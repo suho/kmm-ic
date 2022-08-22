@@ -1,0 +1,5 @@
+//
+//  Constants.swift
+//
+
+enum Constants {}

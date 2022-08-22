@@ -1,16 +1,147 @@
 PODS:
+  - Factory (1.2.8)
+  - Firebase/CoreOnly (9.4.0):
+    - FirebaseCore (= 9.4.0)
+  - Firebase/Crashlytics (9.4.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 9.4.0)
+  - FirebaseCore (9.4.0):
+    - FirebaseCoreDiagnostics (~> 9.0)
+    - FirebaseCoreInternal (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
+  - FirebaseCoreDiagnostics (9.4.0):
+    - GoogleDataTransport (< 10.0.0, >= 9.1.4)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseCoreInternal (9.4.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.7)"
+  - FirebaseCrashlytics (9.4.0):
+    - FirebaseCore (~> 9.0)
+    - FirebaseInstallations (~> 9.0)
+    - GoogleDataTransport (< 10.0.0, >= 9.1.4)
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (~> 2.1)
+  - FirebaseInstallations (9.4.0):
+    - FirebaseCore (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/UserDefaults (~> 7.7)
+    - PromisesObjC (~> 2.1)
+  - GoogleDataTransport (9.2.0):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Environment (7.7.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.7.0):
+    - GoogleUtilities/Environment
+  - "GoogleUtilities/NSData+zlib (7.7.0)"
+  - GoogleUtilities/UserDefaults (7.7.0):
+    - GoogleUtilities/Logger
+  - IQKeyboardManagerSwift (6.5.10)
+  - KeychainAccess (4.2.2)
+  - Kingfisher (7.3.2)
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
+  - Nimble (10.0.0)
+  - NimbleExtension (0.1.0)
+  - PromisesObjC (2.1.1)
+  - Quick (5.0.1)
+  - R.swift (6.1.0):
+    - R.swift.Library (~> 5.3.0)
+  - R.swift.Library (5.3.0)
   - shared (1.0)
+  - Sourcery (1.8.2):
+    - Sourcery/CLI-Only (= 1.8.2)
+  - Sourcery/CLI-Only (1.8.2)
+  - SwiftFormat/CLI (0.49.17)
+  - SwiftLint (0.48.0)
+  - Wormholy (1.6.5)
 
 DEPENDENCIES:
+  - Factory
+  - Firebase/Crashlytics
+  - IQKeyboardManagerSwift
+  - KeychainAccess
+  - Kingfisher
+  - Nimble
+  - NimbleExtension (from `https://github.com/nimblehq/NimbleExtension`, branch `master`)
+  - Quick
+  - R.swift
   - shared (from `../shared`)
+  - Sourcery
+  - SwiftFormat/CLI
+  - SwiftLint
+  - Wormholy
+
+SPEC REPOS:
+  trunk:
+    - Factory
+    - Firebase
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreInternal
+    - FirebaseCrashlytics
+    - FirebaseInstallations
+    - GoogleDataTransport
+    - GoogleUtilities
+    - IQKeyboardManagerSwift
+    - KeychainAccess
+    - Kingfisher
+    - nanopb
+    - Nimble
+    - PromisesObjC
+    - Quick
+    - R.swift
+    - R.swift.Library
+    - Sourcery
+    - SwiftFormat
+    - SwiftLint
+    - Wormholy
 
 EXTERNAL SOURCES:
+  NimbleExtension:
+    :branch: master
+    :git: https://github.com/nimblehq/NimbleExtension
   shared:
     :path: "../shared"
 
-SPEC CHECKSUMS:
-  shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
+CHECKOUT OPTIONS:
+  NimbleExtension:
+    :commit: e14de1e80b9a5a6ee43ab1cc60f71601bc193347
+    :git: https://github.com/nimblehq/NimbleExtension
 
-PODFILE CHECKSUM: 6bc6d9339bd876ca717fd1561dd492b3781672c1
+SPEC CHECKSUMS:
+  Factory: 7bffa5f381d923eabeb750fc8f7920a4bc443220
+  Firebase: 7703fc4022824b6d6db1bf7bea58d13b8e17ec46
+  FirebaseCore: 9a2b10270a854731c4d4d8a97d0aa8380ec3458d
+  FirebaseCoreDiagnostics: aaa87098082c4d4bdd1a9557b1186d18ca85ce8c
+  FirebaseCoreInternal: a13302b0088fbf5f38b79b6ece49c2af7d3e05d6
+  FirebaseCrashlytics: 121ea1d37f4906c94c4c9307297af5121b98b789
+  FirebaseInstallations: 61db1054e688d2bdc4e2b3f744c1b086e913b742
+  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
+  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
+  NimbleExtension: acad4290f27afd4241b1ea20f8597889085e2ce7
+  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
+  R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
+  R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
+  shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
+  Sourcery: ad4aba88367fbaf0c1ae6ec4ba3282db1b571624
+  SwiftFormat: 64ac3f15bbfc3c830103a17340bcc5b60d9a3acd
+  SwiftLint: 284cea64b6187c5d6bd83e9a548a64104d546447
+  Wormholy: 3252bc3e55a1847ef9a0976c1377bd77bf3635fa
+
+PODFILE CHECKSUM: 77165857d42ba12676e6f5b6be80ca18aa9c4241
 
 COCOAPODS: 1.11.3
