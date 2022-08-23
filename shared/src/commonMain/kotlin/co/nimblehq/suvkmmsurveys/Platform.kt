@@ -1,4 +1,4 @@
-package co.nimblehq.suv.kmm_ic
+package co.nimblehq.suvkmmsurveys
 
 expect class Platform() {
     val platform: String

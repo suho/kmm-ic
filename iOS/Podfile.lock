@@ -49,7 +49,6 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - Nimble (10.0.0)
-  - NimbleExtension (0.1.0)
   - PromisesObjC (2.1.1)
   - Quick (5.0.1)
   - R.swift (6.1.0):
@@ -70,7 +69,6 @@ DEPENDENCIES:
   - KeychainAccess
   - Kingfisher
   - Nimble
-  - NimbleExtension (from `https://github.com/nimblehq/NimbleExtension`, branch `master`)
   - Quick
   - R.swift
   - shared (from `../shared`)
@@ -105,16 +103,8 @@ SPEC REPOS:
     - Wormholy
 
 EXTERNAL SOURCES:
-  NimbleExtension:
-    :branch: master
-    :git: https://github.com/nimblehq/NimbleExtension
   shared:
     :path: "../shared"
-
-CHECKOUT OPTIONS:
-  NimbleExtension:
-    :commit: e14de1e80b9a5a6ee43ab1cc60f71601bc193347
-    :git: https://github.com/nimblehq/NimbleExtension
 
 SPEC CHECKSUMS:
   Factory: 7bffa5f381d923eabeb750fc8f7920a4bc443220
@@ -131,7 +121,6 @@ SPEC CHECKSUMS:
   Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
-  NimbleExtension: acad4290f27afd4241b1ea20f8597889085e2ce7
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
@@ -142,6 +131,6 @@ SPEC CHECKSUMS:
   SwiftLint: 284cea64b6187c5d6bd83e9a548a64104d546447
   Wormholy: 3252bc3e55a1847ef9a0976c1377bd77bf3635fa
 
-PODFILE CHECKSUM: 77165857d42ba12676e6f5b6be80ca18aa9c4241
+PODFILE CHECKSUM: f450ac81cac8c8f6afa92d07add0316b1b2ef365
 
 COCOAPODS: 1.11.3

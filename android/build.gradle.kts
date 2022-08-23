@@ -6,7 +6,7 @@ plugins {
 android {
     compileSdk = 32
     defaultConfig {
-        applicationId = "co.nimblehq.suv.kmm_ic.android"
+        applicationId = "co.nimblehq.suvkmmsurveys.android"
         minSdk = 23
         targetSdk = 32
         versionCode = 1

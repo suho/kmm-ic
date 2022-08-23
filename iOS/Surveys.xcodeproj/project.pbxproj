@@ -15,19 +15,15 @@
 		5AD21252E58F1F30EE57EB5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853F5F4E0163A7C3C79C38 /* AppDelegate.swift */; };
 		74EF433F86A30267EA3374FC /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3368FFF21DEE9396422B432F /* Navigator.swift */; };
 		79AD9AC60C2326D2C37DA822 /* ApplicationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D07C7B75034BCA157403F8 /* ApplicationSpec.swift */; };
-		8DD323BC8D45D5FC472505A8 /* Constants+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A71C5D204545F33C7FD6B4 /* Constants+API.swift */; };
+		8B65F87B28B47D950063A2FB /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65F87A28B47D950063A2FB /* Test.swift */; };
 		9034CDC8640BB10EC23F3D2C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA2A4D7F6EBA03C8C781818 /* Constants.swift */; };
 		A0562C2F673B4C4DCABFBDB8 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446379DEC5760FE3C00F3AA3 /* R.generated.swift */; };
 		A423C84CEEF0C0C0B0316E58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8D319AB3630379FFBCEDA47 /* LaunchScreen.storyboard */; };
 		A83AB5806D0E6DD96B166A09 /* Navigator+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0876CC057AA9CF94D74E60 /* Navigator+Transition.swift */; };
-		B2A543A91D8FFE90C3C4B1AE /* UseCaseFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835865F7B76A8891E5CC7BCA /* UseCaseFactoryProtocol.swift */; };
 		BCF9CE78FFD748BD69FDD764 /* Pods_Surveys_SurveysUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F28A762CD3A488A762557F1 /* Pods_Surveys_SurveysUITests.framework */; };
 		CC151CF2A41DE206FA2EDCF0 /* OptionalUnwrapSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C28B64D0889C7EDF9D30A6C /* OptionalUnwrapSpec.swift */; };
-		D159394D010391AC5356ACC1 /* UIView+Subviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8B49AEAA06CB0300537B3E /* UIView+Subviews.swift */; };
 		E523B137B86D7E0119304CC1 /* Optional+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E30052ACBE13146066B25B /* Optional+Unwrap.swift */; };
-		ECD3276C62498EE90151BC6F /* Color+Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE2F293C74A3F8AB78778 /* Color+Application.swift */; };
 		EFBC993CB498891FAF9431BC /* Navigator+Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3EF98D63593B5FE98B4AA5 /* Navigator+Scene.swift */; };
-		FC1CE3FCD6AE97534C3BC5ED /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BBA592F1F989A09A84263F /* Typealiases.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,21 +92,18 @@
 		6D0876CC057AA9CF94D74E60 /* Navigator+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigator+Transition.swift"; sourceTree = "<group>"; };
 		6D0CD7421C31E19936754911 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		74E30052ACBE13146066B25B /* Optional+Unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Unwrap.swift"; sourceTree = "<group>"; };
-		75A71C5D204545F33C7FD6B4 /* Constants+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+API.swift"; sourceTree = "<group>"; };
 		75FE883CA0071FC1190B904E /* DebugProduction.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugProduction.xcconfig; sourceTree = "<group>"; };
 		77CDE5851C54FD002A61E763 /* Pods-Surveys.release production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Surveys.release production.xcconfig"; path = "Target Support Files/Pods-Surveys/Pods-Surveys.release production.xcconfig"; sourceTree = "<group>"; };
 		7CC06B4E3C2F440EBB5297F9 /* Pods-SurveysTests.release production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurveysTests.release production.xcconfig"; path = "Target Support Files/Pods-SurveysTests/Pods-SurveysTests.release production.xcconfig"; sourceTree = "<group>"; };
 		7F28A762CD3A488A762557F1 /* Pods_Surveys_SurveysUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Surveys_SurveysUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F72E6A675B4E003A13F0D96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		835865F7B76A8891E5CC7BCA /* UseCaseFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseFactoryProtocol.swift; sourceTree = "<group>"; };
 		83D8984DAEA7662D8BEA04FC /* Pods-Surveys-SurveysUITests.release production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Surveys-SurveysUITests.release production.xcconfig"; path = "Target Support Files/Pods-Surveys-SurveysUITests/Pods-Surveys-SurveysUITests.release production.xcconfig"; sourceTree = "<group>"; };
 		84FB411111453E4FDA5B5862 /* SurveysUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SurveysUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		894F23E7FF242200A17B28E2 /* Pods-Surveys-SurveysUITests.release staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Surveys-SurveysUITests.release staging.xcconfig"; path = "Target Support Files/Pods-Surveys-SurveysUITests/Pods-Surveys-SurveysUITests.release staging.xcconfig"; sourceTree = "<group>"; };
-		89BBA592F1F989A09A84263F /* Typealiases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealiases.swift; sourceTree = "<group>"; };
 		8AA2A4D7F6EBA03C8C781818 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8B65F87A28B47D950063A2FB /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		8EB8672A8DB533C8A50A0DEC /* Pods_SurveysTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurveysTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B8DCB5A6DDC646B216C9D9 /* DebugStaging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugStaging.xcconfig; sourceTree = "<group>"; };
-		AE8B49AEAA06CB0300537B3E /* UIView+Subviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Subviews.swift"; sourceTree = "<group>"; };
 		BBFD754052B765DD43C73054 /* ReleaseStaging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseStaging.xcconfig; sourceTree = "<group>"; };
 		C40A128F64769F891407434E /* AutoMockable.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMockable.generated.swift; sourceTree = "<group>"; };
 		C8D319AB3630379FFBCEDA47 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -123,7 +116,6 @@
 		F2276C1D4F19513AFCB4F356 /* Pods-SurveysTests.debug staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurveysTests.debug staging.xcconfig"; path = "Target Support Files/Pods-SurveysTests/Pods-SurveysTests.debug staging.xcconfig"; sourceTree = "<group>"; };
 		F745616D84526C4CC770C677 /* ReleaseProduction.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseProduction.xcconfig; sourceTree = "<group>"; };
 		F83602BF62D061E9C5D00C99 /* Pods-Surveys.release staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Surveys.release staging.xcconfig"; path = "Target Support Files/Pods-Surveys/Pods-Surveys.release staging.xcconfig"; sourceTree = "<group>"; };
-		F99CE2F293C74A3F8AB78778 /* Color+Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Application.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				E557859B9D354D43AB93BEBD /* Rswift */,
-				C7500ABEAC69CD0C09BA865A /* Typealiases */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -178,8 +169,6 @@
 			children = (
 				493B2F81B0BB5F7BD1021217 /* Application */,
 				64BD30DE8FDCBE2646F49B28 /* Constants */,
-				212311A59EE0C9D1077518EC /* Data */,
-				78CCB75E5A61B0AAEB5B96B8 /* Domain */,
 				00DE0309F3B7BA8778053DF3 /* Presentation */,
 				FC91B57810B2CC9AA86A6029 /* Supports */,
 			);
@@ -191,13 +180,6 @@
 			children = (
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		212311A59EE0C9D1077518EC /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		2301FBE78FE54CBE769541DE /* XCConfigs */ = {
@@ -249,15 +231,9 @@
 			isa = PBXGroup;
 			children = (
 				3F853F5F4E0163A7C3C79C38 /* AppDelegate.swift */,
+				8B65F87A28B47D950063A2FB /* Test.swift */,
 			);
 			path = Application;
-			sourceTree = "<group>";
-		};
-		4C181C57DAAF379BAAD0CFB8 /* Interfaces */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		622B0DBBBA14110ABF39412C /* Sourcery */ = {
@@ -272,7 +248,6 @@
 			isa = PBXGroup;
 			children = (
 				8AA2A4D7F6EBA03C8C781818 /* Constants.swift */,
-				75A71C5D204545F33C7FD6B4 /* Constants+API.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -285,16 +260,6 @@
 				FBED634BB00B601347F08900 /* Products */,
 				AE91BC4A21F5B36E1C32401D /* Pods */,
 			);
-			sourceTree = "<group>";
-		};
-		78CCB75E5A61B0AAEB5B96B8 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				A942348CBB0976E6205E76DF /* Entities */,
-				4C181C57DAAF379BAAD0CFB8 /* Interfaces */,
-				C2B126DE75BB6917D04E3D96 /* UseCases */,
-			);
-			path = Domain;
 			sourceTree = "<group>";
 		};
 		7F6C1AC833F2CF75D7EF6405 /* Plists */ = {
@@ -337,28 +302,12 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
-		A942348CBB0976E6205E76DF /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Entities;
-			sourceTree = "<group>";
-		};
 		AA0D742236EFEC86AFE68983 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				825F083621408C9A7E3C5D5D /* Foundation */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		AD2AC2DD9A88BB62230DD3F6 /* UIKit */ = {
-			isa = PBXGroup;
-			children = (
-				F99CE2F293C74A3F8AB78778 /* Color+Application.swift */,
-				AE8B49AEAA06CB0300537B3E /* UIView+Subviews.swift */,
-			);
-			path = UIKit;
 			sourceTree = "<group>";
 		};
 		AE91BC4A21F5B36E1C32401D /* Pods */ = {
@@ -447,27 +396,11 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		C2B126DE75BB6917D04E3D96 /* UseCases */ = {
-			isa = PBXGroup;
-			children = (
-				835865F7B76A8891E5CC7BCA /* UseCaseFactoryProtocol.swift */,
-			);
-			path = UseCases;
-			sourceTree = "<group>";
-		};
 		C71C309E92D7DA7FF6328D57 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		C7500ABEAC69CD0C09BA865A /* Typealiases */ = {
-			isa = PBXGroup;
-			children = (
-				89BBA592F1F989A09A84263F /* Typealiases.swift */,
-			);
-			path = Typealiases;
 			sourceTree = "<group>";
 		};
 		CCAC608C76EF118CA7C29FE9 /* Mocks */ = {
@@ -556,7 +489,6 @@
 			isa = PBXGroup;
 			children = (
 				A009914CA2F7CE9E534DF439 /* Foundation */,
-				AD2AC2DD9A88BB62230DD3F6 /* UIKit */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -809,7 +741,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    \"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"$SRCROOT\" --lint --lenient\nfi";
+			shellScript = "if [ -z \"$CI\" ]; then\n    \"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"$SRCROOT\" --lint --lenient\nfi\n";
 		};
 		6334CDB95DF9CFEA7F44A13E /* Sourcery */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -989,18 +921,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AD21252E58F1F30EE57EB5E /* AppDelegate.swift in Sources */,
-				8DD323BC8D45D5FC472505A8 /* Constants+API.swift in Sources */,
 				9034CDC8640BB10EC23F3D2C /* Constants.swift in Sources */,
-				B2A543A91D8FFE90C3C4B1AE /* UseCaseFactoryProtocol.swift in Sources */,
+				8B65F87B28B47D950063A2FB /* Test.swift in Sources */,
 				56803F2B3143178DED1E8D4B /* HomeViewController.swift in Sources */,
 				EFBC993CB498891FAF9431BC /* Navigator+Scene.swift in Sources */,
 				A83AB5806D0E6DD96B166A09 /* Navigator+Transition.swift in Sources */,
 				74EF433F86A30267EA3374FC /* Navigator.swift in Sources */,
 				E523B137B86D7E0119304CC1 /* Optional+Unwrap.swift in Sources */,
-				ECD3276C62498EE90151BC6F /* Color+Application.swift in Sources */,
-				D159394D010391AC5356ACC1 /* UIView+Subviews.swift in Sources */,
 				A0562C2F673B4C4DCABFBDB8 /* R.generated.swift in Sources */,
-				FC1CE3FCD6AE97534C3BC5ED /* Typealiases.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1095,7 +1023,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Release Production";
@@ -1117,7 +1045,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Surveys;
 			};
@@ -1201,7 +1129,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Surveys.app/Surveys";
 				TEST_TARGET_NAME = Surveys;
@@ -1225,7 +1153,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Surveys.app/Surveys";
 				TEST_TARGET_NAME = Surveys;
@@ -1252,7 +1180,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Debug Staging";
@@ -1336,7 +1264,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Release Staging";
@@ -1357,7 +1285,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Surveys;
 			};
@@ -1434,7 +1362,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Surveys.app/Surveys";
 				TEST_TARGET_NAME = Surveys;
@@ -1459,7 +1387,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Surveys.app/Surveys";
 				TEST_TARGET_NAME = Surveys;
@@ -1483,7 +1411,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Surveys;
 			};
@@ -1509,7 +1437,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Debug Production";
@@ -1530,7 +1458,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.6.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Surveys;
 			};

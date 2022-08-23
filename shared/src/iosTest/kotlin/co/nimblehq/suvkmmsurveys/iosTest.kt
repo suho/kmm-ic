@@ -1,4 +1,4 @@
-package co.nimblehq.suv.kmm_ic
+package co.nimblehq.suvkmmsurveys
 
 import kotlin.test.Test
 import kotlin.test.assertTrue

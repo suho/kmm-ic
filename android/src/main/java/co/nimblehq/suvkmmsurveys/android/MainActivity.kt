@@ -1,8 +1,8 @@
-package co.nimblehq.suv.kmm_ic.android
+package co.nimblehq.suvkmmsurveys.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import co.nimblehq.suv.kmm_ic.Greeting
+import co.nimblehq.suvkmmsurveys.Greeting
 import android.widget.TextView
 
 fun greet(): String {
