@@ -1,34 +1,51 @@
-# Git Repository Template
+# Android Templates
 
-Project repository template to set up all public projects at [Nimble](https://nimblehq.co/)
+- Our optimized Android templates used in our android projects
 
-## Usage
+## Setup
 
-Clone the repository
+- Clone the project
+- Run the project with Android Studio
 
-`git clone git@github.com:nimblehq/git-template.git`
+## Linter and static code analysis
 
-## License
+- Lint:
 
-This project is Copyright (c) 2014 and onwards Nimble. It is free software and may be redistributed under the terms specified in the [LICENSE] file.
+```
+$ ./gradlew lint
+```
 
-[LICENSE]: /LICENSE
+Report is located at: `./app/build/reports/lint/`
 
-## About
-<a href="https://nimblehq.co/">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://assets.nimblehq.co/logo/dark/logo-dark-text-160.png">
-    <img alt="Nimble logo" src="https://assets.nimblehq.co/logo/light/logo-light-text-160.png">
-  </picture>
-</a>
+- Detekt
 
-This project is maintained and funded by Nimble.
+```
+$ ./gradlew detekt
+```
 
-We ❤️ open source and do our part in sharing our work with the community!
-See [our other projects][community] or [hire our team][hire] to help build your product.
+Report is located at: `./build/reports/detekt`
 
-Want to join? [Check out our Jobs][jobs]!
+## Testing
 
-[community]: https://github.com/nimblehq
-[hire]: https://nimblehq.co/
-[jobs]: https://jobs.nimblehq.co/
+- Run unit testing:
+
+```
+$ ./gradlew app:testStagingDebugUnitTest
+$ ./gradlew data:testDebugUnitTest
+$ ./gradlew domain:test
+```
+
+- Run unit testing with coverage:
+
+```
+$ ./gradlew jacocoTestReport
+```
+
+Report is located at: `./app/build/reports/jacoco/`
+
+## Build and deploy
+
+For `release` builds, we need to provide release keystore and signing properties:
+
+- Put the `release.keystore` file at root `config` folder.
+- Put keystore signing properties in `signing.properties`
