@@ -82,7 +82,7 @@ class Constants
     'github_action_keychain'
   end
 
-  # a scheme name for unit testing
+  # Keychain password
   def self.KEYCHAIN_PASSWORD
     'password'
   end
@@ -93,7 +93,7 @@ class Constants
 
    # a developer portal team id
   def self.DEV_PORTAL_TEAM_ID
-    '{PROJECT_TEAM_ID}'
+    '4TWS7E2EPE'
   end
 
   # an staging environment scheme name

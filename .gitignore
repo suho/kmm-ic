@@ -111,6 +111,9 @@ DerivedData
 # Tuist
 .tuist-generated
 
+# Firebsae
+GoogleService-Info.plist
+
 # Android
 *.iml
 .gradle
