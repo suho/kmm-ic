@@ -1,51 +1,20 @@
-# Android Templates
+# KMM IC
 
-- Our optimized Android templates used in our android projects
+## License
 
-## Setup
+This project is Copyright (c) 2014 and onwards. It is free software,
+and may be redistributed under the terms specified in the [LICENSE] file.
 
-- Clone the project
-- Run the project with Android Studio
+[LICENSE]: /LICENSE
 
-## Linter and static code analysis
+## About
 
-- Lint:
+![Nimble](https://assets.nimblehq.co/logo/dark/logo-dark-text-160.png)
 
-```
-$ ./gradlew lint
-```
+This project is maintained and funded by Nimble.
 
-Report is located at: `./app/build/reports/lint/`
+We love open source and do our part in sharing our work with the community!
+See [our other projects][community] or [hire our team][hire] to help build your product.
 
-- Detekt
-
-```
-$ ./gradlew detekt
-```
-
-Report is located at: `./build/reports/detekt`
-
-## Testing
-
-- Run unit testing:
-
-```
-$ ./gradlew app:testStagingDebugUnitTest
-$ ./gradlew data:testDebugUnitTest
-$ ./gradlew domain:test
-```
-
-- Run unit testing with coverage:
-
-```
-$ ./gradlew jacocoTestReport
-```
-
-Report is located at: `./app/build/reports/jacoco/`
-
-## Build and deploy
-
-For `release` builds, we need to provide release keystore and signing properties:
-
-- Put the `release.keystore` file at root `config` folder.
-- Put keystore signing properties in `signing.properties`
+[community]: https://github.com/nimblehq
+[hire]: https://nimblehq.co/
