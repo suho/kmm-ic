@@ -10,8 +10,11 @@ import shared
 import SwiftUI
 
 struct HomeView: View {
+
+    let greeting = Greeting().greeting()
+
     var body: some View {
-        Text(Greeting().greeting())
+        Text(greeting)
     }
 }
 
