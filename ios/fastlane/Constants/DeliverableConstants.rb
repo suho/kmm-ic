@@ -41,15 +41,6 @@ class DeliverableConstants
     "nimble-dev"
   end
 
-  ##################
-  ### DEV PORTAL ###
-  ##################
-
-  # Apple ID for Apple Developer Portal
-  def self.DEV_PORTAL_APPLE_ID
-    '<#dev@example.com#>'
-  end
-
   #####################
   ### App Store API ###
   #####################

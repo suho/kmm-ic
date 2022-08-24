@@ -2,7 +2,12 @@ name: Automatic pull request review
 
 on:
   pull_request:
-    types: [opened, reopened, edited, synchronize]
+    types: [ opened, reopened, edited, synchronize ]
+    paths: [ ios/** ]
+
+defaults:
+  run:
+    working-directory: ios
 
 jobs:
   review_pull_request:

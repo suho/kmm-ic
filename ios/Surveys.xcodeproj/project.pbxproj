@@ -13,6 +13,7 @@
 		2E95B771E49CEA324FFF9477 /* Pods_Surveys.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BEC56586159DE04CE2CCAA8 /* Pods_Surveys.framework */; };
 		5AD21252E58F1F30EE57EB5E /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853F5F4E0163A7C3C79C38 /* Application.swift */; };
 		79AD9AC60C2326D2C37DA822 /* ApplicationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D07C7B75034BCA157403F8 /* ApplicationSpec.swift */; };
+		8B4A701028B62A14000888BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A700F28B62A14000888BA /* AppDelegate.swift */; };
 		8BACDE8428B4C8130049C205 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BACDE8328B4C8130049C205 /* HomeView.swift */; };
 		9034CDC8640BB10EC23F3D2C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA2A4D7F6EBA03C8C781818 /* Constants.swift */; };
 		A0562C2F673B4C4DCABFBDB8 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446379DEC5760FE3C00F3AA3 /* R.generated.swift */; };
@@ -93,6 +94,9 @@
 		84FB411111453E4FDA5B5862 /* SurveysUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SurveysUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		894F23E7FF242200A17B28E2 /* Pods-Surveys-SurveysUITests.release staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Surveys-SurveysUITests.release staging.xcconfig"; path = "Target Support Files/Pods-Surveys-SurveysUITests/Pods-Surveys-SurveysUITests.release staging.xcconfig"; sourceTree = "<group>"; };
 		8AA2A4D7F6EBA03C8C781818 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8B4A700A28B62974000888BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8B4A700C28B62974000888BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8B4A700F28B62A14000888BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BACDE8328B4C8130049C205 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8EB8672A8DB533C8A50A0DEC /* Pods_SurveysTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurveysTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B8DCB5A6DDC646B216C9D9 /* DebugStaging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugStaging.xcconfig; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 		493B2F81B0BB5F7BD1021217 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				8B4A700F28B62A14000888BA /* AppDelegate.swift */,
 				3F853F5F4E0163A7C3C79C38 /* Application.swift */,
 			);
 			path = Application;
@@ -273,6 +278,32 @@
 				AA0D742236EFEC86AFE68983 /* Extensions */,
 			);
 			path = Supports;
+			sourceTree = "<group>";
+		};
+		8B4A700828B62974000888BA /* GoogleService */ = {
+			isa = PBXGroup;
+			children = (
+				8B4A700928B62974000888BA /* Staging */,
+				8B4A700B28B62974000888BA /* Production */,
+			);
+			name = GoogleService;
+			path = Plists/GoogleService;
+			sourceTree = "<group>";
+		};
+		8B4A700928B62974000888BA /* Staging */ = {
+			isa = PBXGroup;
+			children = (
+				8B4A700A28B62974000888BA /* GoogleService-Info.plist */,
+			);
+			path = Staging;
+			sourceTree = "<group>";
+		};
+		8B4A700B28B62974000888BA /* Production */ = {
+			isa = PBXGroup;
+			children = (
+				8B4A700C28B62974000888BA /* GoogleService-Info.plist */,
+			);
+			path = Production;
 			sourceTree = "<group>";
 		};
 		9B41B5500391874798F1405B /* LaunchScreen */ = {
@@ -426,6 +457,7 @@
 		D85DBB3C9345EA2AA26C4F59 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
+				8B4A700828B62974000888BA /* GoogleService */,
 				7F6C1AC833F2CF75D7EF6405 /* Plists */,
 				2301FBE78FE54CBE769541DE /* XCConfigs */,
 			);
@@ -731,7 +763,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/Sourcery/bin/sourcery\"";
+			shellScript = "\"$PODS_ROOT/Sourcery/bin/sourcery\"\n";
 		};
 		8C0E6DF360757F1773ACF28E /* R.swift */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -751,7 +783,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/$PROJECT_NAME/Sources/Supports/Helpers/Rswift/R.generated.swift\"";
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/$PROJECT_NAME/Sources/Supports/Helpers/Rswift/R.generated.swift\"\n";
 		};
 		8D9D67B922314DD9BF5A00AC /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -769,7 +801,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    ${PODS_ROOT}/SwiftLint/swiftlint\nfi";
+			shellScript = "if [ -z \"$CI\" ]; then\n    ${PODS_ROOT}/SwiftLint/swiftlint\nfi\n";
 		};
 		9A7D15E040268641035A29E2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -848,7 +880,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH_TO_GOOGLE_PLISTS=\"$SRCROOT/$PROJECT_NAME/Configurations/Plists/GoogleService\"\n\ncase \"${CONFIGURATION}\" in\n\"Debug Staging\" | \"Release Staging\" )\ncp -r \"$PATH_TO_GOOGLE_PLISTS/Staging/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\"\n;;\n\"Debug Production\" | \"Release Production\" )\ncp -r \"$PATH_TO_GOOGLE_PLISTS/Production/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\"\n;;\n*)\n;;\nesac";
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"$SRCROOT/$PROJECT_NAME/Configurations/Plists/GoogleService\"\n\ncase \"${CONFIGURATION}\" in\n\"Debug Staging\" | \"Release Staging\" )\necho \"Hello ${CONFIGURATION}\"\ncp -r \"$PATH_TO_GOOGLE_PLISTS/Staging/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\"\n;;\n\"Debug Production\" | \"Release Production\" )\necho \"Hello ${CONFIGURATION}\"\ncp -r \"$PATH_TO_GOOGLE_PLISTS/Production/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\"\n;;\n*)\n;;\nesac\n";
 		};
 		FC8679B837B91A9E649F7BA9 /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -892,6 +924,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B4A701028B62A14000888BA /* AppDelegate.swift in Sources */,
 				8BACDE8428B4C8130049C205 /* HomeView.swift in Sources */,
 				5AD21252E58F1F30EE57EB5E /* Application.swift in Sources */,
 				9034CDC8640BB10EC23F3D2C /* Constants.swift in Sources */,
@@ -981,6 +1014,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Surveys/Configurations/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				KOTLIN_FRAMEWORK_BUILD_TYPE = release;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1137,6 +1171,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Surveys/Configurations/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				KOTLIN_FRAMEWORK_BUILD_TYPE = debug;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1222,6 +1257,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Surveys/Configurations/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				KOTLIN_FRAMEWORK_BUILD_TYPE = debug;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1394,6 +1430,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Surveys/Configurations/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				KOTLIN_FRAMEWORK_BUILD_TYPE = release;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -2,6 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CLIENT_ID</key>
+    <string>713044215071-ihabamke7hqol1j6cf8mdasrol52bqkd.apps.googleusercontent.com</string>
+    <key>REVERSED_CLIENT_ID</key>
+    <string>com.googleusercontent.apps.713044215071-ihabamke7hqol1j6cf8mdasrol52bqkd</string>
+    <key>API_KEY</key>
+    <string>AIzaSyAQXsYg5K2XoA6KZLAMgCfWKAGQxyxhdZo</string>
+    <key>GCM_SENDER_ID</key>
+    <string>713044215071</string>
+    <key>PLIST_VERSION</key>
+    <string>1</string>
+    <key>BUNDLE_ID</key>
+    <string>co.nimblehq.suv.kmm-ic.staging</string>
+    <key>PROJECT_ID</key>
+    <string>ic-kmm-suv</string>
+    <key>STORAGE_BUCKET</key>
+    <string>ic-kmm-suv.appspot.com</string>
+    <key>IS_ADS_ENABLED</key>
+    <false></false>
+    <key>IS_ANALYTICS_ENABLED</key>
+    <false></false>
+    <key>IS_APPINVITE_ENABLED</key>
+    <true></true>
+    <key>IS_GCM_ENABLED</key>
+    <true></true>
+    <key>IS_SIGNIN_ENABLED</key>
+    <true></true>
+    <key>GOOGLE_APP_ID</key>
+    <string>1:713044215071:ios:eb121336a05ba0718adc2a</string>
 </dict>
 </plist>
-<!-- REPLACE WITH GoogleService-Info.plist IN STAGING -->

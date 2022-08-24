@@ -1,18 +1,23 @@
-name: Deploy Release Build To Firebase
+name: Deploy Build To App Store
 
 # SECRETS needed:
 ### SSH_PRIVATE_KEY for Match Repo
 ### MATCH_PASS
-### FIREBASE_TOKEN
+### APPSTORE_CONNECT_API_KEY
 
 on:
   push:
-    branches: [ release/** ]
+    branches: [ main ]
+    paths: [ ios/** ]
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: ios
+
 jobs:
-  Lint:
-    name: lint
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -34,7 +39,8 @@ jobs:
       with:
         access_token: ${{ github.token }}
 
-    - uses: actions/checkout@v2
+    - name: Checkout Repo
+      uses: actions/checkout@v2
     # Set fetch-depth (default: 1) to get whole tree
       with:
         fetch-depth: 0
@@ -63,12 +69,12 @@ jobs:
     - name: Build and Test
       run: bundle exec fastlane build_and_test
 
-    - name: Match Ad-hoc
-      run: bundle exec fastlane sync_adhoc_production_signing
+    - name: Match AppStore
+      run: bundle exec fastlane sync_appstore_signing
       env:
         MATCH_PASSWORD: ${{ secrets.MATCH_PASS }}
 
-    - name: Build Production App and Distribute to Firebase
-      run: bundle exec fastlane build_and_upload_production_app
+    - name: Build App and Distribute to AppStore
+      run: bundle exec fastlane build_and_upload_appstore_app
       env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
