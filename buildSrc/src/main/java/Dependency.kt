@@ -15,9 +15,36 @@ object Dependency {
     const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Version.ACTIVITY_COMPOSE}"
     const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Version.NAVIGATION_COMPOSE}"
 
+    // Kotlinx
+    const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES_CORE}"
+
+    // Ktor
+    const val KTOR_CORE = "io.ktor:ktor-client-core:${Version.KTOR}"
+    const val KTOR_SERIALIZATION = "io.ktor:ktor-client-serialization:${Version.KTOR}"
+    const val KTOR_LOGGING = "io.ktor:ktor-client-logging:${Version.KTOR}"
+    const val KTOR_CIO = "io.ktor:ktor-client-cio:${Version.KTOR}"
+    const val KTOR_CONTENT_NEGOTIATION = "io.ktor:ktor-client-content-negotiation:${Version.KTOR}"
+    const val KTOR_JSON = "io.ktor:ktor-serialization-kotlinx-json:${Version.KTOR}"
+    const val KTOR_ANDROID = "io.ktor:ktor-client-android:${Version.KTOR}"
+    const val KTOR_IOS = "io.ktor:ktor-client-ios:${Version.KTOR}"
+
+    // Log
+    const val NAPIER = "io.github.aakira:napier:2.4.0"
+
+    // Koin
+    const val KOIN_CORE = "io.insert-koin:koin-core:${Version.KOIN}"
+    const val KOIN_ANDROID = "io.insert-koin:koin-android:${Version.KOIN}"
+    const val KOIN_TEST = "io.insert-koin:koin-test:${Version.KOIN}"
+
+    // Serialization
+    const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Version.KOTLIN_SERIALIZATION}"
+
     // Debug
     const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling:${Version.COMPOSE_STABLE_VERSION}"
     const val COMPOSE_UI_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest:${Version.COMPOSE_STABLE_VERSION}"
+
+    // BuildKonfig
+    const val BUILD_KONFIG = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:${Version.BUILD_KONFIG}"
 
     // Tests
     const val JUNIT = "junit:junit:${Version.JUNIT}"

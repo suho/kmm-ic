@@ -43,6 +43,9 @@ PODS:
   - IQKeyboardManagerSwift (6.5.10)
   - KeychainAccess (4.2.2)
   - Kingfisher (7.3.2)
+  - KMPNativeCoroutinesCombine (0.12.6):
+    - KMPNativeCoroutinesCore (= 0.12.6)
+  - KMPNativeCoroutinesCore (0.12.6)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
     - nanopb/encode (= 2.30909.0)
@@ -54,7 +57,7 @@ PODS:
   - R.swift (6.1.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
-  - shared (1.0)
+  - Shared (1.0)
   - Sourcery (1.8.2):
     - Sourcery/CLI-Only (= 1.8.2)
   - Sourcery/CLI-Only (1.8.2)
@@ -67,10 +70,11 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - KeychainAccess
   - Kingfisher
+  - KMPNativeCoroutinesCombine (= 0.12.6)
   - Nimble
   - Quick
   - R.swift
-  - shared (from `../shared`)
+  - Shared (from `../shared`)
   - Sourcery
   - SwiftFormat/CLI
   - SwiftLint
@@ -89,6 +93,8 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - KeychainAccess
     - Kingfisher
+    - KMPNativeCoroutinesCombine
+    - KMPNativeCoroutinesCore
     - nanopb
     - Nimble
     - PromisesObjC
@@ -100,7 +106,7 @@ SPEC REPOS:
     - SwiftLint
 
 EXTERNAL SOURCES:
-  shared:
+  Shared:
     :path: "../shared"
 
 SPEC CHECKSUMS:
@@ -116,17 +122,19 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
+  KMPNativeCoroutinesCombine: 9c82dee7ba35c6acff4b35a9757bfecae8b335fd
+  KMPNativeCoroutinesCore: 35da0312355f0e911cbb16923aea3389894affca
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
-  shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
+  Shared: 3b057278ed1516767bfd51d2f8286a2b8920cbca
   Sourcery: ad4aba88367fbaf0c1ae6ec4ba3282db1b571624
   SwiftFormat: 64ac3f15bbfc3c830103a17340bcc5b60d9a3acd
   SwiftLint: 284cea64b6187c5d6bd83e9a548a64104d546447
 
-PODFILE CHECKSUM: 5d1d3ffd87a5c3ce6a0f032ff638d021be104cec
+PODFILE CHECKSUM: 7fb8bf86460a90386f40bb52321bb9273663c8f4
 
 COCOAPODS: 1.11.3

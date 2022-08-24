@@ -24,6 +24,13 @@ object Version {
     const val LIFECYCLE_RUNTIME_KTX = "2.5.1"
     const val NAVIGATION_COMPOSE = "2.5.1"
 
+    const val KOIN = "3.2.0"
+    const val KOTLIN_SERIALIZATION = "1.7.10"
+    const val NATIVE_COROUTINES_KOTLIN = "0.12.6-new-mm"
+    const val COROUTINES_CORE = "1.6.4"
+    const val KTOR = "2.1.1"
+    const val BUILD_KONFIG = "0.13.3"
+
     // Tests
     const val JUNIT = "4.13.2"
     const val JUNIT_EXT = "1.1.3"
