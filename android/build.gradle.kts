@@ -7,7 +7,6 @@ plugins {
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
 
 android {
-
     signingConfigs {
         create(BuildType.RELEASE) {
             storeFile = rootProject.file("config/release.keystore")
@@ -51,6 +50,19 @@ android {
         create(Flavor.PRODUCTION) {
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = Version.KOTLIN_JVM_TARGET
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Version.COMPOSE_VERSION
+    }
 }
 
 dependencies {
@@ -61,4 +73,23 @@ dependencies {
     implementation(Dependency.MATERIAL)
     implementation(Dependency.APPCOMPAT)
     implementation(Dependency.CONSTRAINT_LAYOUT)
+
+    // Compose
+    implementation(Dependency.CORE_KTX)
+    implementation(Dependency.COMPOSE_UI)
+    implementation(Dependency.COMPOSE_MATERIAL)
+    implementation(Dependency.COMPOSE_UI_PREVIEW)
+    implementation(Dependency.LIFECYCLE_RUNTIME_KTX)
+    implementation(Dependency.ACTIVITY_COMPOSE)
+    implementation(Dependency.NAVIGATION_COMPOSE)
+
+    // Debug
+    debugImplementation(Dependency.COMPOSE_UI_TOOLING)
+    debugImplementation(Dependency.COMPOSE_UI_TEST_MANIFEST)
+
+    // Test
+    testImplementation(Dependency.JUNIT)
+    androidTestImplementation(Dependency.JUNIT_EXT)
+    androidTestImplementation(Dependency.ESPRESSO_CORE)
+    androidTestImplementation(Dependency.COMPOSE_UI_TEST_JUNIT)
 }
