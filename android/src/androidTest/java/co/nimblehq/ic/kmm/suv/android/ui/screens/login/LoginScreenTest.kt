@@ -1,12 +1,12 @@
 package co.nimblehq.ic.kmm.suv.android.ui.screens.login
 
-import co.nimblehq.ic.kmm.suv.android.R
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import co.nimblehq.ic.kmm.suv.android.MainActivity
+import co.nimblehq.ic.kmm.suv.android.R
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

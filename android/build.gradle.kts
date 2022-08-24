@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.application")
-    id("com.google.gms.google-services")
-    kotlin("android")
+    id(Plugin.ANDROID_APPLICATION)
+    id(Plugin.GOOGLE_SERVICE)
+    kotlin(Plugin.ANDROID)
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -91,6 +91,10 @@ dependencies {
     implementation(Dependency.LIFECYCLE_RUNTIME_KTX)
     implementation(Dependency.ACTIVITY_COMPOSE)
     implementation(Dependency.NAVIGATION_COMPOSE)
+
+    // Koin
+    implementation(Dependency.KOIN_CORE)
+    implementation(Dependency.KOIN_ANDROID)
 
     // Debug
     debugImplementation(Dependency.COMPOSE_UI_TOOLING)
