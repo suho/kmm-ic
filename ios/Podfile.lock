@@ -60,7 +60,6 @@ PODS:
   - Sourcery/CLI-Only (1.8.2)
   - SwiftFormat/CLI (0.49.17)
   - SwiftLint (0.48.0)
-  - Wormholy (1.6.5)
 
 DEPENDENCIES:
   - Factory
@@ -75,7 +74,6 @@ DEPENDENCIES:
   - Sourcery
   - SwiftFormat/CLI
   - SwiftLint
-  - Wormholy
 
 SPEC REPOS:
   trunk:
@@ -100,7 +98,6 @@ SPEC REPOS:
     - Sourcery
     - SwiftFormat
     - SwiftLint
-    - Wormholy
 
 EXTERNAL SOURCES:
   shared:
@@ -125,12 +122,11 @@ SPEC CHECKSUMS:
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
-  shared: 7e5bb3963fe6bd4de6f2c4da301b5f6251f84201
+  shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
   Sourcery: ad4aba88367fbaf0c1ae6ec4ba3282db1b571624
   SwiftFormat: 64ac3f15bbfc3c830103a17340bcc5b60d9a3acd
   SwiftLint: 284cea64b6187c5d6bd83e9a548a64104d546447
-  Wormholy: 3252bc3e55a1847ef9a0976c1377bd77bf3635fa
 
-PODFILE CHECKSUM: f450ac81cac8c8f6afa92d07add0316b1b2ef365
+PODFILE CHECKSUM: 5d1d3ffd87a5c3ce6a0f032ff638d021be104cec
 
 COCOAPODS: 1.11.3

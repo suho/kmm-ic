@@ -20,7 +20,6 @@ kotlin {
         framework {
             baseName = "shared"
         }
-
         xcodeConfigurationToNativeBuildType["Debug Staging"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType["Debug Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType["Release Staging"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
@@ -58,10 +57,10 @@ kotlin {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 23
-        targetSdk = 30
+        targetSdk = 32
     }
 }
