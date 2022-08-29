@@ -5,23 +5,26 @@ import java.util.*
 plugins {
     id("com.android.application")
     kotlin("android")
-}
-
-val keystoreProperties = Properties().apply {
-    load(FileInputStream(File(rootProject.rootDir, "signing.properties")))
+    id("com.google.gms.google-services")
 }
 
 android {
+
     signingConfigs {
-        create("release") {
-            storeFile = file("../config/release.keystore")
-            storePassword = keystoreProperties.getProperty("KEYSTORE_PASSWORD")
-            keyPassword = keystoreProperties.getProperty("KEY_PASSWORD")
-            keyAlias = keystoreProperties.getProperty("KEY_ALIAS")
+        val keystorePropertiesFile = rootProject.file("signing.properties")
+        if (keystorePropertiesFile.exists()) {
+            create("release") {
+                val keystoreProperties = Properties()
+                keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+                storeFile = rootProject.file("config/release.keystore")
+                storePassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEYSTORE_PASSWORD")
+                keyAlias = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_ALIAS")
+                keyPassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_PASSWORD")
+            }
         }
 
         getByName("debug") {
-            storeFile = file("../config/debug.keystore")
+            storeFile = rootProject.file("config/debug.keystore")
             storePassword = "oQ4mL1jY2uX7wD8q"
             keyAlias = "debug-key-alias"
             keyPassword = "oQ4mL1jY2uX7wD8q"
@@ -59,7 +62,11 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:30.3.2"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    implementation("com.google.android.material:material:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.5.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }

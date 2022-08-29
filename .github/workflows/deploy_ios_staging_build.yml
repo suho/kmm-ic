@@ -1,14 +1,14 @@
-name: Deploy Production Builds To App Store
+name: Deploy Staging Builds To Firebase
 
 # SECRETS needed:
 ### SSH_PRIVATE_KEY for Match Repo
 ### MATCH_PASS
-### APPSTORE_CONNECT_API_KEY
+### FIREBASE_TOKEN
 
 on:
   push:
     branches:
-      - main
+      - develop
   workflow_dispatch:
 
 defaults:
@@ -17,7 +17,7 @@ defaults:
 
 jobs:
   lint:
-    name: Lint
+    name: Run SwiftLint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -32,9 +32,9 @@ jobs:
         with:
           args: --strict
 
-  build_and_upload_to_app_store:
-    name: Build
-    runs-on: macOS-latest
+  deploy_ios_staging_to_firebase:
+    name: Deploy iOS staging to Firebase
+    runs-on: macos-latest
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.5.0
@@ -50,13 +50,18 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Setup Google Services for Production
-        env:
-          IOS_GOOGLE_SERVICE_INFO: ${{ secrets.IOS_GOOGLE_SERVICE_INFO }}
+      - name: Install Firebase-Tools
         run: |
-          mkdir -p Surveys/Configurations/Plists/GoogleService/Production
-          touch Surveys/Configurations/Plists/GoogleService/Production/GoogleService-Info.plist
-          echo $IOS_GOOGLE_SERVICE_INFO | base64 --decode > ./Surveys/Configurations/Plists/GoogleService/Production/GoogleService-Info.plist
+          yarn global add firebase-tools
+          echo "$(yarn global bin)" >> $GITHUB_PATH
+
+      - name: Setup Google Services for Staging
+        env:
+          IOS_GOOGLE_SERVICE_INFO_STAGING: ${{ secrets.IOS_GOOGLE_SERVICE_INFO_STAGING }}
+        run: |
+          mkdir -p Surveys/Configurations/Plists/GoogleService/Staging
+          touch Surveys/Configurations/Plists/GoogleService/Staging/GoogleService-Info.plist
+          echo $IOS_GOOGLE_SERVICE_INFO_STAGING | base64 --decode > ./Surveys/Configurations/Plists/GoogleService/Staging/GoogleService-Info.plist
 
       - name: Setup Android Signing
         env:
@@ -64,19 +69,9 @@ jobs:
           ANDROID_SIGNING_PROPERTIES: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
         run: |
           touch ../config/release.keystore
-          echo $ANDROID_RELEASE_KEYSTORE > ../config/release.keystore\
+          echo $ANDROID_RELEASE_KEYSTORE | base64 --decode > ../config/release.keystore
           touch ../signing.properties
-          echo $ANDROID_SIGNING_PROPERTIES > ../signing.properties
-
-      - name: Setup Android Signing
-        env:
-          ANDROID_RELEASE_KEYSTORE: ${{ secrets.ANDROID_RELEASE_KEYSTORE }}
-          ANDROID_SIGNING_PROPERTIES: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
-        run: |
-          touch ../config/release.keystore
-          echo $ANDROID_RELEASE_KEYSTORE > ../config/release.keystore\
-          touch ../signing.properties
-          echo $ANDROID_SIGNING_PROPERTIES > ../signing.properties
+          echo $ANDROID_SIGNING_PROPERTIES | base64 --decode > ../signing.properties
 
       - name: Setup Java JDK
         uses: actions/setup-java@v2.1.0
@@ -99,7 +94,7 @@ jobs:
           cd ..
           ./gradlew generateDummyFramework
 
-      - name: Cache Bunlder
+      - name: Cache Bundler
         uses: actions/cache@v2
         id: bunlderCache
         with:
@@ -121,12 +116,12 @@ jobs:
       - name: Install Pods Dependencies
         run: bundle exec pod install
 
-      - name: Match AppStore
-        run: bundle exec fastlane sync_appstore_signing
+      - name: Match Ad-hoc
+        run: bundle exec fastlane sync_adhoc_signing
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASS }}
 
-      - name: Build App and Distribute to AppStore
-        run: bundle exec fastlane build_and_upload_appstore_app
+      - name: Build App and Distribute to Firebase
+        run: bundle exec fastlane build_and_upload_staging_app
         env:
-          APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

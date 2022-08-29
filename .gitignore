@@ -123,6 +123,11 @@ build/
 .externalNativeBuild
 signing.properties
 config/release.keystore
+config/release.jks
+config/private_key.pepk
+config/release_keystore_base64_encoded.txt
+
+google-services.json
 
 # KMM
 /local.properties

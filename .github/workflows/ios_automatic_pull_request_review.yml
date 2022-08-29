@@ -1,4 +1,4 @@
-name: Automatic pull request review
+name: iOS - Automatic pull request review
 
 on:
   pull_request:
@@ -25,9 +25,9 @@ jobs:
         with:
           args: --strict
 
-  review_pull_request:
-    name: Pull request review by Danger
-    runs-on: macOS-latest
+  review_ios_pull_request:
+    name: Pull request review for iOS
+    runs-on: macos-latest
     steps:
     - name: Cancel Previous Runs
       uses: styfle/cancel-workflow-action@0.5.0
@@ -53,9 +53,9 @@ jobs:
         ANDROID_SIGNING_PROPERTIES: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
       run: |
         touch ../config/release.keystore
-        echo $ANDROID_RELEASE_KEYSTORE > ../config/release.keystore\
+        echo $ANDROID_RELEASE_KEYSTORE | base64 --decode > ../config/release.keystore
         touch ../signing.properties
-        echo $ANDROID_SIGNING_PROPERTIES > ../signing.properties
+        echo $ANDROID_SIGNING_PROPERTIES | base64 --decode > ../signing.properties
 
     - name: Setup Java JDK
       uses: actions/setup-java@v2.1.0
@@ -78,12 +78,6 @@ jobs:
       run: |
         cd ..
         ./gradlew generateDummyFramework
-
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '2.6.0'
-        bundler: '2.3.10'
 
     - uses: actions/cache@v2
       with:
