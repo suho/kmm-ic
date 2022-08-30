@@ -28,26 +28,17 @@ class DeliverableConstants
 
   # a firebase app ID for Staging
   def self.FIREBASE_APP_ID_STAGING
-    '<#PROJECT_FIREBASE_APP_ID#>'
+    '1:713044215071:ios:eb121336a05ba0718adc2a'
   end
 
   # a firebase app ID for Production
   def self.FIREBASE_APP_ID_PRODUCTION
-    '<#PROJECT_FIREBASE_APP_ID#>'
+    '1:713044215071:ios:cdc7555a219bf6488adc2a'
   end
 
   # Firebase Tester group name, seperate by comma(,) string
   def self.FIREBASE_TESTER_GROUPS
     "nimble-dev"
-  end
-
-  ##################
-  ### DEV PORTAL ###
-  ##################
-
-  # Apple ID for Apple Developer Portal
-  def self.DEV_PORTAL_APPLE_ID
-    '<#dev@example.com#>'
   end
 
   #####################
@@ -56,12 +47,12 @@ class DeliverableConstants
 
   # App Store Connect API Key ID
   def self.APP_STORE_KEY_ID
-    '<#API_KEY_ID#>'
+    '3Q76PWRQN6'
   end
 
   # App Store Connect API Issuer ID
   def self.APP_STORE_ISSUER_ID
-    '<#ISSUER_ID#>'
+    '69a6de82-b7cb-47e3-e053-5b8c7c11a4d1'
   end
 
 end

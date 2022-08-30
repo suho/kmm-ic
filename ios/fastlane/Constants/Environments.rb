@@ -1,7 +1,7 @@
 class Environments
 
-  def self.FIREBASE_CLI_TOKEN
-    ENV['FIREBASE_CLI_TOKEN']
+  def self.FIREBASE_TOKEN
+    ENV['FIREBASE_TOKEN']
   end
 
   def self.KEYCHAIN_PASSWORD

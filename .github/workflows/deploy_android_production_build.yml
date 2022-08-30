@@ -1,0 +1,70 @@
+name: Deploy Android Production Builds To Firebase
+
+# SECRETS needed:
+### FIREBASE_TOKEN
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy_android_production_to_firebase:
+    name: Deploy android production to Firebase
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Java JDK
+        uses: actions/setup-java@v2.1.0
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Google Services for Staging
+        env:
+          ANDROID_GOOGLE_SERVICE_INFO: ${{ secrets.ANDROID_GOOGLE_SERVICE_INFO }}
+        run: |
+          touch android/google-services.json
+          echo $ANDROID_GOOGLE_SERVICE_INFO > ./android/google-services.json
+
+      - name: Setup Android Signing
+        env:
+          ANDROID_RELEASE_KEYSTORE: ${{ secrets.ANDROID_RELEASE_KEYSTORE }}
+          ANDROID_SIGNING_PROPERTIES: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
+        run: |
+          touch config/release.keystore
+          echo $ANDROID_RELEASE_KEYSTORE | base64 --decode > config/release.keystore
+          touch signing.properties
+          echo $ANDROID_SIGNING_PROPERTIES | base64 --decode > signing.properties
+
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches/modules-*
+            ~/.gradle/caches/jars-*
+            ~/.gradle/caches/build-cache-*
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: android/build.gradle.kts
+          versionCode: ${{ github.run_number }}
+          versionName: 0.1.0
+
+      - name: Build production release APK
+        run: ./gradlew assembleProductionRelease
+
+      - name: Deploy staging to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: '1:713044215071:android:ef61df1cb34c024e8adc2a'
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: nimble-dev
+          file: android/build/outputs/apk/production/release/android-production-release.apk

@@ -101,6 +101,7 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 fastlane/xcov_output
+.env
 
 # Sourcery
 *.generated.swift
@@ -111,14 +112,22 @@ DerivedData
 # Tuist
 .tuist-generated
 
+# Firebsae
+GoogleService-Info.plist
+
 # Android
 *.iml
 .gradle
-/template/local.properties
-/RxJavaTemplate[DEPRECATED]/local.properties
 build/
 /captures
 .externalNativeBuild
+signing.properties
+config/release.keystore
+config/release.jks
+config/private_key.pepk
+config/release_keystore_base64_encoded.txt
+
+google-services.json
 
 # KMM
 /local.properties

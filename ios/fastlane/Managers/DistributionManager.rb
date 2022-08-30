@@ -29,14 +29,10 @@ class DistributionManager
     )
   end
 
-  def upload_to_testflight(product_name:, bundle_identifier:, notes:, tester_groups:, app_review_info:)
+  def upload_to_testflight(product_name:, bundle_identifier:)
     @fastlane.pilot(
       ipa: "#{@build_path}/#{product_name}.ipa",
-      app_identifier: bundle_identifier,
-      groups: tester_groups,
-      changelog: notes,
-      beta_app_review_info: app_review_info,
-      demo_account_required: !app_review_info.nil?
+      app_identifier: bundle_identifier
     )
   end
 end
