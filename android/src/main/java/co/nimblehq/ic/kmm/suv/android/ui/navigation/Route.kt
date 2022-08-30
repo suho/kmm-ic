@@ -4,4 +4,5 @@ object Route {
     const val AUTHENTICATION = "authentication"
     const val MAIN = "main"
     const val SPLASH = "splash"
+    const val LOGIN = "login"
 }
