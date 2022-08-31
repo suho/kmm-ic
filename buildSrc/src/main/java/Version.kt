@@ -15,6 +15,8 @@ object Version {
     const val MATERIAL = "1.6.1"
     const val APPCOMPAT = "1.5.0"
     const val CONSTRAINT_LAYOUT = "2.1.4"
+    const val DETEKT = "1.21.0"
 
     // Tests
+    const val JUNIT = "4.13.2"
 }

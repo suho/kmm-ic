@@ -7,4 +7,5 @@ object Dependency {
     const val MATERIAL = "com.google.android.material:material:${Version.MATERIAL}"
     const val APPCOMPAT = "androidx.appcompat:appcompat:${Version.APPCOMPAT}"
     const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Version.CONSTRAINT_LAYOUT}"
+    const val JUNIT = "junit:junit:${Version.JUNIT}"
 }
