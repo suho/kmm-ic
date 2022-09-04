@@ -20,25 +20,17 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashBackground" translatesAutoresizingMaskIntoConstraints="NO" id="ymp-eW-JlB">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashOverlay" translatesAutoresizingMaskIntoConstraints="NO" id="g4i-EJ-anB">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoWhite" translatesAutoresizingMaskIntoConstraints="NO" id="CYe-95-iDt">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logoWhite" translatesAutoresizingMaskIntoConstraints="NO" id="CYe-95-iDt">
                                 <rect key="frame" x="106" y="424" width="202" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="CYe-95-iDt" firstAttribute="centerY" secondItem="g4i-EJ-anB" secondAttribute="centerY" id="5OV-w9-avO"/>
                             <constraint firstItem="ymp-eW-JlB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6hu-o7-HvG"/>
                             <constraint firstItem="ymp-eW-JlB" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="JXO-Uf-MGU"/>
-                            <constraint firstItem="g4i-EJ-anB" firstAttribute="trailing" secondItem="ymp-eW-JlB" secondAttribute="trailing" id="YBC-qA-c3Z"/>
-                            <constraint firstItem="g4i-EJ-anB" firstAttribute="leading" secondItem="ymp-eW-JlB" secondAttribute="leading" id="eFy-Tn-KMf"/>
-                            <constraint firstItem="CYe-95-iDt" firstAttribute="centerX" secondItem="g4i-EJ-anB" secondAttribute="centerX" id="fWr-K9-Sgo"/>
                             <constraint firstAttribute="bottom" secondItem="ymp-eW-JlB" secondAttribute="bottom" id="gEA-QG-1Dx"/>
-                            <constraint firstItem="g4i-EJ-anB" firstAttribute="top" secondItem="ymp-eW-JlB" secondAttribute="top" id="jId-eY-Jwv"/>
-                            <constraint firstItem="g4i-EJ-anB" firstAttribute="bottom" secondItem="ymp-eW-JlB" secondAttribute="bottom" id="jd7-Tx-YuQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ymp-eW-JlB" secondAttribute="trailing" id="ofU-qY-Qac"/>
                         </constraints>
                     </view>
@@ -51,7 +43,6 @@
     <resources>
         <image name="logoWhite" width="202" height="48"/>
         <image name="splashBackground" width="375" height="812"/>
-        <image name="splashOverlay" width="375" height="812"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

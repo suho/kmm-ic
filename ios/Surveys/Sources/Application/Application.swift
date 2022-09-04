@@ -1,4 +1,4 @@
-// swiftlint:disable weak_delegate
+// swiftlint:disable weak_delegate let_var_whitespace
 import FirebaseCore
 import SwiftUI
 
@@ -10,7 +10,7 @@ struct Application: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            LoginView()
         }
     }
 }
