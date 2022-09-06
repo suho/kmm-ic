@@ -1,0 +1,9 @@
+sources:
+  - Surveys/Sources
+templates:
+  - tools/sourcery/templates
+output:
+  SurveysTests/Sources/Mocks/Sourcery 
+args:
+  autoMockableTestableImports:
+    - Surveys
