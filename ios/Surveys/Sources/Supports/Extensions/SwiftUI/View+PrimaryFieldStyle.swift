@@ -11,7 +11,7 @@ import SwiftUI
 extension View {
 
     func primaryFieldStyle() -> some View {
-        font(.system(size: 17.0))
+        font(R.font.neuzeitSLTStdBook.font(size: 17.0))
             .accentColor(Color.white)
             .padding()
             .background(Color.white.opacity(0.18))

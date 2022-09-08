@@ -15,3 +15,10 @@ extension ImageResource {
         Image(name)
     }
 }
+
+extension FontResource {
+
+    func font(size: CGFloat) -> Font {
+        Font.custom(fontName, size: size)
+    }
+}
