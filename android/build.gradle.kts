@@ -1,29 +1,22 @@
-import java.io.File
-import java.io.FileInputStream
-import java.util.*
-
 plugins {
     id("com.android.application")
     kotlin("android")
     id("com.google.gms.google-services")
 }
 
+val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
+
 android {
 
     signingConfigs {
-        val keystorePropertiesFile = rootProject.file("signing.properties")
-        if (keystorePropertiesFile.exists()) {
-            create("release") {
-                val keystoreProperties = Properties()
-                keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-                storeFile = rootProject.file("config/release.keystore")
-                storePassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEYSTORE_PASSWORD")
-                keyAlias = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_ALIAS")
-                keyPassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_PASSWORD")
-            }
+        create(BuildType.RELEASE) {
+            storeFile = rootProject.file("config/release.keystore")
+            storePassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEYSTORE_PASSWORD")
+            keyAlias = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_ALIAS")
+            keyPassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_PASSWORD")
         }
 
-        getByName("debug") {
+        getByName(BuildType.DEBUG) {
             storeFile = rootProject.file("config/debug.keystore")
             storePassword = "oQ4mL1jY2uX7wD8q"
             keyAlias = "debug-key-alias"
@@ -31,42 +24,41 @@ android {
         }
     }
 
-    compileSdk = 32
+    compileSdk = Version.ANDROID_COMPILE_SDK_VERSION
     defaultConfig {
         applicationId = "co.nimblehq.ic.kmm.suv.android"
-        minSdk = 23
-        targetSdk = 32
-        versionCode = 1
-        versionName = "0.1.0"
+        minSdk = Version.ANDROID_MIN_SDK_VERSION
+        targetSdk = Version.ANDROID_TARGET_SDK_VERSION
+        versionCode = Version.ANDROID_VERSION_CODE
+        versionName = Version.ANDROID_VERSION_NAME
     }
     buildTypes {
-        getByName("release") {
+        getByName(BuildType.RELEASE) {
             isMinifyEnabled = false
-            signingConfig = signingConfigs["release"]
+            signingConfig = signingConfigs[BuildType.RELEASE]
         }
 
-        getByName("debug") {
+        getByName(BuildType.DEBUG) {
             isMinifyEnabled = false
-            signingConfig = signingConfigs["debug"]
+            signingConfig = signingConfigs[BuildType.DEBUG]
         }
     }
-    flavorDimensions += "version"
+    flavorDimensions += Flavor.DIMENSION
     productFlavors {
-        create("staging") {
+        create(Flavor.STAGING) {
             applicationIdSuffix = ".staging"
         }
-        create("production") {
+        create(Flavor.PRODUCTION) {
         }
     }
 }
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(project(Module.SHARED))
 
-    implementation(platform("com.google.firebase:firebase-bom:30.3.2"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
-
-    implementation("com.google.android.material:material:1.6.1")
-    implementation("androidx.appcompat:appcompat:1.5.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation(platform(Dependency.FIREBASE_BOM))
+    implementation(Dependency.FIREBASE_ANALYTICS)
+    implementation(Dependency.MATERIAL)
+    implementation(Dependency.APPCOMPAT)
+    implementation(Dependency.CONSTRAINT_LAYOUT)
 }
