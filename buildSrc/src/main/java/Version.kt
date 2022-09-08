@@ -4,7 +4,7 @@ object Version {
     const val ANDROID_MIN_SDK_VERSION = 23
     const val ANDROID_TARGET_SDK_VERSION = 32
     const val ANDROID_VERSION_CODE = 1
-    const val ANDROID_VERSION_NAME = "0.1.0s"
+    const val ANDROID_VERSION_NAME = "0.1.0"
 
     // Dependencies (Alphabet sorted)
     const val BUILD_GRADLE_VERSION = "7.2.2"
