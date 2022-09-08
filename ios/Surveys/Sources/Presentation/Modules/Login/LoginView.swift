@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LoginView: View {
 
-    @State var animated = false
+    @State private var animated = false
     @State private var email: String = ""
     @State private var password: String = ""
 
@@ -18,11 +18,11 @@ struct LoginView: View {
         ZStack {
             R.image.splashBackground.image
                 .resizable()
-                .blur(radius: animated ? 20 : 0)
+                .blur(radius: animated ? 20.0 : 0.0)
                 .animation(.easeInOut(duration: 0.5))
 
             R.image.logoWhite.image
-                .offset(x: 0, y: animated ? -229 : 0)
+                .offset(x: 0.0, y: animated ? -229.0 : 0.0)
                 .scaleEffect(animated ? (1.0 / 1.2) : 1.0)
                 .animation(.easeInOut(duration: 0.5))
                 .onAppear {
@@ -50,7 +50,7 @@ struct LoginView: View {
                 .frame(height: 56.0, alignment: .center)
             }
             .frame(maxWidth: .infinity)
-            .opacity(animated ? 1.0 : 0)
+            .opacity(animated ? 1.0 : 0.0)
             .animation(.easeInOut(duration: 0.5))
         }
         .edgesIgnoringSafeArea(.all)
