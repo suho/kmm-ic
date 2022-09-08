@@ -46,5 +46,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Lint
+        run: ./gradlew lint
+
+      - name: Run detekt
+        run: ./gradlew detekt
+
       - name: Build and Test
         run: ./gradlew allTests
+
+# TODO: Will integrate Danger and test report later
