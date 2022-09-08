@@ -44,16 +44,10 @@ detekt {
     ignoredFlavors = listOf(Flavor.PRODUCTION)
 }
 
-tasks.detekt {
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
     reports {
-        xml {
-            outputLocation.set(file("build/reports/detekt.xml"))
-            required.set(true)
-        }
-
-        html {
-            outputLocation.set(file("build/reports/detekt.html"))
-            required.set(true)
-        }
+        html.required.set(true)
+        xml.required.set(true)
+        md.required.set(true)
     }
 }
