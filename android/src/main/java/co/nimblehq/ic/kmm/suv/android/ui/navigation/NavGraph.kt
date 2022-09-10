@@ -9,7 +9,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.navigation
 import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.main.MainScreen
-import co.nimblehq.ic.kmm.suv.android.ui.screens.splash.SplashScreen
 
 @Composable
 fun NavGraph() {

@@ -4,7 +4,9 @@
 
     <application
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize"
+        >
         <activity
             android:name=".MainActivity"
             android:exported="true">
