@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
     id("com.google.gms.google-services")
+    kotlin("android")
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -30,6 +30,7 @@ android {
         targetSdk = Version.ANDROID_TARGET_SDK_VERSION
         versionCode = Version.ANDROID_VERSION_CODE
         versionName = Version.ANDROID_VERSION_NAME
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         getByName(BuildType.RELEASE) {
@@ -62,6 +63,14 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Version.COMPOSE_VERSION
+    }
+    testOptions {
+        animationsDisabled = true
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
