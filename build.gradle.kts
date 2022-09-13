@@ -8,6 +8,7 @@ buildscript {
         classpath(Dependency.KOTLIN_GRADLE_PLUGIN)
         classpath(Dependency.GRADLE)
         classpath(Dependency.GOOGLE_SERVICES)
+        classpath("org.jetbrains.kotlin:kotlin-serialization:1.7.10")
     }
 }
 

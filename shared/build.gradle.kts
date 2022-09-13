@@ -4,6 +4,9 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("kotlinx-serialization")
+    kotlin("kapt")
+
 }
 
 version = "1.0"
@@ -29,10 +32,23 @@ kotlin {
     }
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+                implementation("com.infinum.jsonapix:core:1.0.0-alpha02")
+                configurations.getByName("kapt").dependencies.add(
+                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
+                        "com.infinum.jsonapix",
+                        "processor",
+                        "1.0.0-alpha02"
+                    )
+                )
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+
             }
         }
         val androidMain by getting
