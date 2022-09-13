@@ -18,7 +18,7 @@ struct PrimaryButton: View {
             Button(action: action) {
                 Text(title)
                     .frame(height: geometry.size.height, alignment: .center)
-                    .font(R.font.neuzeitSLTStdBookHeavy.font(size: 17.0))
+                    .font(Typography.neuzeitSLTStdBookHeavy.font(size: 17.0))
             }
             .frame(maxWidth: .infinity)
             .background(Color.white)

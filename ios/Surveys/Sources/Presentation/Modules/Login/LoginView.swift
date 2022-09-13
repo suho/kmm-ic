@@ -16,33 +16,28 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            R.image.splashBackground.image
+            Asset.splashBackground.image
                 .resizable()
                 .blur(radius: animated ? 20.0 : 0.0)
                 .animation(.easeInOut(duration: 0.5))
 
-            R.image.logoWhite.image
+            Asset.logoWhite.image
                 .offset(x: 0.0, y: animated ? -229.0 : 0.0)
                 .scaleEffect(animated ? (1.0 / 1.2) : 1.0)
                 .animation(.easeInOut(duration: 0.5))
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        self.animated.toggle()
-                    }
-                }
 
             VStack(alignment: .center, spacing: 20.0) {
-                TextField(R.string.localizable.authenticationFieldsEmail(), text: $email)
+                TextField(Localize.authenticationFieldsEmail(), text: $email)
                     .primaryFieldStyle()
                     .padding([.leading, .trailing])
                     .frame(height: 56.0, alignment: .center)
 
-                SecureField(R.string.localizable.authenticationFieldsPassword(), text: $password)
+                SecureField(Localize.authenticationFieldsPassword(), text: $password)
                     .primaryFieldStyle()
                     .padding([.leading, .trailing])
                     .frame(height: 56.0, alignment: .center)
 
-                PrimaryButton(title: R.string.localizable.authenticationFieldsLogin()) {
+                PrimaryButton(title: Localize.authenticationFieldsLogin()) {
                     // TODO: - Implement on integrate task
                     print("Log in button did tap")
                 }
@@ -55,6 +50,11 @@ struct LoginView: View {
         }
         .edgesIgnoringSafeArea(.all)
         .preferredColorScheme(.dark)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.animated.toggle()
+            }
+        }
     }
 }
 
