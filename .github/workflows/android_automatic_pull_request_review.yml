@@ -19,6 +19,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Google Services for Staging
+        env:
+          ANDROID_GOOGLE_SERVICE_INFO: ${{ secrets.ANDROID_GOOGLE_SERVICE_INFO }}
+        run: |
+          touch android/google-services.json
+          echo $ANDROID_GOOGLE_SERVICE_INFO > ./android/google-services.json
+
       - name: Setup Android Signing
         env:
           ANDROID_RELEASE_KEYSTORE: ${{ secrets.ANDROID_RELEASE_KEYSTORE }}

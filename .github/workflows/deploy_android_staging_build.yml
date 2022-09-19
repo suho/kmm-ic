@@ -56,7 +56,6 @@ jobs:
         with:
           gradlePath: android/build.gradle.kts
           versionCode: ${{ github.run_number }}
-          versionName: 0.1.0
 
       - name: Build staging APK
         run: ./gradlew assembleStagingDebug

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -20,10 +22,10 @@ kotlin {
         framework {
             baseName = "shared"
         }
-        xcodeConfigurationToNativeBuildType["Debug Staging"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType["Debug Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType["Release Staging"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
-        xcodeConfigurationToNativeBuildType["Release Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_STAGING] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_PRODUCTION] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_STAGING] = NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_PRODUCTION] = NativeBuildType.RELEASE
     }
     
     sourceSets {
@@ -57,10 +59,14 @@ kotlin {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Version.ANDROID_COMPILE_SDK_VERSION
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 23
-        targetSdk = 32
+        minSdk = Version.ANDROID_MIN_SDK_VERSION
+        targetSdk = Version.ANDROID_TARGET_SDK_VERSION
     }
+}
+
+dependencies {
+    testImplementation(Dependency.JUNIT)
 }
