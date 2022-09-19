@@ -1,5 +1,6 @@
 package co.nimblehq.ic.kmm.suv.data.repository
 
+import co.nimblehq.ic.kmm.suv.data.local.datasource.TokenLocalDataSource
 import co.nimblehq.ic.kmm.suv.data.remote.datasource.TokenRemoteDataSource
 import co.nimblehq.ic.kmm.suv.data.remote.model.TokenApiModel
 import co.nimblehq.ic.kmm.suv.data.remote.model.toToken
@@ -19,7 +20,9 @@ import kotlin.test.assertEquals
 class TokenRepositoryTest {
 
     @Mock
-    private val mockTokenRemoteDataSource =mock(classOf<TokenRemoteDataSource>())
+    private val mockTokenRemoteDataSource = mock(classOf<TokenRemoteDataSource>())
+    @Mock
+    private val mockTokenLocalDataSource = mock(classOf<TokenLocalDataSource>())
 
     private val mockThrowable = Throwable("mock")
     private val mockToken = TokenApiModel(
@@ -36,7 +39,7 @@ class TokenRepositoryTest {
 
     @BeforeTest
     fun setUp() {
-        repository = TokenRepositoryImpl(mockTokenRemoteDataSource)
+        repository = TokenRepositoryImpl(mockTokenRemoteDataSource, mockTokenLocalDataSource)
     }
 
     @Test
@@ -69,5 +72,14 @@ class TokenRepositoryTest {
         repository.logIn("dev@nimblehq.co", "123456").catch {
             it.message shouldBe mockThrowable.message
         }.collect()
+    }
+
+    @Test
+    fun `when save token is called - the token local data source invokes`() = runTest {
+        repository.save(mockToken.toToken())
+        verify(mockTokenLocalDataSource)
+            .function(mockTokenLocalDataSource::save)
+            .with(any())
+            .wasInvoked(exactly = 1.time)
     }
 }

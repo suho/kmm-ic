@@ -8,7 +8,6 @@
 
 import Shared
 
-
 extension KoinApplication {
 
     static let shared = companion.start()

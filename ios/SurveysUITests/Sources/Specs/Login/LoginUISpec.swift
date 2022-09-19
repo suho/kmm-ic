@@ -6,8 +6,11 @@
 //  Copyright © 2022 Nimble. All rights reserved.
 //
 
+import Factory
 import Nimble
 import Quick
+
+@testable import Surveys
 
 final class LoginUISpec: QuickSpec {
 
@@ -32,7 +35,7 @@ final class LoginUISpec: QuickSpec {
                     let emailField = app.textFields["Email"]
                     expect(emailField.exists) == true
 
-                    let passwordField = app.textFields["Password"]
+                    let passwordField = app.secureTextFields["Password"]
                     expect(passwordField.exists) == true
 
                     let loginButton = app.buttons["Log in"]
@@ -43,13 +46,13 @@ final class LoginUISpec: QuickSpec {
 
                     beforeEach {
                         app.fillInField("Email", with: "dev@nimblehq.co")
-                        app.fillInField("Password", with: "123456")
+                        app.fillInSecureField("Password", with: "12345678")
                         app.tapButton("Log in")
                     }
 
                     it("shows home screen") {
-                        // TODO: - Implement later
-                        expect(true) == true
+                        // TODO: - Update this when having a Home screen
+                        expect(app.staticTexts["Home"].exists).toEventually(equal(true), timeout: .seconds(5))
                     }
                 }
 
@@ -57,13 +60,12 @@ final class LoginUISpec: QuickSpec {
 
                     beforeEach {
                         app.fillInField("Email", with: "test@nimblehq.co")
-                        app.fillInField("Password", with: "123456")
+                        app.fillInSecureField("Password", with: "123456")
                         app.tapButton("Log in")
                     }
 
                     it("shows an alert after the request fails") {
-                        // TODO: - Implement later
-                        expect(true) == true
+                        expect(app.alerts["Surveys"].exists).toEventually(equal(true), timeout: .seconds(5))
                     }
                 }
             }

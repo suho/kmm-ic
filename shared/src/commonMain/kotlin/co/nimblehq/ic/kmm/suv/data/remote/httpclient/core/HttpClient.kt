@@ -1,6 +1,8 @@
 package co.nimblehq.ic.kmm.suv.data.remote.httpclient.core
 
+import co.nimblehq.ic.kmm.suv.domain.model.AppError
 import co.nimblehq.jsonapi.json.JsonApi
+import co.nimblehq.jsonapi.model.JsonApiException
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.LogLevel
 import io.github.aakira.napier.Napier
@@ -48,7 +50,12 @@ inline fun <reified T> HttpClient.body(builder: HttpRequestBuilder) : Flow<T> {
                 contentType(ContentType.Application.Json)
             }
         ).bodyAsText()
-        val data = JsonApi(json).decodeFromJsonApiString<T>(body)
-        emit(data)
+        try {
+            val data = JsonApi(json).decodeFromJsonApiString<T>(body)
+            emit(data)
+        } catch (e: JsonApiException) {
+            val message = e.errors.first().detail
+            throw AppError(message)
+        }
     }
 }

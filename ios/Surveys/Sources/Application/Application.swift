@@ -1,5 +1,6 @@
 // swiftlint:disable weak_delegate
 import FirebaseCore
+import FlowStacks
 import SwiftUI
 
 @main
@@ -9,7 +10,7 @@ struct Application: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            AppNavigator()
         }
     }
 }
