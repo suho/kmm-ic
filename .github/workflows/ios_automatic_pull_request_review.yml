@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: SwiftLint for files changed in the PR
-        uses: norio-nomura/action-swiftlint@3.2.1
+        uses: sinoru/actions-swiftlint@v6
         env:
           DIFF_BASE: ${{ github.base_ref }}
         with:
