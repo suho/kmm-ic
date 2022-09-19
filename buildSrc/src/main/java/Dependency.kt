@@ -17,6 +17,7 @@ object Dependency {
 
     // Kotlinx
     const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES_CORE}"
+    const val COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.COROUTINES_CORE}"
 
     // Ktor
     const val KTOR_CORE = "io.ktor:ktor-client-core:${Version.KTOR}"
@@ -51,4 +52,6 @@ object Dependency {
     const val JUNIT_EXT = "androidx.test.ext:junit:${Version.JUNIT_EXT}"
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Version.ESPRESSO_CORE}"
     const val COMPOSE_UI_TEST_JUNIT = "androidx.compose.ui:ui-test-junit4:${Version.COMPOSE_STABLE_VERSION}"
+    const val MOCKATIVE = "io.mockative:mockative:${Version.MOCKATIVE}"
+    const val MOCKATIVE_PROCESSOR = "io.mockative:mockative-processor:${Version.MOCKATIVE}"
 }

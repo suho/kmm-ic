@@ -12,4 +12,5 @@ object Plugin {
     const val KOTLINX_SERIALIZATION = "kotlinx-serialization"
     const val NATIVE_COROUTINES = "com.rickclephas.kmp.nativecoroutines"
     const val BUILD_KONFIG = "com.codingfeline.buildkonfig"
+    const val KSP = "com.google.devtools.ksp"
 }
