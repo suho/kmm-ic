@@ -23,17 +23,13 @@ class TokenRepositoryTest {
 
     private val mockThrowable = Throwable("mock")
     private val mockToken = TokenApiModel(
-        TokenApiModel.Data(
-            "id",
-            "type",
-            TokenApiModel.Attributes(
-                "accessToken",
-                "tokenType",
-                0,
-                "refreshToken",
-                0
-            )
-        )
+        "id",
+        "type",
+        "accessToken",
+        "tokenType",
+        0,
+        "refreshToken",
+        0
     )
 
     private lateinit var repository: TokenRepository
