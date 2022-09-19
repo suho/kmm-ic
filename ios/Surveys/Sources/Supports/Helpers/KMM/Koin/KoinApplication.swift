@@ -8,8 +8,7 @@
 
 import Shared
 
-// TODO: Remove comment later
-/*
+
 extension KoinApplication {
 
     static let shared = companion.start()
@@ -22,7 +21,9 @@ extension KoinApplication {
 
 extension KoinApplication {
 
-    private static let keyPaths: [PartialKeyPath<Koin>] = []
+    private static let keyPaths: [PartialKeyPath<Koin>] = [
+        \.logInUseCase
+    ]
 
     static func inject<T>() -> T {
         shared.inject()
@@ -37,4 +38,3 @@ extension KoinApplication {
         fatalError("\(T.self) is not registered with KoinApplication")
     }
 }
- */

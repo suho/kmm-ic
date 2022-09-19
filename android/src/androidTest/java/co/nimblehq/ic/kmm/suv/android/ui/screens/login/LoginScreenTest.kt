@@ -7,9 +7,11 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import co.nimblehq.ic.kmm.suv.android.MainActivity
 import co.nimblehq.ic.kmm.suv.android.R
+import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.koin.java.KoinJavaComponent
 
 @ExperimentalTestApi
 class LoginScreenTest {
@@ -20,7 +22,8 @@ class LoginScreenTest {
     @Before
     fun setup() {
         composeRule.activity.setContent {
-            LoginScreen()
+            val logInUseCase: LogInUseCase by KoinJavaComponent.inject(LogInUseCase::class.java)
+            LoginScreen(logInUseCase)
         }
     }
 

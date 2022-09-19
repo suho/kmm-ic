@@ -14,6 +14,8 @@ struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
 
+    @StateObject private var viewModel = LoginViewModel()
+
     var body: some View {
         ZStack {
             Asset.splashBackground.image
@@ -39,7 +41,7 @@ struct LoginView: View {
 
                 PrimaryButton(title: Localize.authenticationButtonLogin()) {
                     // TODO: - Implement on integrate task
-                    print("Log in button did tap")
+                    viewModel.logIn()
                 }
                 .padding([.leading, .trailing])
                 .frame(height: 56.0, alignment: .center)
