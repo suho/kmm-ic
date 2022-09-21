@@ -14,8 +14,8 @@ fun MainScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Text(
             text = Greeting().greeting(),
-            color = Color.Black,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
+            color = Color.Black
         )
     }
 }

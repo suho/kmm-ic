@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
-import co.nimblehq.ic.kmm.suv.android.ui.navigation.Navigation
+import co.nimblehq.ic.kmm.suv.android.ui.navigation.NavGraph
 import co.nimblehq.ic.kmm.suv.android.ui.theme.MyApplicationTheme
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             MyApplicationTheme {
-                Navigation()
+                NavGraph()
             }
         }
     }

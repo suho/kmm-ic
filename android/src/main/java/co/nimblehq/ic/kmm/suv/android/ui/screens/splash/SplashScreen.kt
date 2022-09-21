@@ -14,19 +14,19 @@ import co.nimblehq.ic.kmm.suv.android.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(onDidLaunch: () -> Unit) {
+fun SplashScreen(onLaunch: () -> Unit) {
     LaunchedEffect(key1 = true) {
         delay(3000L)
-        onDidLaunch()
+        onLaunch()
     }
     Box {
         Box(modifier = Modifier.fillMaxSize()) {
             Image(
                 painter = painterResource(id = R.drawable.bg_splash),
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth,
                 modifier = Modifier
-                    .matchParentSize()
+                    .matchParentSize(),
+                contentScale = ContentScale.FillWidth
             )
         }
         Image(
@@ -39,6 +39,6 @@ fun SplashScreen(onDidLaunch: () -> Unit) {
 
 @Preview
 @Composable
-fun DefaultPreview() {
+fun SplashScreenPreview() {
     SplashScreen {}
 }
