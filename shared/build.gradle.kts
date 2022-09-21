@@ -55,6 +55,9 @@ kotlin {
                 // Koin
                 implementation(Dependency.KOIN_CORE)
                 implementation(Dependency.KOIN_TEST)
+
+                // jsonapi
+                implementation(project(Module.JSONAPI_CORE))
             }
         }
         val commonTest by getting {

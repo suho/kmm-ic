@@ -3,9 +3,7 @@ package co.nimblehq.ic.kmm.suv.data.repository
 import co.nimblehq.ic.kmm.suv.data.model.ApiToken
 import co.nimblehq.ic.kmm.suv.data.model.toToken
 import co.nimblehq.ic.kmm.suv.data.network.service.UserService
-import co.nimblehq.ic.kmm.suv.domain.model.Token
 import co.nimblehq.ic.kmm.suv.domain.repository.UserRepository
-import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
 import io.mockative.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -24,17 +22,13 @@ class UserRepositoryTest {
 
     private val mockThrowable = Throwable("mock")
     private val mockToken = ApiToken(
-        ApiToken.Data(
-            "id",
-            "type",
-            ApiToken.Attributes(
-                "accessToken",
-                "tokenType",
-                0,
-                "refreshToken",
-                0
-            )
-        )
+        "id",
+        "type",
+        "accessToken",
+        "tokenType",
+        0,
+        "refreshToken",
+        0
     )
 
     private lateinit var repository: UserRepository
