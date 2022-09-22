@@ -15,7 +15,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(onLaunch: () -> Unit) {
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(Unit) {
         delay(3000L)
         onLaunch()
     }
@@ -24,9 +24,9 @@ fun SplashScreen(onLaunch: () -> Unit) {
             Image(
                 painter = painterResource(id = R.drawable.bg_splash),
                 contentDescription = null,
+                contentScale = ContentScale.FillWidth,
                 modifier = Modifier
-                    .matchParentSize(),
-                contentScale = ContentScale.FillWidth
+                    .matchParentSize()
             )
         }
         Image(
