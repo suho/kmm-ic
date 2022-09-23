@@ -37,7 +37,7 @@ struct LoginView: View {
                     .padding([.leading, .trailing])
                     .frame(height: 56.0, alignment: .center)
 
-                PrimaryButton(title: Localize.authenticationFieldsLogin()) {
+                PrimaryButton(title: Localize.authenticationButtonLogin()) {
                     // TODO: - Implement on integrate task
                     print("Log in button did tap")
                 }
