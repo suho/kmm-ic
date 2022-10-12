@@ -26,10 +26,12 @@ import co.nimblehq.ic.kmm.suv.android.ui.components.PrimaryTextField
 import kotlinx.coroutines.delay
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    defaultComponentsVisible: Boolean = false
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var componentsVisible by remember {  mutableStateOf(false) }
+    var componentsVisible by remember {  mutableStateOf(defaultComponentsVisible) }
 
     LaunchedEffect(Unit) {
         delay(4000)
@@ -75,7 +77,7 @@ fun LoginScreen() {
                     visualTransformation = PasswordVisualTransformation(),
                 )
                 PrimaryButton(
-                    title = stringResource(id = R.string.login_button),
+                    text = stringResource(id = R.string.login_button),
                     onClick = { /* TODO: Handle in integrate task */ },
                 )
             }
@@ -151,5 +153,7 @@ private fun NimbleLogo(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(
+        defaultComponentsVisible = true
+    )
 }
