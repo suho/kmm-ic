@@ -7,8 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.navigation
+import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.main.MainScreen
-import co.nimblehq.ic.kmm.suv.android.ui.screens.splash.SplashScreen
 
 @Composable
 fun NavGraph() {
@@ -20,11 +20,9 @@ fun NavGraph() {
 }
 
 fun NavGraphBuilder.authenticationGraph(navController: NavController) {
-    navigation(startDestination = Route.SPLASH, route = Route.AUTHENTICATION) {
-        composable(Route.SPLASH) {
-            SplashScreen {
-                navController.navigate(Route.MAIN)
-            }
+    navigation(startDestination = Route.LOGIN, route = Route.AUTHENTICATION) {
+        composable(Route.LOGIN) {
+            LoginScreen()
         }
     }
 }
