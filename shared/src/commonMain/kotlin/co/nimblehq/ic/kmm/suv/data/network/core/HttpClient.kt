@@ -8,16 +8,16 @@ import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
+import io.ktor.client.plugins.logging.LogLevel.ALL
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
 
-
 fun provideHttpClient(engine: HttpClientEngine) = HttpClient(engine = engine) {
     install(Logging) {
-        level = io.ktor.client.plugins.logging.LogLevel.ALL
+        level = ALL
         logger = object : Logger {
             override fun log(message: String) {
                 Napier.log(LogLevel.DEBUG, message = message)

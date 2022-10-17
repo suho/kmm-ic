@@ -37,7 +37,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-
+                // Core
                 implementation(Dependency.COROUTINES_CORE)
 
                 // Ktor
@@ -109,21 +109,31 @@ buildkonfig {
         buildConfigField(
             STRING,
             "CLIENT_ID",
-            buildKonfigProperties.getProperty("CLIENT_ID")
+            buildKonfigProperties.getProperty("STAGING_CLIENT_ID")
         )
         buildConfigField(
             STRING,
             "CLIENT_SECRET",
-            buildKonfigProperties.getProperty("CLIENT_SECRET")
+            buildKonfigProperties.getProperty("STAGING_CLIENT_SECRET")
         )
         buildConfigField(
             STRING,
             "BASE_URL",
-            buildKonfigProperties.getProperty("DEFAULT_BASE_URL")
+            buildKonfigProperties.getProperty("STAGING_BASE_URL")
         )
     }
 
     defaultConfigs(Flavor.PRODUCTION) {
+        buildConfigField(
+            STRING,
+            "CLIENT_ID",
+            buildKonfigProperties.getProperty("PRODUCTION_CLIENT_ID")
+        )
+        buildConfigField(
+            STRING,
+            "CLIENT_SECRET",
+            buildKonfigProperties.getProperty("PRODUCTION_CLIENT_SECRET")
+        )
         buildConfigField(
             STRING,
             "BASE_URL",
@@ -132,6 +142,16 @@ buildkonfig {
     }
 
     defaultConfigs(Flavor.STAGING) {
+        buildConfigField(
+            STRING,
+            "CLIENT_ID",
+            buildKonfigProperties.getProperty("STAGING_CLIENT_ID")
+        )
+        buildConfigField(
+            STRING,
+            "CLIENT_SECRET",
+            buildKonfigProperties.getProperty("STAGING_CLIENT_SECRET")
+        )
         buildConfigField(
             STRING,
             "BASE_URL",
