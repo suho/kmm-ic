@@ -41,6 +41,7 @@ object Dependency {
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Version.KOTLIN_SERIALIZATION}"
 
     // Debug
+    const val TIMBER = "com.jakewharton.timber:timber:${Version.TIMBER}"
     const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling:${Version.COMPOSE_STABLE_VERSION}"
     const val COMPOSE_UI_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest:${Version.COMPOSE_STABLE_VERSION}"
 
@@ -54,4 +55,7 @@ object Dependency {
     const val COMPOSE_UI_TEST_JUNIT = "androidx.compose.ui:ui-test-junit4:${Version.COMPOSE_STABLE_VERSION}"
     const val MOCKATIVE = "io.mockative:mockative:${Version.MOCKATIVE}"
     const val MOCKATIVE_PROCESSOR = "io.mockative:mockative-processor:${Version.MOCKATIVE}"
+    const val KOTEST_FRAMEWORK = "io.kotest:kotest-framework-engine:${Version.KOTEST}"
+    const val KOTEST_ASSERTIONS = "io.kotest:kotest-assertions-core:${Version.KOTEST}"
+    const val KOTEST_PROPERTY = "io.kotest:kotest-property:${Version.KOTEST}"
 }

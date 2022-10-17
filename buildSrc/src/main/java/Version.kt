@@ -31,10 +31,12 @@ object Version {
     const val KTOR = "2.1.1"
     const val BUILD_KONFIG = "0.13.3"
     const val KSP = "1.7.10-1.0.6"
+    const val TIMBER = "5.0.1"
 
     // Tests
     const val JUNIT = "4.13.2"
     const val JUNIT_EXT = "1.1.3"
     const val ESPRESSO_CORE = "3.4.0"
     const val MOCKATIVE = "1.2.6"
+    const val KOTEST = "5.5.1"
 }

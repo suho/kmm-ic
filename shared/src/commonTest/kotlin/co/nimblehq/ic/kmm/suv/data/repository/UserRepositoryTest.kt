@@ -1,11 +1,10 @@
 package co.nimblehq.ic.kmm.suv.data.repository
 
-import co.nimblehq.ic.kmm.suv.data.model.ApiToken
-import co.nimblehq.ic.kmm.suv.data.model.toToken
-import co.nimblehq.ic.kmm.suv.data.network.service.UserService
-import co.nimblehq.ic.kmm.suv.domain.model.Token
-import co.nimblehq.ic.kmm.suv.domain.repository.UserRepository
-import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
+import co.nimblehq.ic.kmm.suv.data.remote.datasource.TokenRemoteDataSource
+import co.nimblehq.ic.kmm.suv.data.remote.model.TokenApiModel
+import co.nimblehq.ic.kmm.suv.data.remote.model.toToken
+import co.nimblehq.ic.kmm.suv.domain.repository.TokenRepository
+import io.kotest.matchers.shouldBe
 import io.mockative.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -20,14 +19,14 @@ import kotlin.test.assertEquals
 class UserRepositoryTest {
 
     @Mock
-    private val mockUserService =mock(classOf<UserService>())
+    private val mockTokenRemoteDataSource =mock(classOf<TokenRemoteDataSource>())
 
     private val mockThrowable = Throwable("mock")
-    private val mockToken = ApiToken(
-        ApiToken.Data(
+    private val mockToken = TokenApiModel(
+        TokenApiModel.Data(
             "id",
             "type",
-            ApiToken.Attributes(
+            TokenApiModel.Attributes(
                 "accessToken",
                 "tokenType",
                 0,
@@ -37,18 +36,18 @@ class UserRepositoryTest {
         )
     )
 
-    private lateinit var repository: UserRepository
+    private lateinit var repository: TokenRepository
 
     @BeforeTest
     fun setUp() {
-        repository = UserRepositoryImpl(mockUserService)
+        repository = TokenRepositoryImpl(mockTokenRemoteDataSource)
     }
 
     @Test
-    fun when_logIn_is_called__the_service_returns_token() = runTest {
-        given(mockUserService)
-            .function(mockUserService::logIn)
-            .whenInvokedWith(any(), any())
+    fun `when logIn is called - the data source returns token`() = runTest {
+        given(mockTokenRemoteDataSource)
+            .function(mockTokenRemoteDataSource::logIn)
+            .whenInvokedWith(any())
             .thenReturn(
                 flow {
                     emit(mockToken)
@@ -56,15 +55,15 @@ class UserRepositoryTest {
             )
 
        repository.logIn("dev@nimblehq.co", "123456").collect {
-           assertEquals(it, mockToken.toToken())
+           it shouldBe mockToken.toToken()
        }
     }
 
     @Test
-    fun when_login_is_called__the_service_returns_error() = runTest {
-        given(mockUserService)
-            .function(mockUserService::logIn)
-            .whenInvokedWith(any(), any())
+    fun `when login is called - the data source returns error`() = runTest {
+        given(mockTokenRemoteDataSource)
+            .function(mockTokenRemoteDataSource::logIn)
+            .whenInvokedWith(any())
             .thenReturn(
                 flow {
                     throw mockThrowable
@@ -72,7 +71,7 @@ class UserRepositoryTest {
             )
 
         repository.logIn("dev@nimblehq.co", "123456").catch {
-            assertEquals(mockThrowable.message, it.message)
+            it.message shouldBe mockThrowable.message
         }.collect()
     }
 }

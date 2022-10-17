@@ -1,7 +1,8 @@
 package co.nimblehq.ic.kmm.suv.domain.usecase
 
 import co.nimblehq.ic.kmm.suv.domain.model.Token
-import co.nimblehq.ic.kmm.suv.domain.repository.UserRepository
+import co.nimblehq.ic.kmm.suv.domain.repository.TokenRepository
+import io.kotest.matchers.shouldBe
 import io.mockative.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -16,7 +17,7 @@ import kotlin.test.assertEquals
 class LogInUseCaseTest {
 
     @Mock
-    private val mockRepository = mock(classOf<UserRepository>())
+    private val mockRepository = mock(classOf<TokenRepository>())
 
     private val mockThrowable = Throwable("mock")
     private val mockToken = Token("", "", 0, "", 0)
@@ -25,11 +26,11 @@ class LogInUseCaseTest {
 
     @BeforeTest
     fun setUp() {
-        useCase = LogInUseCase(mockRepository)
+        useCase = LogInUseCaseImpl(mockRepository)
     }
 
     @Test
-    fun when_logIn_is_called__the_repository_returns_token() = runTest {
+    fun `when logIn is called - the repository returns token`() = runTest {
         given(mockRepository)
             .function(mockRepository::logIn)
             .whenInvokedWith(any(), any())
@@ -40,12 +41,12 @@ class LogInUseCaseTest {
             )
 
         useCase("dev@nimblehq.co", "123456").collect {
-            assertEquals(it, mockToken)
+            it shouldBe mockToken
         }
     }
 
     @Test
-    fun when_login_is_called__the_repository_returns_error() = runTest {
+    fun `when login is called - the repository returns error`() = runTest {
         given(mockRepository)
             .function(mockRepository::logIn)
             .whenInvokedWith(any(), any())
@@ -56,7 +57,7 @@ class LogInUseCaseTest {
             )
 
         useCase("dev@nimblehq.co", "123456").catch {
-            assertEquals(mockThrowable.message, it.message)
+            it.message shouldBe mockThrowable.message
         }.collect()
     }
 }

@@ -2,10 +2,19 @@ package co.nimblehq.ic.kmm.suv.android
 
 import android.app.Application
 import co.nimblehq.ic.kmm.suv.di.initKoin
+import timber.log.Timber
 
 class MainApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
         initKoin()
+        setupLogging()
+    }
+
+    private fun setupLogging() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }

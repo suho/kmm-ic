@@ -97,6 +97,7 @@ dependencies {
     implementation(Dependency.KOIN_ANDROID)
 
     // Debug
+    implementation(Dependency.TIMBER)
     debugImplementation(Dependency.COMPOSE_UI_TOOLING)
     debugImplementation(Dependency.COMPOSE_UI_TEST_MANIFEST)
 

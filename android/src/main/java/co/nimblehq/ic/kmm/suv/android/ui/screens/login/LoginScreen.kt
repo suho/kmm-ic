@@ -27,6 +27,7 @@ import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import org.koin.java.KoinJavaComponent.inject
+import timber.log.Timber
 
 @Composable
 fun LoginScreen(
@@ -42,10 +43,10 @@ fun LoginScreen(
         componentsVisible = true
         logInUseCase("dev@nimblehq.co", "12345678")
             .catch { error ->
-                print(error.message)
+                Timber.e(error)
             }
             .collect { token ->
-                print(token)
+                Timber.v("Token ${token.accessToken}")
             }
     }
 

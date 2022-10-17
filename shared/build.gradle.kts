@@ -63,6 +63,9 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
                 implementation(Dependency.COROUTINES_TEST)
                 implementation(Dependency.MOCKATIVE)
+                implementation(Dependency.KOTEST_FRAMEWORK)
+                implementation(Dependency.KOTEST_ASSERTIONS)
+                implementation(Dependency.KOTEST_PROPERTY)
             }
         }
         val androidMain by getting {

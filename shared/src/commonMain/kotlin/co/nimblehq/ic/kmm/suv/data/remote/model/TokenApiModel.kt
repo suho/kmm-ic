@@ -1,4 +1,4 @@
-package co.nimblehq.ic.kmm.suv.data.model
+package co.nimblehq.ic.kmm.suv.data.remote.model
 
 import co.nimblehq.ic.kmm.suv.domain.model.Token
 import kotlinx.serialization.SerialName
@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 // TODO: Find a JsonApi to support this
 
 @Serializable
-data class ApiToken(
+data class TokenApiModel(
     @SerialName("data")
     val data: Data
 ) {
@@ -36,7 +36,7 @@ data class ApiToken(
     )
 }
 
-fun ApiToken.toToken(): Token {
+fun TokenApiModel.toToken(): Token {
     return Token(
         data.attributes.accessToken,
         data.attributes.tokenType,
