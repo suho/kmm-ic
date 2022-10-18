@@ -136,3 +136,4 @@ google-services.json
 */build
 .cxx
 local.properties
+buildKonfig.properties

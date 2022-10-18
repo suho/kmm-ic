@@ -8,11 +8,13 @@ buildscript {
         classpath(Dependency.KOTLIN_GRADLE_PLUGIN)
         classpath(Dependency.GRADLE)
         classpath(Dependency.GOOGLE_SERVICES)
+        classpath(Dependency.KOTLIN_SERIALIZATION)
+        classpath(Dependency.BUILD_KONFIG)
     }
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt").version(Version.DETEKT)
+    id(Plugin.DETEKT).version(Version.DETEKT)
 }
 
 allprojects {

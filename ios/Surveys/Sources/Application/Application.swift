@@ -1,4 +1,4 @@
-// swiftlint:disable weak_delegate
+// swiftlint:disable weak_delegate let_var_whitespace
 import FirebaseCore
 import SwiftUI
 

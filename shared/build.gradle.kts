@@ -1,9 +1,14 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
+    kotlin(Plugin.MULTIPLATFORM)
+    kotlin(Plugin.COCOAPODS)
+    id(Plugin.ANDROID_LIBRARY)
+    kotlin(Plugin.KOTLIN_SERIALIZATION)
+    id(Plugin.KOTLINX_SERIALIZATION)
+    id(Plugin.NATIVE_COROUTINES).version(Version.NATIVE_COROUTINES_KOTLIN)
+    id(Plugin.BUILD_KONFIG)
 }
 
 version = "1.0"
@@ -15,12 +20,13 @@ kotlin {
     iosSimulatorArm64()
 
     cocoapods {
+        name = "Shared"
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../ios/Podfile")
         framework {
-            baseName = "shared"
+            baseName = "Shared"
         }
         xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_STAGING] = NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_PRODUCTION] = NativeBuildType.DEBUG
@@ -29,13 +35,37 @@ kotlin {
     }
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                // Core
+                implementation(Dependency.COROUTINES_CORE)
+
+                // Ktor
+                implementation(Dependency.KTOR_CORE)
+                implementation(Dependency.KTOR_SERIALIZATION)
+                implementation(Dependency.KTOR_LOGGING)
+                implementation(Dependency.KTOR_CIO)
+                implementation(Dependency.KTOR_CONTENT_NEGOTIATION)
+                implementation(Dependency.KTOR_JSON)
+
+                // Logging
+                implementation(Dependency.NAPIER)
+
+                // Koin
+                implementation(Dependency.KOIN_CORE)
+                implementation(Dependency.KOIN_TEST)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(Dependency.KTOR_ANDROID)
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -45,6 +75,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(Dependency.KTOR_IOS)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -67,6 +100,62 @@ android {
     }
 }
 
-dependencies {
-    testImplementation(Dependency.JUNIT)
+val buildKonfigProperties = rootDir.loadGradleProperties("buildKonfig.properties")
+
+buildkonfig {
+    packageName = "co.nimblehq.ic.kmm.suv"
+
+    defaultConfigs {
+        buildConfigField(
+            STRING,
+            "CLIENT_ID",
+            buildKonfigProperties.getProperty("STAGING_CLIENT_ID")
+        )
+        buildConfigField(
+            STRING,
+            "CLIENT_SECRET",
+            buildKonfigProperties.getProperty("STAGING_CLIENT_SECRET")
+        )
+        buildConfigField(
+            STRING,
+            "BASE_URL",
+            buildKonfigProperties.getProperty("STAGING_BASE_URL")
+        )
+    }
+
+    defaultConfigs(Flavor.PRODUCTION) {
+        buildConfigField(
+            STRING,
+            "CLIENT_ID",
+            buildKonfigProperties.getProperty("PRODUCTION_CLIENT_ID")
+        )
+        buildConfigField(
+            STRING,
+            "CLIENT_SECRET",
+            buildKonfigProperties.getProperty("PRODUCTION_CLIENT_SECRET")
+        )
+        buildConfigField(
+            STRING,
+            "BASE_URL",
+            buildKonfigProperties.getProperty("PRODUCTION_BASE_URL")
+        )
+    }
+
+    defaultConfigs(Flavor.STAGING) {
+        buildConfigField(
+            STRING,
+            "CLIENT_ID",
+            buildKonfigProperties.getProperty("STAGING_CLIENT_ID")
+        )
+        buildConfigField(
+            STRING,
+            "CLIENT_SECRET",
+            buildKonfigProperties.getProperty("STAGING_CLIENT_SECRET")
+        )
+        buildConfigField(
+            STRING,
+            "BASE_URL",
+            buildKonfigProperties.getProperty("STAGING_BASE_URL")
+        )
+    }
 }

@@ -36,6 +36,13 @@ jobs:
           touch signing.properties
           echo $ANDROID_SIGNING_PROPERTIES | base64 --decode > signing.properties
 
+      - name: Setup Konfig Properties
+        env:
+          KMM_KONFIG_PROPERTIES:  ${{ secrets.KMM_KONFIG_PROPERTIES }}
+        run: |
+          touch buildKonfig.properties
+          echo $KMM_KONFIG_PROPERTIES | base64 --decode > buildKonfig.properties
+
       - name: Setup Java JDK
         uses: actions/setup-java@v2.1.0
         with:
