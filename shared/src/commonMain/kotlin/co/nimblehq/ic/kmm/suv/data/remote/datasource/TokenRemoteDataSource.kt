@@ -20,7 +20,6 @@ class TokenRemoteDataSourceImpl(private val httpClient: HttpClient): TokenRemote
             HttpRequestBuilder().apply {
                 path("/v1/oauth/token")
                 method = HttpMethod.Post
-                contentType(ContentType.Application.Json)
                 setBody(body)
             }
         )

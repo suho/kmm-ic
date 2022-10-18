@@ -16,7 +16,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
-class UserRepositoryTest {
+class TokenRepositoryTest {
 
     @Mock
     private val mockTokenRemoteDataSource =mock(classOf<TokenRemoteDataSource>())
