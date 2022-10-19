@@ -11,6 +11,7 @@ object BuildType {
 
 object Module {
     const val SHARED = ":shared"
+    const val JSONAPI_CORE = ":jsonapi-kotlin:core"
 }
 
 object XcodeConfiguration {
