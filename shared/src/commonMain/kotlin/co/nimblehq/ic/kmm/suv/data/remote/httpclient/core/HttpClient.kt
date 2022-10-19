@@ -1,4 +1,4 @@
-package co.nimblehq.ic.kmm.suv.data.network.core
+package co.nimblehq.ic.kmm.suv.data.remote.httpclient.core
 
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.LogLevel
@@ -10,6 +10,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.plugins.logging.LogLevel.ALL
 import io.ktor.client.request.*
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,6 +30,7 @@ fun provideHttpClient(engine: HttpClientEngine) = HttpClient(engine = engine) {
         json(Json {
             prettyPrint = true
             isLenient = true
+            encodeDefaults = true
         })
     }
 }.also {
@@ -37,7 +39,11 @@ fun provideHttpClient(engine: HttpClientEngine) = HttpClient(engine = engine) {
 
 inline fun <reified T> HttpClient.body(builder: HttpRequestBuilder) : Flow<T> {
     return flow {
-        val data = request(builder).body<T>()
+        val data = request(
+            builder.apply {
+                contentType(ContentType.Application.Json)
+            }
+        ).body<T>()
         emit(data)
     }
 }

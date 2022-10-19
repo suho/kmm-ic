@@ -17,6 +17,7 @@ object Dependency {
 
     // Kotlinx
     const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES_CORE}"
+    const val COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.COROUTINES_CORE}"
 
     // Ktor
     const val KTOR_CORE = "io.ktor:ktor-client-core:${Version.KTOR}"
@@ -40,6 +41,7 @@ object Dependency {
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Version.KOTLIN_SERIALIZATION}"
 
     // Debug
+    const val TIMBER = "com.jakewharton.timber:timber:${Version.TIMBER}"
     const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling:${Version.COMPOSE_STABLE_VERSION}"
     const val COMPOSE_UI_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest:${Version.COMPOSE_STABLE_VERSION}"
 
@@ -51,4 +53,9 @@ object Dependency {
     const val JUNIT_EXT = "androidx.test.ext:junit:${Version.JUNIT_EXT}"
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Version.ESPRESSO_CORE}"
     const val COMPOSE_UI_TEST_JUNIT = "androidx.compose.ui:ui-test-junit4:${Version.COMPOSE_STABLE_VERSION}"
+    const val MOCKATIVE = "io.mockative:mockative:${Version.MOCKATIVE}"
+    const val MOCKATIVE_PROCESSOR = "io.mockative:mockative-processor:${Version.MOCKATIVE}"
+    const val KOTEST_FRAMEWORK = "io.kotest:kotest-framework-engine:${Version.KOTEST}"
+    const val KOTEST_ASSERTIONS = "io.kotest:kotest-assertions-core:${Version.KOTEST}"
+    const val KOTEST_PROPERTY = "io.kotest:kotest-property:${Version.KOTEST}"
 }

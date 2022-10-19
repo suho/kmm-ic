@@ -23,10 +23,15 @@ import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.ui.components.PrimaryButton
 import co.nimblehq.ic.kmm.suv.android.ui.components.PrimaryTextField
+import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import org.koin.java.KoinJavaComponent.inject
+import timber.log.Timber
 
 @Composable
 fun LoginScreen(
+    logInUseCase: LogInUseCase, // TODO: Add this into ViewModel instead (Integrate task)
     defaultComponentsVisible: Boolean = false
 ) {
     var email by remember { mutableStateOf("") }
@@ -36,6 +41,13 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         delay(4000)
         componentsVisible = true
+        logInUseCase("dev@nimblehq.co", "12345678")
+            .catch { error ->
+                Timber.e(error)
+            }
+            .collect { token ->
+                Timber.v("Token ${token.accessToken}")
+            }
     }
 
     Box {
@@ -153,7 +165,9 @@ private fun NimbleLogo(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun LoginScreenPreview() {
+    val logInUseCase: LogInUseCase by inject(LogInUseCase::class.java)
     LoginScreen(
+        logInUseCase,
         defaultComponentsVisible = true
     )
 }

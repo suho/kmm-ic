@@ -6,8 +6,6 @@
 //  Copyright © 2022 Nimble. All rights reserved.
 //
 
-// TODO: Remove comments later
-/*
 @propertyWrapper
 struct LazyKoin<T> {
 
@@ -15,4 +13,3 @@ struct LazyKoin<T> {
 
     init() {}
 }
-*/
