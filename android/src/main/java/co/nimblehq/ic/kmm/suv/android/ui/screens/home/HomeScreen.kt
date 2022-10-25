@@ -1,4 +1,4 @@
-package co.nimblehq.ic.kmm.suv.android.ui.screens.main
+package co.nimblehq.ic.kmm.suv.android.ui.screens.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import co.nimblehq.ic.kmm.suv.Greeting
 
 @Composable
-fun MainScreen() {
+fun HomeScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Text(
             text = Greeting().greeting(),

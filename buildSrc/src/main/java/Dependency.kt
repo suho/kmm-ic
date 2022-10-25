@@ -14,6 +14,7 @@ object Dependency {
     const val LIFECYCLE_RUNTIME_KTX = "androidx.lifecycle:lifecycle-runtime-ktx:${Version.LIFECYCLE_RUNTIME_KTX}"
     const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Version.ACTIVITY_COMPOSE}"
     const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Version.NAVIGATION_COMPOSE}"
+    const val VIEW_MODEL_COMPOSE = "androidx.lifecycle:lifecycle-viewmodel-compose:${Version.VIEW_MODEL_COMPOSE}"
 
     // Kotlinx
     const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES_CORE}"
@@ -34,7 +35,8 @@ object Dependency {
 
     // Koin
     const val KOIN_CORE = "io.insert-koin:koin-core:${Version.KOIN}"
-    const val KOIN_ANDROID = "io.insert-koin:koin-android:${Version.KOIN}"
+    const val KOIN_ANDROID = "io.insert-koin:koin-android:${Version.KOIN_ANDROID}"
+    const val KOIN_COMPOSE = "io.insert-koin:koin-androidx-compose:${Version.KOIN_ANDROID}"
     const val KOIN_TEST = "io.insert-koin:koin-test:${Version.KOIN}"
 
     // Serialization
@@ -63,4 +65,7 @@ object Dependency {
     const val KOTEST_FRAMEWORK = "io.kotest:kotest-framework-engine:${Version.KOTEST}"
     const val KOTEST_ASSERTIONS = "io.kotest:kotest-assertions-core:${Version.KOTEST}"
     const val KOTEST_PROPERTY = "io.kotest:kotest-property:${Version.KOTEST}"
+    const val MOCKK = "io.mockk:mockk:${Version.MOCKK}"
+    const val KOTLIN_COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.COROUTINES_CORE}"
+    const val MOCKK_ANDROID = "io.mockk:mockk-android:${Version.MOCKK}"
 }

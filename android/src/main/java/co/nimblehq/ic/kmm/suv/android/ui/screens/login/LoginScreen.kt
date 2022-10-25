@@ -21,41 +21,67 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
+import co.nimblehq.ic.kmm.suv.android.ui.components.ErrorAlertDialog
 import co.nimblehq.ic.kmm.suv.android.ui.components.PrimaryButton
 import co.nimblehq.ic.kmm.suv.android.ui.components.PrimaryTextField
-import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
-import org.koin.java.KoinJavaComponent.inject
-import timber.log.Timber
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun LoginScreen(
-    logInUseCase: LogInUseCase, // TODO: Add this into ViewModel instead (Integrate task)
+    onLogInSuccess: () -> Unit,
+    viewModel: LoginViewModel = getViewModel(),
     defaultComponentsVisible: Boolean = false
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
     var componentsVisible by remember {  mutableStateOf(defaultComponentsVisible) }
+    val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         delay(4000)
         componentsVisible = true
-        logInUseCase("dev@nimblehq.co", "12345678")
-            .catch { error ->
-                Timber.e(error)
-            }
-            .collect { token ->
-                Timber.v("Token ${token.accessToken}")
-            }
     }
 
+    uiState.errorMessage?.let { message ->
+        ErrorAlertDialog(
+            message = message,
+            onButtonClick = { viewModel.dismissError() }
+        )
+    }
+
+    LaunchedEffect(uiState.isLogInSuccess) {
+        if (uiState.isLogInSuccess) {
+            onLogInSuccess()
+        }
+    }
+
+    LoginScreenContent(
+        email = uiState.email,
+        password = uiState.password,
+        onEmailChange = viewModel::updateEmail,
+        onPasswordChange = viewModel::updatePassword,
+        onLogInClick = viewModel::logIn,
+        isLoading = uiState.isLoading,
+        componentsVisible = componentsVisible
+    )
+}
+
+@Composable
+private fun LoginScreenContent(
+    email: String,
+    password: String,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLogInClick: () -> Unit,
+    isLoading: Boolean = false,
+    componentsVisible: Boolean = false,
+) {
     Box {
         Box(modifier = Modifier.fillMaxSize()) {
             BackgroundImage(modifier = Modifier.matchParentSize())
         }
         NimbleLogo(
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier
+                .align(Alignment.Center)
                 .wrapContentHeight()
                 .navigationBarsPadding()
                 .imePadding()
@@ -79,18 +105,19 @@ fun LoginScreen(
             ) {
                 PrimaryTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = onEmailChange,
                     placeholder = stringResource(id = R.string.login_email),
                 )
                 PrimaryTextField(
                     value = password,
-                    onValueChange = { password = it },
+                    onValueChange = onPasswordChange,
                     placeholder = stringResource(id = R.string.login_password),
                     visualTransformation = PasswordVisualTransformation(),
                 )
                 PrimaryButton(
                     text = stringResource(id = R.string.login_button),
-                    onClick = { /* TODO: Handle in integrate task */ },
+                    isLoading = isLoading,
+                    onClick = onLogInClick,
                 )
             }
         }
@@ -165,9 +192,5 @@ private fun NimbleLogo(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    val logInUseCase: LogInUseCase by inject(LogInUseCase::class.java)
-    LoginScreen(
-        logInUseCase,
-        defaultComponentsVisible = true
-    )
+    LoginScreenContent("", "", {}, {}, {}, componentsVisible = true)
 }
