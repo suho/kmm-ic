@@ -1,3 +1,6 @@
 "authentication.fields.email" = "Email";
 "authentication.fields.password" = "Password";
 "authentication.button.login" = "Log in";
+
+"general.button.gotIt" = "Got it!";
+"general.text.surveys" = "Surveys";

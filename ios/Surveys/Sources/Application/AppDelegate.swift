@@ -7,6 +7,7 @@
 //
 
 import FirebaseCore
+import IQKeyboardManagerSwift
 import UIKit
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
@@ -15,7 +16,15 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        FirebaseApp.configure()
+        setUpDependencies()
         return true
+    }
+}
+
+extension AppDelegate {
+
+    private func setUpDependencies() {
+        FirebaseApp.configure()
+        IQKeyboardManager.shared.enable = true
     }
 }

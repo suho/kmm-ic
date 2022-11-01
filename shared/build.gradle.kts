@@ -58,6 +58,10 @@ kotlin {
 
                 // jsonapi
                 implementation(project(Module.JSONAPI_CORE))
+
+                // settings
+                implementation(Dependency.SETTINGS)
+                implementation(Dependency.SETTINGS_SERIALIZATION)
             }
         }
         val commonTest by getting {
@@ -74,6 +78,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Dependency.KTOR_ANDROID)
+                implementation(Dependency.SECURITY_CRYPTO_KTX)
             }
         }
         val androidTest by getting

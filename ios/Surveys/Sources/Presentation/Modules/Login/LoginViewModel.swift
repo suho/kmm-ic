@@ -7,22 +7,42 @@
 //
 
 import Combine
-import KMPNativeCoroutinesCombine
-import Shared
+import Factory
 
 final class LoginViewModel: ObservableObject {
 
-    @LazyKoin private var logInUseCase: LogInUseCase
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var state: State = .idle
+
+    @Injected(Container.logInUseCase) private var logInUseCase: LogInUseCaseProtocol
 
     private var bag = Set<AnyCancellable>()
 
-    // TODO: For backend testing only
     func logIn() {
-        createPublisher(for: logInUseCase.invokeNative(email: "dev@nimblehq.co", password: "12345678")).sink { error in
-            print(error)
-        } receiveValue: { token in
-            print(token)
-        }
-        .store(in: &bag)
+        state = .loading
+        logInUseCase(email: email, password: password)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] completion in
+                switch completion {
+                case let .failure(error):
+                    self?.state = .loginFail(error.appError?.message ?? "-")
+                case .finished: break
+                }
+            } receiveValue: { [weak self] _ in
+                self?.state = .loginSuccess
+            }
+            .store(in: &bag)
+    }
+}
+
+extension LoginViewModel {
+
+    enum State: Equatable {
+
+        case idle
+        case loading
+        case loginSuccess
+        case loginFail(String)
     }
 }

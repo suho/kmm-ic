@@ -5,5 +5,5 @@ import co.nimblehq.ic.kmm.suv.domain.repository.TokenRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<TokenRepository> { TokenRepositoryImpl(get()) }
+    single<TokenRepository> { TokenRepositoryImpl(get(), get()) }
 }

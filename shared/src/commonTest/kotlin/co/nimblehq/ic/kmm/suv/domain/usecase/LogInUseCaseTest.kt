@@ -30,7 +30,7 @@ class LogInUseCaseTest {
     }
 
     @Test
-    fun `when logIn is called - the repository returns token`() = runTest {
+    fun `when logIn is called - the repository saves and returns token`() = runTest {
         given(mockRepository)
             .function(mockRepository::logIn)
             .whenInvokedWith(any(), any())
@@ -43,6 +43,11 @@ class LogInUseCaseTest {
         useCase("dev@nimblehq.co", "123456").collect {
             it shouldBe mockToken
         }
+
+        verify(mockRepository)
+            .function(mockRepository::save)
+            .with(any())
+            .wasInvoked(exactly = 1.time)
     }
 
     @Test

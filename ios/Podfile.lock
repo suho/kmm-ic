@@ -29,6 +29,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - PromisesObjC (~> 2.1)
+  - FlowStacks (0.2.5)
   - GoogleDataTransport (9.2.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
@@ -67,6 +68,7 @@ PODS:
 DEPENDENCIES:
   - Factory
   - Firebase/Crashlytics
+  - FlowStacks
   - IQKeyboardManagerSwift
   - KeychainAccess
   - Kingfisher
@@ -88,6 +90,7 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseCrashlytics
     - FirebaseInstallations
+    - FlowStacks
     - GoogleDataTransport
     - GoogleUtilities
     - IQKeyboardManagerSwift
@@ -117,6 +120,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: 50a8e39cae8abf72d5145d07ea34c3244f70862b
   FirebaseCrashlytics: d20fa38bb8c88cb0f1c9211286bc23ab58c1b464
   FirebaseInstallations: 41f811b530c41dd90973d0174381cdb3fcb5e839
+  FlowStacks: a8f2c03581f41c4206c8444843a659c8a1897604
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
@@ -135,6 +139,6 @@ SPEC CHECKSUMS:
   SwiftFormat: 64ac3f15bbfc3c830103a17340bcc5b60d9a3acd
   SwiftLint: 284cea64b6187c5d6bd83e9a548a64104d546447
 
-PODFILE CHECKSUM: 7fb8bf86460a90386f40bb52321bb9273663c8f4
+PODFILE CHECKSUM: 81eee5299be0e32eb4109f593a9ca7f36333a80d
 
 COCOAPODS: 1.11.3

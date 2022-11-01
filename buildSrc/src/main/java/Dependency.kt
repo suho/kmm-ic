@@ -48,6 +48,11 @@ object Dependency {
     // BuildKonfig
     const val BUILD_KONFIG = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:${Version.BUILD_KONFIG}"
 
+    // Settings
+    const val SETTINGS = "com.russhwolf:multiplatform-settings:${Version.SETTINGS}"
+    const val SETTINGS_SERIALIZATION = "com.russhwolf:multiplatform-settings-serialization:${Version.SETTINGS}"
+    const val SECURITY_CRYPTO_KTX = "androidx.security:security-crypto-ktx:${Version.SECURITY_CRYPTO}"
+
     // Tests
     const val JUNIT = "junit:junit:${Version.JUNIT}"
     const val JUNIT_EXT = "androidx.test.ext:junit:${Version.JUNIT_EXT}"

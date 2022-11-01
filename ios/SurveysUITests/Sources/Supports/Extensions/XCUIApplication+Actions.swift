@@ -16,6 +16,12 @@ extension XCUIApplication {
         field.typeText(value)
     }
 
+    func fillInSecureField(_ placeHolder: String, with value: String) {
+        let field = secureTextFields[placeHolder]
+        field.tap()
+        field.typeText(value)
+    }
+
     func tapButton(_ title: String) {
         let button = buttons[title]
         button.tap()

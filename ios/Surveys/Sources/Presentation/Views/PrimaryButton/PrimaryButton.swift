@@ -11,24 +11,30 @@ import SwiftUI
 struct PrimaryButton: View {
 
     private let title: String
+    private let isLoading: Bool
     private let action: () -> Void
 
     var body: some View {
-        GeometryReader { geometry in
-            Button(action: action) {
+        Button(action: action) {
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                    .frame(maxHeight: .infinity, alignment: .center)
+            } else {
                 Text(title)
-                    .frame(height: geometry.size.height, alignment: .center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .font(Typography.neuzeitSLTStdBookHeavy.font(size: 17.0))
             }
-            .frame(maxWidth: .infinity)
-            .background(Color.white)
-            .foregroundColor(Color.black)
-            .cornerRadius(10.0)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white)
+        .foregroundColor(Color.black)
+        .cornerRadius(10.0)
     }
 
-    init(title: String, action: @escaping () -> Void) {
+    init(title: String, isLoading: Bool, action: @escaping () -> Void) {
         self.title = title
+        self.isLoading = isLoading
         self.action = action
     }
 }

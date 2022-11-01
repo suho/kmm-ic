@@ -32,6 +32,8 @@ object Version {
     const val BUILD_KONFIG = "0.13.3"
     const val KSP = "1.7.10-1.0.6"
     const val TIMBER = "5.0.1"
+    const val SETTINGS = "1.0.0-RC"
+    const val SECURITY_CRYPTO = "1.1.0-alpha03"
 
     // Tests
     const val JUNIT = "4.13.2"
