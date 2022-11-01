@@ -35,7 +35,7 @@ class LoginViewModelTest {
         loginViewModel.logIn()
         advanceUntilIdle()
 
-        loginViewModel.uiState.value.isLogInSuccess shouldBe true
+        loginViewModel.isLoginSuccess.value shouldBe true
     }
 
     @Test
@@ -46,7 +46,7 @@ class LoginViewModelTest {
         loginViewModel.logIn()
         advanceUntilIdle()
 
-        loginViewModel.uiState.value.errorMessage shouldBe expectedError.message
+        loginViewModel.errorMessage.value shouldBe expectedError.message
     }
 
     @Test
@@ -56,9 +56,9 @@ class LoginViewModelTest {
         loginViewModel = LoginViewModel(mockLogInUseCase)
         loginViewModel.logIn()
 
-        loginViewModel.uiState.value.isLoading shouldBe true
+        loginViewModel.isLoading.value shouldBe true
         advanceUntilIdle()
-        loginViewModel.uiState.value.isLoading shouldBe false
+        loginViewModel.isLoading.value shouldBe false
     }
 
     @Test
@@ -67,7 +67,7 @@ class LoginViewModelTest {
         loginViewModel = LoginViewModel(mockLogInUseCase)
         loginViewModel.updateEmail(expectedEmail)
 
-        loginViewModel.uiState.value.email shouldBe expectedEmail
+        loginViewModel.email.value shouldBe expectedEmail
     }
 
     @Test
@@ -76,7 +76,7 @@ class LoginViewModelTest {
         loginViewModel = LoginViewModel(mockLogInUseCase)
         loginViewModel.updatePassword(expectedPassword)
 
-        loginViewModel.uiState.value.password shouldBe expectedPassword
+        loginViewModel.password.value shouldBe expectedPassword
     }
 
     @Test
@@ -84,6 +84,6 @@ class LoginViewModelTest {
         loginViewModel = LoginViewModel(mockLogInUseCase)
         loginViewModel.dismissError()
 
-        loginViewModel.uiState.value.errorMessage shouldBe null
+        loginViewModel.errorMessage.value shouldBe null
     }
 }

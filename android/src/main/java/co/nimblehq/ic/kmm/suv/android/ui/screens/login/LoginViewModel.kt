@@ -2,61 +2,44 @@ package co.nimblehq.ic.kmm.suv.android.ui.screens.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.nimblehq.ic.kmm.suv.android.ui.base.BaseViewModel
 import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val logInUseCase: LogInUseCase
-): ViewModel() {
+): BaseViewModel() {
 
-    data class UiState(
-        val email: String = "",
-        val password: String = "",
-        val isLogInSuccess: Boolean = false,
-        val isLoading: Boolean = false,
-        val errorMessage: String? = null
-    )
+    private val _email = MutableStateFlow("")
+    val email: StateFlow<String> = _email.asStateFlow()
 
-    private val _uiState = MutableStateFlow(UiState())
-    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+    private val _password = MutableStateFlow("")
+    val password: StateFlow<String> = _password.asStateFlow()
+
+    private val _isLoginSuccess = MutableStateFlow(false)
+    val isLoginSuccess: StateFlow<Boolean> = _isLoginSuccess.asStateFlow()
 
     fun updateEmail(newEmail: String) {
-        _uiState.update {
-            it.copy(email = newEmail)
-        }
+        _email.value = newEmail
     }
 
     fun updatePassword(newPassword: String) {
-        _uiState.update {
-            it.copy(password = newPassword)
-        }
-    }
-
-    fun dismissError() {
-        _uiState.update {
-            it.copy(errorMessage = null)
-        }
+        _password.value = newPassword
     }
 
     fun logIn() {
-        _uiState.update {
-            it.copy(isLoading = true)
-        }
+        showLoading()
         viewModelScope.launch {
-            logInUseCase(email = uiState.value.email, password = uiState.value.password)
+            logInUseCase(email = email.value, password = password.value)
                 .catch { e ->
-                    _uiState.update {
-                        it.copy(isLoading = false, errorMessage = e.message)
-                    }
+                    hideLoading()
+                    showError(e.message)
                 }
                 .collect {
-                    _uiState.update {
-                        it.copy(isLoading = false, isLogInSuccess = true)
-                    }
+                    hideLoading()
+                    _isLoginSuccess.emit(true)
                 }
         }
     }
 }
-
-

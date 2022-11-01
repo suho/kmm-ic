@@ -34,33 +34,37 @@ fun LoginScreen(
     defaultComponentsVisible: Boolean = false
 ) {
     var componentsVisible by remember {  mutableStateOf(defaultComponentsVisible) }
-    val uiState by viewModel.uiState.collectAsState()
+    val email by viewModel.email.collectAsState()
+    val password by viewModel.password.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val isLoginSuccess by viewModel.isLoginSuccess.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
 
     LaunchedEffect(Unit) {
         delay(4000)
         componentsVisible = true
     }
 
-    uiState.errorMessage?.let { message ->
+    errorMessage?.let {
         ErrorAlertDialog(
-            message = message,
+            message = it,
             onButtonClick = { viewModel.dismissError() }
         )
     }
 
-    LaunchedEffect(uiState.isLogInSuccess) {
-        if (uiState.isLogInSuccess) {
+    LaunchedEffect(isLoginSuccess) {
+        if (isLoginSuccess) {
             onLogInSuccess()
         }
     }
 
     LoginScreenContent(
-        email = uiState.email,
-        password = uiState.password,
+        email = email,
+        password = password,
         onEmailChange = viewModel::updateEmail,
         onPasswordChange = viewModel::updatePassword,
         onLogInClick = viewModel::logIn,
-        isLoading = uiState.isLoading,
+        isLoading = isLoading,
         componentsVisible = componentsVisible
     )
 }

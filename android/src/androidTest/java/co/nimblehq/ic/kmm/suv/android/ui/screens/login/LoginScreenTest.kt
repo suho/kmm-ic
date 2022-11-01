@@ -23,7 +23,7 @@ class LoginScreenTest {
     val composeRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var viewModel: LoginViewModel
-    private val mockLogInUseCase = mockk<LogInUseCase>()
+    private val mockLogInUseCase: LogInUseCase = mockk()
 
     @Before
     fun setup() {
@@ -51,7 +51,7 @@ class LoginScreenTest {
             onNodeWithText(activity.getString(R.string.login_email)).performTextInput("dev@nimblehq.co")
             onNodeWithText(activity.getString(R.string.login_password)).performTextInput("12345678")
             onNodeWithText(activity.getString(R.string.login_button)).performClick()
-            assertTrue(viewModel.uiState.value.isLogInSuccess)
+            assertTrue(viewModel.isLoginSuccess.value)
         }
     }
 
