@@ -48,6 +48,7 @@ kotlin {
                 implementation(Dependency.KTOR_CIO)
                 implementation(Dependency.KTOR_CONTENT_NEGOTIATION)
                 implementation(Dependency.KTOR_JSON)
+                implementation(Dependency.KTOR_AUTH)
 
                 // Logging
                 implementation(Dependency.NAPIER)

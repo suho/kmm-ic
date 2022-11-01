@@ -1,4 +1,4 @@
-package co.nimblehq.ic.kmm.suv.data.remote.httpclient.builder
+package co.nimblehq.ic.kmm.suv.data.remote.apiclient.builder
 
 import co.nimblehq.ic.kmm.suv.BuildKonfig
 import io.ktor.client.request.*
