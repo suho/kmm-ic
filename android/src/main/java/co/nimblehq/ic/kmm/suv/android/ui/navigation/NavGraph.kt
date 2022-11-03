@@ -8,9 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.navigation
 import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginScreen
-import co.nimblehq.ic.kmm.suv.android.ui.screens.main.MainScreen
-import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
-import org.koin.java.KoinJavaComponent
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.HomeScreen
 
 @Composable
 fun NavGraph() {
@@ -24,15 +22,15 @@ fun NavGraph() {
 fun NavGraphBuilder.authenticationGraph(navController: NavController) {
     navigation(startDestination = Route.LOGIN, route = Route.AUTHENTICATION) {
         composable(Route.LOGIN) {
-            // TODO: Remove this later in the integrate task
-            val logInUseCase: LogInUseCase by KoinJavaComponent.inject(LogInUseCase::class.java)
-            LoginScreen(logInUseCase)
+            LoginScreen(onLogInSuccess = {
+                navController.navigate(Route.HOME)
+            })
         }
     }
 }
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
-    composable(Route.MAIN) {
-        MainScreen()
+    composable(Route.HOME) {
+        HomeScreen()
     }
 }

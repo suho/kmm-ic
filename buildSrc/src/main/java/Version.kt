@@ -23,8 +23,10 @@ object Version {
     const val ACTIVITY_COMPOSE = "1.5.1"
     const val LIFECYCLE_RUNTIME_KTX = "2.5.1"
     const val NAVIGATION_COMPOSE = "2.5.1"
+    const val VIEW_MODEL_COMPOSE = "2.5.1"
 
     const val KOIN = "3.2.0"
+    const val KOIN_ANDROID = "3.3.0"
     const val KOTLIN_SERIALIZATION = "1.7.10"
     const val NATIVE_COROUTINES_KOTLIN = "0.12.6-new-mm"
     const val COROUTINES_CORE = "1.6.4"
@@ -41,4 +43,5 @@ object Version {
     const val ESPRESSO_CORE = "3.4.0"
     const val MOCKATIVE = "1.2.6"
     const val KOTEST = "5.5.1"
+    const val MOCKK = "1.13.2"
 }
