@@ -18,6 +18,14 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          submodules: recursive
+
+      - name: Setup Google Services for Staging
+        env:
+          ANDROID_GOOGLE_SERVICE_INFO: ${{ secrets.ANDROID_GOOGLE_SERVICE_INFO }}
+        run: |
+          touch android/google-services.json
+          echo $ANDROID_GOOGLE_SERVICE_INFO > ./android/google-services.json
 
       - name: Setup Android Signing
         env:
@@ -28,6 +36,13 @@ jobs:
           echo $ANDROID_RELEASE_KEYSTORE | base64 --decode > config/release.keystore
           touch signing.properties
           echo $ANDROID_SIGNING_PROPERTIES | base64 --decode > signing.properties
+
+      - name: Setup Konfig Properties
+        env:
+          KMM_KONFIG_PROPERTIES:  ${{ secrets.KMM_KONFIG_PROPERTIES }}
+        run: |
+          touch buildKonfig.properties
+          echo $KMM_KONFIG_PROPERTIES | base64 --decode > buildKonfig.properties
 
       - name: Setup Java JDK
         uses: actions/setup-java@v2.1.0
@@ -47,4 +62,4 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build and Test
-        run: ./gradlew allTests
+        run: ./gradlew testDebugUnitTest && ./gradlew testStagingDebugUnitTest

@@ -16,22 +16,6 @@ defaults:
     working-directory: ios
 
 jobs:
-  lint:
-    name: Run SwiftLint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: SwiftLint for files changed in the PR
-        uses: norio-nomura/action-swiftlint@3.2.1
-        env:
-          DIFF_BASE: ${{ github.base_ref }}
-        with:
-          args: --strict
-
   deploy_ios_staging_to_firebase:
     name: Deploy iOS staging to Firebase
     runs-on: macos-latest
@@ -44,6 +28,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          submodules: recursive
 
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.4.1
@@ -72,6 +57,13 @@ jobs:
           echo $ANDROID_RELEASE_KEYSTORE | base64 --decode > ../config/release.keystore
           touch ../signing.properties
           echo $ANDROID_SIGNING_PROPERTIES | base64 --decode > ../signing.properties
+
+      - name: Setup Konfig Properties
+        env:
+          KMM_KONFIG_PROPERTIES: ${{ secrets.KMM_KONFIG_PROPERTIES }}
+        run: |
+          touch ../buildKonfig.properties
+          echo $KMM_KONFIG_PROPERTIES | base64 --decode > ../buildKonfig.properties
 
       - name: Setup Java JDK
         uses: actions/setup-java@v2.1.0

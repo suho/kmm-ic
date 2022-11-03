@@ -1,29 +1,21 @@
-import java.io.File
-import java.io.FileInputStream
-import java.util.*
-
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    id("com.google.gms.google-services")
+    id(Plugin.ANDROID_APPLICATION)
+    id(Plugin.GOOGLE_SERVICE)
+    kotlin(Plugin.ANDROID)
 }
 
-android {
+val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
 
+android {
     signingConfigs {
-        val keystorePropertiesFile = rootProject.file("signing.properties")
-        if (keystorePropertiesFile.exists()) {
-            create("release") {
-                val keystoreProperties = Properties()
-                keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-                storeFile = rootProject.file("config/release.keystore")
-                storePassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEYSTORE_PASSWORD")
-                keyAlias = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_ALIAS")
-                keyPassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_PASSWORD")
-            }
+        create(BuildType.RELEASE) {
+            storeFile = rootProject.file("config/release.keystore")
+            storePassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEYSTORE_PASSWORD")
+            keyAlias = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_ALIAS")
+            keyPassword = keystoreProperties.getProperty("ANDROID_SIGNING_KEY_PASSWORD")
         }
 
-        getByName("debug") {
+        getByName(BuildType.DEBUG) {
             storeFile = rootProject.file("config/debug.keystore")
             storePassword = "oQ4mL1jY2uX7wD8q"
             keyAlias = "debug-key-alias"
@@ -31,42 +23,98 @@ android {
         }
     }
 
-    compileSdk = 32
+    compileSdk = Version.ANDROID_COMPILE_SDK_VERSION
     defaultConfig {
         applicationId = "co.nimblehq.ic.kmm.suv.android"
-        minSdk = 23
-        targetSdk = 32
-        versionCode = 1
-        versionName = "0.1.0"
+        minSdk = Version.ANDROID_MIN_SDK_VERSION
+        targetSdk = Version.ANDROID_TARGET_SDK_VERSION
+        versionCode = Version.ANDROID_VERSION_CODE
+        versionName = Version.ANDROID_VERSION_NAME
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        getByName("release") {
+        getByName(BuildType.RELEASE) {
             isMinifyEnabled = false
-            signingConfig = signingConfigs["release"]
+            signingConfig = signingConfigs[BuildType.RELEASE]
         }
 
-        getByName("debug") {
+        getByName(BuildType.DEBUG) {
             isMinifyEnabled = false
-            signingConfig = signingConfigs["debug"]
+            signingConfig = signingConfigs[BuildType.DEBUG]
         }
     }
-    flavorDimensions += "version"
+    flavorDimensions += Flavor.DIMENSION
     productFlavors {
-        create("staging") {
+        create(Flavor.STAGING) {
             applicationIdSuffix = ".staging"
         }
-        create("production") {
+        create(Flavor.PRODUCTION) {
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = Version.KOTLIN_JVM_TARGET
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Version.COMPOSE_VERSION
+    }
+    testOptions {
+        animationsDisabled = true
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging = true
+            }
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1,*.md}"
         }
     }
 }
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(project(Module.SHARED))
 
-    implementation(platform("com.google.firebase:firebase-bom:30.3.2"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(platform(Dependency.FIREBASE_BOM))
+    implementation(Dependency.FIREBASE_ANALYTICS)
+    implementation(Dependency.MATERIAL)
+    implementation(Dependency.APPCOMPAT)
+    implementation(Dependency.CONSTRAINT_LAYOUT)
 
-    implementation("com.google.android.material:material:1.6.1")
-    implementation("androidx.appcompat:appcompat:1.5.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    // Compose
+    implementation(Dependency.CORE_KTX)
+    implementation(Dependency.COMPOSE_UI)
+    implementation(Dependency.COMPOSE_MATERIAL)
+    implementation(Dependency.COMPOSE_UI_PREVIEW)
+    implementation(Dependency.LIFECYCLE_RUNTIME_KTX)
+    implementation(Dependency.ACTIVITY_COMPOSE)
+    implementation(Dependency.NAVIGATION_COMPOSE)
+    implementation(Dependency.VIEW_MODEL_COMPOSE)
+
+    // Koin
+    implementation(Dependency.KOIN_CORE)
+    implementation(Dependency.KOIN_ANDROID)
+    implementation(Dependency.KOIN_COMPOSE)
+
+    // Debug
+    implementation(Dependency.TIMBER)
+    debugImplementation(Dependency.COMPOSE_UI_TOOLING)
+    debugImplementation(Dependency.COMPOSE_UI_TEST_MANIFEST)
+
+    // Test
+    testImplementation(Dependency.JUNIT)
+    testImplementation(Dependency.MOCKK)
+    testImplementation(Dependency.KOTLIN_COROUTINES_TEST)
+    testImplementation(Dependency.KOTEST_ASSERTIONS)
+    androidTestImplementation(Dependency.MOCKK_ANDROID)
+    androidTestImplementation(Dependency.JUNIT_EXT)
+    androidTestImplementation(Dependency.ESPRESSO_CORE)
+    androidTestImplementation(Dependency.COMPOSE_UI_TEST_JUNIT)
 }

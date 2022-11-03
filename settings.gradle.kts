@@ -9,3 +9,4 @@ pluginManagement {
 rootProject.name = "Surveys"
 include(":android")
 include(":shared")
+include(":jsonapi-kotlin:core")

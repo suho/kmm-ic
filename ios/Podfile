@@ -10,12 +10,14 @@ def testing_pods
 end
 
 def kmm_pods
-  pod 'shared', :path => '../shared'
+  pod 'Shared', :path => '../shared'
+  pod 'KMPNativeCoroutinesCombine','0.12.6'
 end
 
 target 'Surveys' do
   # UI
   pod 'Kingfisher'
+  pod 'FlowStacks'
 
   # Storage
   pod 'KeychainAccess'
