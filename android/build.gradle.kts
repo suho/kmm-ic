@@ -97,6 +97,7 @@ dependencies {
     implementation(Dependency.ACTIVITY_COMPOSE)
     implementation(Dependency.NAVIGATION_COMPOSE)
     implementation(Dependency.VIEW_MODEL_COMPOSE)
+    implementation(Dependency.COIL_COMPOSE)
 
     // Koin
     implementation(Dependency.KOIN_CORE)

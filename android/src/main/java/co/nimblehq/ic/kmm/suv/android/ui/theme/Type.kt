@@ -16,6 +16,10 @@ private val Neuzeit = FontFamily(
 // Set of Material typography styles to start with
 val Typography = Typography(
     defaultFontFamily = Neuzeit,
+    h4 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 34.sp
+    ),
     subtitle1 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 17.sp
@@ -23,5 +27,9 @@ val Typography = Typography(
     subtitle2 = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 17.sp
+    ),
+    caption = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 13.sp
     )
 )
