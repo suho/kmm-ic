@@ -112,8 +112,3 @@ custom_rules:
     message: 'Collection should be either on the same line, or one per line.'
     regex: '\[\n([^\[\(])*(,([^\n\r])*[\w]+)([^\[])*\n(\s)*]'
     severity: warning
-  multiline_arguments_one_per_line:
-    name: 'Multiline Arguments One Per Line'
-    message: 'Arguments should be either on the same line, or one per line.'
-    regex: '[^\n\r]\(\n([^\(])*([^\n\r],([^\n\r])*[\w]+)([^\)])*\n(\s)*\)'
-    severity: warning
