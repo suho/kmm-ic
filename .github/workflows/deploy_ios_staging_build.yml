@@ -18,7 +18,7 @@ defaults:
 jobs:
   deploy_ios_staging_to_firebase:
     name: Deploy iOS staging to Firebase
-    runs-on: macos-latest
+    runs-on: macos-12
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.5.0

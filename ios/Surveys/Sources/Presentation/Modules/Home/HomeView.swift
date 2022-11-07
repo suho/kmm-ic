@@ -10,12 +10,38 @@ import SwiftUI
 
 struct HomeView: View {
 
+    @StateObject var viewModel = HomeViewModel()
+
     var body: some View {
+        switch viewModel.state {
+        case .idle:
+            homeContent()
+                .onAppear {
+                    viewModel.loadProfile()
+                }
+        case .loading:
+            homeContent(isLoading: true)
+        case .loaded:
+            homeContent()
+        case let .failure(message):
+            homeContent()
+                .alert(isPresented: .constant(true), content: {
+                    Alert(
+                        title: Text(Localize.generalTextSurveys()),
+                        message: Text(message),
+                        dismissButton: Alert.Button.default(Text(Localize.generalButtonGotIt()))
+                    )
+                })
+        }
+    }
+
+    private func homeContent(isLoading: Bool = false) -> some View {
         VStack {
             // TODO: - Demo data for POW
             HomeHeaderView(
-                title: "Monday, JUNE 16",
-                imageURLString: "https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375__340.png"
+                title: viewModel.today,
+                imageURLString: viewModel.avatarURLString,
+                isLoading: isLoading
             )
             .padding(EdgeInsets(top: 0.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
             Spacer()

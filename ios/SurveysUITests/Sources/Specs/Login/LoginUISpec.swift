@@ -50,9 +50,9 @@ final class LoginUISpec: QuickSpec {
                         app.tapButton("Log in")
                     }
 
-                    it("shows home screen") {
-                        // TODO: - Update this when having a Home screen
-                        expect(app.staticTexts["Home"].exists).toEventually(equal(true), timeout: .seconds(5))
+                    it("shows home screen with today label") {
+                        expect(app.staticTexts[AccessibilityIdentifier.Home.today].exists)
+                            .toEventually(equal(true), timeout: .seconds(5))
                     }
                 }
 

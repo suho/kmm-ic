@@ -59,6 +59,7 @@ PODS:
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
   - Shared (1.0)
+  - ShimmerView (0.5.0)
   - Sourcery (1.8.2):
     - Sourcery/CLI-Only (= 1.8.2)
   - Sourcery/CLI-Only (1.8.2)
@@ -77,6 +78,7 @@ DEPENDENCIES:
   - Quick
   - R.swift
   - Shared (from `../shared`)
+  - ShimmerView
   - Sourcery
   - SwiftFormat/CLI
   - SwiftLint
@@ -104,6 +106,7 @@ SPEC REPOS:
     - Quick
     - R.swift
     - R.swift.Library
+    - ShimmerView
     - Sourcery
     - SwiftFormat
     - SwiftLint
@@ -135,10 +138,11 @@ SPEC CHECKSUMS:
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   Shared: 3b057278ed1516767bfd51d2f8286a2b8920cbca
+  ShimmerView: ffde81304d8fb29127cbce492d14430dca288ebb
   Sourcery: ad4aba88367fbaf0c1ae6ec4ba3282db1b571624
   SwiftFormat: 64ac3f15bbfc3c830103a17340bcc5b60d9a3acd
   SwiftLint: 284cea64b6187c5d6bd83e9a548a64104d546447
 
-PODFILE CHECKSUM: 81eee5299be0e32eb4109f593a9ca7f36333a80d
+PODFILE CHECKSUM: 46debf4f7af5b64b681ac5458811a5accfcc8edc
 
 COCOAPODS: 1.11.3
