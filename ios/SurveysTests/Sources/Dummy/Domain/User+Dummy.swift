@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  User+Dummy.swift
 //  SurveysTests
 //
 //  Created by Su Ho on 07/11/2022.

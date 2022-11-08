@@ -29,7 +29,7 @@ struct HomeView: View {
                     Alert(
                         title: Text(Localize.generalTextSurveys()),
                         message: Text(message),
-                        dismissButton: Alert.Button.default(Text(Localize.generalButtonGotIt()))
+                        dismissButton: .default(Text(Localize.generalButtonGotIt()))
                     )
                 })
         }
