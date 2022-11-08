@@ -62,7 +62,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `When update email, the uiState's email should be changed`() = runTest {
+    fun `When update email, the email should be changed`() = runTest {
         val expectedEmail = "new@nimblehq.co"
         loginViewModel = LoginViewModel(mockLogInUseCase)
         loginViewModel.updateEmail(expectedEmail)
@@ -71,7 +71,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `When update password, the uiState's password should be changed`() = runTest {
+    fun `When update password, the password should be changed`() = runTest {
         val expectedPassword = "newPassword"
         loginViewModel = LoginViewModel(mockLogInUseCase)
         loginViewModel.updatePassword(expectedPassword)
@@ -80,7 +80,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `When the error alert is shown, the uiState's errorMessage should be null`() = runTest {
+    fun `When the error alert is shown, the errorMessage should be null`() = runTest {
         loginViewModel = LoginViewModel(mockLogInUseCase)
         loginViewModel.dismissError()
 
