@@ -27,6 +27,7 @@ object Dependency {
     const val KTOR_CIO = "io.ktor:ktor-client-cio:${Version.KTOR}"
     const val KTOR_CONTENT_NEGOTIATION = "io.ktor:ktor-client-content-negotiation:${Version.KTOR}"
     const val KTOR_JSON = "io.ktor:ktor-serialization-kotlinx-json:${Version.KTOR}"
+    const val KTOR_AUTH = "io.ktor:ktor-client-auth:${Version.KTOR}"
     const val KTOR_ANDROID = "io.ktor:ktor-client-android:${Version.KTOR}"
     const val KTOR_IOS = "io.ktor:ktor-client-ios:${Version.KTOR}"
 
