@@ -5,7 +5,10 @@ import co.nimblehq.ic.kmm.suv.data.remote.model.UserApiModel
 import co.nimblehq.ic.kmm.suv.data.remote.model.toUser
 import co.nimblehq.ic.kmm.suv.domain.repository.UserRepository
 import io.kotest.matchers.shouldBe
-import io.mockative.*
+import io.mockative.Mock
+import io.mockative.classOf
+import io.mockative.given
+import io.mockative.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -36,7 +39,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    fun `when getProfile is called - the data source returns user`() = runTest {
+    fun `when getProfile is succeeded - it returns user`() = runTest {
         given(mockUserRemoteDataSource)
             .function(mockUserRemoteDataSource::getProfile)
             .whenInvoked()
@@ -52,7 +55,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    fun `when getProfile is called - the data source returns error`() = runTest {
+    fun `when getProfile is failed - it returns error`() = runTest {
         given(mockUserRemoteDataSource)
             .function(mockUserRemoteDataSource::getProfile)
             .whenInvoked()

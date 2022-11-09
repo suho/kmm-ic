@@ -22,5 +22,3 @@ class UserRemoteDataSourceImpl(private val apiClient: ApiClient): UserRemoteData
         )
     }
 }
-
-

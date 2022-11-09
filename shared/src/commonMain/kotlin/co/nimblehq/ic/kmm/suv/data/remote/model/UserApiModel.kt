@@ -14,9 +14,8 @@ data class UserApiModel(
     val avatarUrl: String
 )
 
-fun UserApiModel.toUser(): User =
-    User(
-        email,
-        name,
-        avatarUrl
-    )
+fun UserApiModel.toUser() = User(
+    email,
+    name,
+    avatarUrl
+)

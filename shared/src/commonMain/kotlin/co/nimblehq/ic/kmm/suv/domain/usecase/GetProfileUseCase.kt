@@ -9,8 +9,8 @@ interface GetProfileUseCase {
 }
 
 class GetProfileUseCaseImpl(
-    private val userRepository: UserRepository,
-    ): GetProfileUseCase {
+    private val userRepository: UserRepository
+) : GetProfileUseCase {
 
     override operator fun invoke(): Flow<User> {
         return userRepository

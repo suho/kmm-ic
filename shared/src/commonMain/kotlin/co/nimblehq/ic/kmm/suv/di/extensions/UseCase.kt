@@ -11,5 +11,5 @@ fun KoinApplication.Companion.start(): KoinApplication = initKoin()
 val Koin.logInUseCase: LogInUseCase
     get() = get()
 
-val Koin.getHomeHeaderUseCase: GetProfileUseCase
+val Koin.getProfileUseCase: GetProfileUseCase
     get() = get()

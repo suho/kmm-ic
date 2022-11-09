@@ -3,7 +3,10 @@ package co.nimblehq.ic.kmm.suv.domain.usecase
 import co.nimblehq.ic.kmm.suv.domain.model.User
 import co.nimblehq.ic.kmm.suv.domain.repository.UserRepository
 import io.kotest.matchers.shouldBe
-import io.mockative.*
+import io.mockative.Mock
+import io.mockative.classOf
+import io.mockative.given
+import io.mockative.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -28,7 +31,7 @@ class GetProfileUseCaseTest {
     }
 
     @Test
-    fun `when invoke is called - the repositories return user and today`() = runTest {
+    fun `when the use case is succeeded - it returns user`() = runTest {
         given(mockUserRepository)
             .function(mockUserRepository::getProfile)
             .whenInvoked()
@@ -38,7 +41,7 @@ class GetProfileUseCaseTest {
     }
 
     @Test
-    fun `when getProfile is called - the repository returns error`() = runTest {
+    fun `when the use case is failed - it returns error`() = runTest {
         given(mockUserRepository)
             .function(mockUserRepository::getProfile)
             .whenInvoked()
