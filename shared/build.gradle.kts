@@ -63,6 +63,9 @@ kotlin {
                 // settings
                 implementation(Dependency.SETTINGS)
                 implementation(Dependency.SETTINGS_SERIALIZATION)
+
+                // Date
+                implementation(Dependency.DATE_TIME)
             }
         }
         val commonTest by getting {

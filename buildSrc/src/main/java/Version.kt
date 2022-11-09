@@ -36,6 +36,7 @@ object Version {
     const val TIMBER = "5.0.1"
     const val SETTINGS = "1.0.0-RC"
     const val SECURITY_CRYPTO = "1.1.0-alpha03"
+    const val DATE_TIME = "0.4.0"
 
     // Tests
     const val JUNIT = "4.13.2"

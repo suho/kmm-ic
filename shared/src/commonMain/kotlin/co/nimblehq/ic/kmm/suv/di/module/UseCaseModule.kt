@@ -1,9 +1,9 @@
 package co.nimblehq.ic.kmm.suv.di.module
 
-import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
-import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCaseImpl
+import co.nimblehq.ic.kmm.suv.domain.usecase.*
 import org.koin.dsl.module
 
 val useCaseModule = module {
     single<LogInUseCase> { LogInUseCaseImpl(get()) }
+    single<GetProfileUseCase> { GetProfileUseCaseImpl(get()) }
 }
