@@ -3,9 +3,7 @@ package co.nimblehq.ic.kmm.suv.data.remote.apiclient.core
 import co.nimblehq.ic.kmm.suv.BuildKonfig
 import co.nimblehq.ic.kmm.suv.data.local.datasource.TokenLocalDataSource
 import co.nimblehq.ic.kmm.suv.data.remote.body.RefreshTokenApiBody
-import co.nimblehq.ic.kmm.suv.data.remote.apiclient.builder.path
 import co.nimblehq.ic.kmm.suv.data.remote.datasource.TokenRemoteDataSource
-import co.nimblehq.ic.kmm.suv.data.remote.model.TokenApiModel
 import co.nimblehq.ic.kmm.suv.domain.model.AppError
 import co.nimblehq.jsonapi.json.JsonApi
 import co.nimblehq.jsonapi.model.JsonApiException
@@ -18,12 +16,14 @@ import io.ktor.client.plugins.auth.*
 import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
-import io.ktor.client.plugins.logging.LogLevel.ALL
+import io.ktor.client.plugins.logging.LogLevel.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.last
 import kotlinx.serialization.json.Json
 
 class ApiClient(
@@ -74,15 +74,17 @@ class ApiClient(
                         }
 
                         refreshTokens {
-                            val token = tokenRemoteDataSource
-                                .refreshToken(RefreshTokenApiBody(
-                                    refreshToken = oldTokens?.refreshToken ?: "")
+                            tokenRemoteDataSource
+                                .refreshToken(
+                                    RefreshTokenApiBody(
+                                        refreshToken = oldTokens?.refreshToken ?: ""
+                                    )
                                 )
                                 .last()
-                            tokenLocalDataSource.save(token)
-                            tokenLocalDataSource.getToken()?.run {
-                                BearerTokens(accessToken, refreshToken)
-                            }
+                                .run {
+                                    tokenLocalDataSource.save(this)
+                                    BearerTokens(accessToken, refreshToken)
+                                }
                         }
                     }
                 }
