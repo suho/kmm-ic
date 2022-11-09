@@ -6,10 +6,10 @@ import co.nimblehq.ic.kmm.suv.data.remote.apiclient.core.ApiClient
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-private const val DEFAULT_HTTP_CLIENT = "default"
+private const val UNAUTHORIZED_API_CLIENT = "UNAUTHORIZED_API_CLIENT"
 
 val remoteModule = module {
-    single { ApiClient(get(), get()) }
-    single(named(DEFAULT_HTTP_CLIENT)) { ApiClient(get()) }
-    single<TokenRemoteDataSource> { TokenRemoteDataSourceImpl(get(named(DEFAULT_HTTP_CLIENT))) }
+    single { ApiClient(get(), get(), get()) }
+    single(named(UNAUTHORIZED_API_CLIENT)) { ApiClient(get()) }
+    single<TokenRemoteDataSource> { TokenRemoteDataSourceImpl(get(named(UNAUTHORIZED_API_CLIENT))) }
 }

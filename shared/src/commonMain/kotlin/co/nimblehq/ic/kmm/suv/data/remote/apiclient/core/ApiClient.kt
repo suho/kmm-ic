@@ -4,6 +4,7 @@ import co.nimblehq.ic.kmm.suv.BuildKonfig
 import co.nimblehq.ic.kmm.suv.data.local.datasource.TokenLocalDataSource
 import co.nimblehq.ic.kmm.suv.data.remote.body.RefreshTokenApiBody
 import co.nimblehq.ic.kmm.suv.data.remote.apiclient.builder.path
+import co.nimblehq.ic.kmm.suv.data.remote.datasource.TokenRemoteDataSource
 import co.nimblehq.ic.kmm.suv.data.remote.model.TokenApiModel
 import co.nimblehq.ic.kmm.suv.domain.model.AppError
 import co.nimblehq.jsonapi.json.JsonApi
@@ -25,7 +26,11 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.json.Json
 
-class ApiClient(engine: HttpClientEngine, tokenLocalDataSource: TokenLocalDataSource? = null) {
+class ApiClient(
+    engine: HttpClientEngine,
+    tokenLocalDataSource: TokenLocalDataSource? = null,
+    tokenRemoteDataSource: TokenRemoteDataSource? = null
+) {
 
     val httpClient: HttpClient
     val json = Json {
@@ -55,13 +60,12 @@ class ApiClient(engine: HttpClientEngine, tokenLocalDataSource: TokenLocalDataSo
                 json(json)
             }
 
-            tokenLocalDataSource?.let {
+            if (tokenLocalDataSource != null && tokenRemoteDataSource != null) {
                 install(Auth) {
                     bearer {
                         loadTokens {
-                            val token = it.getToken()
-                            token?.let {
-                                BearerTokens(it.accessToken, it.refreshToken)
+                            tokenLocalDataSource.getToken()?.run {
+                                BearerTokens(accessToken, refreshToken)
                             }
                         }
 
@@ -70,10 +74,14 @@ class ApiClient(engine: HttpClientEngine, tokenLocalDataSource: TokenLocalDataSo
                         }
 
                         refreshTokens {
-                            val token = refreshToken(oldTokens?.refreshToken ?: "").last()
+                            val token = tokenRemoteDataSource
+                                .refreshToken(RefreshTokenApiBody(
+                                    refreshToken = oldTokens?.refreshToken ?: "")
+                                )
+                                .last()
                             tokenLocalDataSource.save(token)
-                            tokenLocalDataSource.getToken()?.let {
-                                BearerTokens(it.accessToken, it.refreshToken)
+                            tokenLocalDataSource.getToken()?.run {
+                                BearerTokens(accessToken, refreshToken)
                             }
                         }
                     }
@@ -97,14 +105,5 @@ class ApiClient(engine: HttpClientEngine, tokenLocalDataSource: TokenLocalDataSo
                 throw AppError(message)
             }
         }
-    }
-
-    private fun refreshToken(token: String): Flow<TokenApiModel> {
-        val body = RefreshTokenApiBody(refreshToken = token)
-        return body(HttpRequestBuilder().apply {
-            path("/v1/oauth/token")
-            method = HttpMethod.Post
-            setBody(body)
-        })
     }
 }
