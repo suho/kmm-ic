@@ -12,6 +12,6 @@ extension AccessibilityIdentifier {
 
         static let today = "today"
         static let currentDate = "currentDate"
-        static let avatar = "currentDate"
+        static let avatar = "avatar"
     }
 }
