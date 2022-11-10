@@ -15,6 +15,8 @@ object Dependency {
     const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Version.ACTIVITY_COMPOSE}"
     const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Version.NAVIGATION_COMPOSE}"
     const val VIEW_MODEL_COMPOSE = "androidx.lifecycle:lifecycle-viewmodel-compose:${Version.VIEW_MODEL_COMPOSE}"
+    const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Version.COIL_COMPOSE}"
+
 
     // Kotlinx
     const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES_CORE}"
