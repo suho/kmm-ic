@@ -1,5 +1,5 @@
 //
-//  Token.swift
+//  Token+Dummy.swift
 //  SurveysTests
 //
 //  Created by Su Ho on 23/10/2022.
