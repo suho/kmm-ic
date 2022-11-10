@@ -26,7 +26,7 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
     errorMessage?.let {
         ErrorAlertDialog(
             message = it,
-            onButtonClick = { viewModel.dismissError() }
+            onButtonClick = viewModel::dismissError
         )
     }
 

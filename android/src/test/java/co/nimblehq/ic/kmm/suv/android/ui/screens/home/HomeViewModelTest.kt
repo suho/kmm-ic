@@ -1,16 +1,12 @@
 package co.nimblehq.ic.kmm.suv.android.ui.screens.home
 
-import androidx.activity.compose.setContent
 import co.nimblehq.ic.kmm.suv.android.rule.MainCoroutinesRule
-import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginViewModel
 import co.nimblehq.ic.kmm.suv.domain.model.AppError
+import co.nimblehq.ic.kmm.suv.domain.model.User
 import co.nimblehq.ic.kmm.suv.domain.usecase.GetProfileUseCase
-import co.nimblehq.ic.kmm.suv.domain.usecase.LogInUseCase
 import co.nimblehq.ic.kmm.suv.helper.date.DateTime
-import co.nimblehq.ic.kmm.suv.helper.date.DateTimeFormatter
 import co.nimblehq.ic.kmm.suv.helper.date.DateTimeFormatterImpl
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +29,7 @@ class HomeViewModelTest {
 
     private val mockGetProfileUseCase: GetProfileUseCase = mockk()
     private val mockDateTime: DateTime = mockk()
+    private val mockUser = User("email", "name", "avatarUrl")
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -41,7 +38,7 @@ class HomeViewModelTest {
     @Before
     fun setup() {
         every { mockDateTime.today() } returns LocalDate(2022, 11, 8)
-        every { mockGetProfileUseCase() } returns flowOf(mockk())
+        every { mockGetProfileUseCase() } returns flowOf(mockUser)
         viewModel = HomeViewModel(mockGetProfileUseCase, mockDateTime, DateTimeFormatterImpl())
     }
 
@@ -55,7 +52,7 @@ class HomeViewModelTest {
         viewModel.loadProfile()
         advanceUntilIdle()
 
-        viewModel.avatarUrlString.value shouldNotBe null
+        viewModel.avatarUrlString.value shouldBe mockUser.avatarUrl
     }
 
     @Test

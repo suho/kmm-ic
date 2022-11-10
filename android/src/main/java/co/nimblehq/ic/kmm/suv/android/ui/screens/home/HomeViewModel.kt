@@ -6,17 +6,14 @@ import co.nimblehq.ic.kmm.suv.domain.usecase.GetProfileUseCase
 import co.nimblehq.ic.kmm.suv.helper.date.DateFormat
 import co.nimblehq.ic.kmm.suv.helper.date.DateTime
 import co.nimblehq.ic.kmm.suv.helper.date.DateTimeFormatter
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getProfileUseCase: GetProfileUseCase,
     dateTime: DateTime,
     dateTimeFormatter: DateTimeFormatter
-    ) : BaseViewModel() {
+) : BaseViewModel() {
 
     private val _currentDate = MutableStateFlow("")
     val currentDate: StateFlow<String> = _currentDate.asStateFlow()
@@ -36,11 +33,10 @@ class HomeViewModel(
         viewModelScope.launch {
             getProfileUseCase()
                 .catch { e ->
-                    hideLoading()
                     showError(e.message)
                 }
+                .onCompletion { hideLoading() }
                 .collect {
-                    hideLoading()
                     _avatarUrlString.value = it.avatarUrl
                 }
         }
