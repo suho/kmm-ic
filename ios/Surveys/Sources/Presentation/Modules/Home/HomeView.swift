@@ -37,7 +37,6 @@ struct HomeView: View {
 
     private func homeContent(isLoading: Bool = false) -> some View {
         VStack {
-            // TODO: - Demo data for POW
             HomeHeaderView(
                 title: viewModel.today,
                 imageURLString: viewModel.avatarURLString,
