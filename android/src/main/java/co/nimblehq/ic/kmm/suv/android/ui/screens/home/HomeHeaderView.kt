@@ -41,7 +41,7 @@ fun HomeHeaderView(title: String, imageUrlString: String, isLoading: Boolean) {
                             highlightColor = Color.White,
                         ),
                     )
-                    .semantics { contentDescription = HomeContentDescription.CURRENT_DATE.value },
+                    .semantics { contentDescription = HomeContentDescription.CURRENT_DATE },
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
@@ -57,7 +57,7 @@ fun HomeHeaderView(title: String, imageUrlString: String, isLoading: Boolean) {
                             highlightColor = Color.White,
                         ),
                     )
-                    .semantics { contentDescription = HomeContentDescription.TODAY_TEXT.value }
+                    .semantics { contentDescription = HomeContentDescription.TODAY_TEXT }
             )
         }
         AsyncImage(
@@ -76,7 +76,7 @@ fun HomeHeaderView(title: String, imageUrlString: String, isLoading: Boolean) {
                     ),
                 )
                 .semantics {
-                    contentDescription = HomeContentDescription.AVATAR.value
+                    contentDescription = HomeContentDescription.AVATAR
                 }
         )
     }
