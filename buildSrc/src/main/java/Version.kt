@@ -25,6 +25,7 @@ object Version {
     const val NAVIGATION_COMPOSE = "2.5.1"
     const val VIEW_MODEL_COMPOSE = "2.5.1"
     const val COIL_COMPOSE = "2.2.2"
+    const val ACCOMPANIST = "0.25.1"
 
     const val KOIN = "3.2.0"
     const val KOIN_ANDROID = "3.3.0"
