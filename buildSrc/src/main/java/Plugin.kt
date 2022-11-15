@@ -13,4 +13,5 @@ object Plugin {
     const val NATIVE_COROUTINES = "com.rickclephas.kmp.nativecoroutines"
     const val BUILD_KONFIG = "com.codingfeline.buildkonfig"
     const val KSP = "com.google.devtools.ksp"
+    const val REALM = "io.realm.kotlin"
 }

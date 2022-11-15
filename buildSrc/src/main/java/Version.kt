@@ -39,6 +39,7 @@ object Version {
     const val SETTINGS = "1.0.0-RC"
     const val SECURITY_CRYPTO = "1.1.0-alpha03"
     const val DATE_TIME = "0.4.0"
+    const val REALM = "1.3.0"
 
     // Tests
     const val JUNIT = "4.13.2"
