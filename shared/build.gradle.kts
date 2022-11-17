@@ -1,5 +1,6 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
 
 plugins {
     kotlin(Plugin.MULTIPLATFORM)
@@ -30,12 +31,16 @@ kotlin {
         framework {
             baseName = "Shared"
         }
-        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_STAGING] = NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_PRODUCTION] = NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_STAGING] = NativeBuildType.RELEASE
-        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_PRODUCTION] = NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_STAGING] =
+            NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_PRODUCTION] =
+            NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_STAGING] =
+            NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_PRODUCTION] =
+            NativeBuildType.RELEASE
     }
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -81,6 +86,7 @@ kotlin {
                 implementation(Dependency.KOTEST_FRAMEWORK)
                 implementation(Dependency.KOTEST_ASSERTIONS)
                 implementation(Dependency.KOTEST_PROPERTY)
+                implementation("app.cash.turbine:turbine:0.12.1")
             }
         }
         val androidMain by getting {
@@ -199,7 +205,10 @@ tasks.withType<com.google.devtools.ksp.gradle.KspTask>().configureEach {
     when (this) {
         is com.google.devtools.ksp.gradle.KspTaskNative -> {
             this.compilerPluginOptions.addPluginArgument(
-                tasks.named<org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile>(compilation.compileKotlinTaskName).get().compilerPluginOptions
+                tasks
+                    .named<KotlinNativeCompile>(compilation.compileKotlinTaskName)
+                    .get()
+                    .compilerPluginOptions
             )
         }
     }

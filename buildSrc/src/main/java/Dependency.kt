@@ -76,4 +76,5 @@ object Dependency {
     const val MOCKK = "io.mockk:mockk:${Version.MOCKK}"
     const val KOTLIN_COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.COROUTINES_CORE}"
     const val MOCKK_ANDROID = "io.mockk:mockk-android:${Version.MOCKK}"
+    const val TURBINE = "app.cash.turbine:turbine:${Version.TURBINE}"
 }
