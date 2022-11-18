@@ -36,17 +36,53 @@ struct HomeView: View {
     }
 
     private func homeContent(isLoading: Bool = false) -> some View {
-        VStack {
-            HomeHeaderView(
-                title: viewModel.today,
-                imageURLString: viewModel.avatarURLString,
-                isLoading: isLoading
-            )
-            .padding(EdgeInsets(top: 0.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-            Spacer()
+        GeometryReader { proxy in
+            ZStack {
+                // TODO: - Remove dummy data later
+                HomeSurveysView(
+                    model: .init(surveys: [
+                        .init(
+                            title: "Scarlett Bangkok",
+                            description: "We'd love to hear from you!",
+                            isActive: true,
+                            imageURLString: "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l"
+                        ),
+                        .init(
+                            title: "ibis Bangkok Riverside",
+                            description: "We'd love to hear from you!",
+                            isActive: true,
+                            imageURLString: "https://dhdbhh0jsld0o.cloudfront.net/m/287db81c5e4242412cc0_l"
+                        ),
+                        .init(
+                            title: "21 on Rajah",
+                            description: "We'd love to hear from you!",
+                            isActive: true,
+                            imageURLString: "https://dhdbhh0jsld0o.cloudfront.net/m/0221e768b99dc3576210_l"
+                        )
+                    ]),
+                    configuration: .init(
+                        bottomPadding: proxy.safeAreaInsets.bottom
+                    )
+                )
+                VStack {
+                    HomeHeaderView(
+                        title: viewModel.today,
+                        imageURLString: viewModel.avatarURLString,
+                        isLoading: isLoading
+                    )
+                    .padding(EdgeInsets(
+                        top: proxy.safeAreaInsets.top,
+                        leading: 20.0,
+                        bottom: 0.0,
+                        trailing: 20.0
+                    ))
+                    Spacer()
+                }
+            }
+            .edgesIgnoringSafeArea(.all)
+            .background(Color.black)
+            .preferredColorScheme(.dark)
         }
-        .background(Color.black) // TODO: - Remove this after implement surveys list feature
-        .preferredColorScheme(.dark)
     }
 }
 

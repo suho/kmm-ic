@@ -27,7 +27,6 @@ opt_in_rules:
   - explicit_init
   - fallthrough
   - fatal_error_message
-  - file_name
   - file_types_order
   - first_where
   - force_unwrapping
