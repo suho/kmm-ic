@@ -7,9 +7,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SurveyApiModel(
+    @SerialName("id")
     val id: String,
+    @SerialName("type")
     val type: String,
+    @SerialName("title")
     val title: String,
+    @SerialName("description")
     val description: String,
     @SerialName("is_active")
     val isActive: Boolean,
