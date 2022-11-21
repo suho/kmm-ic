@@ -28,7 +28,6 @@ fun SurveyApiModel.toSurvey() = Survey(
     coverImageUrl
 )
 
-
 fun SurveyApiModel.toSurveyRealmObject(): SurveyRealmObject {
     val survey = SurveyRealmObject()
     survey.id = id
