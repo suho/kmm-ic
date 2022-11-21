@@ -26,4 +26,9 @@ extension Container {
     static let sharedDateTimeFormatter = Factory {
         KoinApplication.inject(\.dateTimeFormatter) as Shared.DateTimeFormatter
     }
+
+    static let getSurveysUseCase = Factory { Surveys.GetSurveysUseCase() as GetSurveysUseCaseProtocol }
+    static let sharedGetSurveysUseCase = Factory {
+        KoinApplication.inject(\.getSurveysUseCase) as Shared.GetSurveysUseCase
+    }
 }

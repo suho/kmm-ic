@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import ShimmerView
 
 struct HomeSurveysView: View {
 
@@ -14,13 +15,14 @@ struct HomeSurveysView: View {
 
     private let configuration: UIConfiguration
     private let model: UIModel
+    private let isLoading: Bool
 
     private var currentItem: SurveyUIModel? {
         guard model.surveys.indices.contains(currentPage) else { return nil }
         return model.surveys[currentPage]
     }
 
-    var body: some View {
+    private var content: some View {
         ZStack {
             GeometryReader { proxy in
                 if let item = currentItem {
@@ -100,9 +102,45 @@ struct HomeSurveysView: View {
         }
     }
 
-    init(model: UIModel, configuration: UIConfiguration) {
+    private var loadingContent: some View {
+        let shimmerElementHeight: CGFloat = 18.0
+        let paddingHorizontal: CGFloat = 20.0
+        return ShimmerScope(isAnimating: .constant(true)) {
+            ZStack {
+                VStack(alignment: .leading) {
+                    Spacer()
+                    ShimmerElement(width: 45.0, height: shimmerElementHeight).cornerRadius(shimmerElementHeight / 2.0)
+
+                    ShimmerElement(width: 250.0, height: shimmerElementHeight).cornerRadius(shimmerElementHeight / 2.0)
+                    ShimmerElement(width: 150.0, height: shimmerElementHeight).cornerRadius(shimmerElementHeight / 2.0)
+
+                    ShimmerElement(width: 320.0, height: shimmerElementHeight).cornerRadius(shimmerElementHeight / 2.0)
+                    ShimmerElement(width: 220.0, height: shimmerElementHeight).cornerRadius(shimmerElementHeight / 2.0)
+                }
+                .padding(
+                    EdgeInsets(
+                        top: 0.0,
+                        leading: paddingHorizontal,
+                        bottom: configuration.bottomPadding,
+                        trailing: paddingHorizontal
+                    )
+                )
+            }
+        }
+    }
+
+    var body: some View {
+        if isLoading {
+            loadingContent
+        } else {
+            content
+        }
+    }
+
+    init(model: UIModel, configuration: UIConfiguration, isLoading: Bool) {
         self.model = model
         self.configuration = configuration
+        self.isLoading = isLoading
     }
 }
 
@@ -153,7 +191,8 @@ struct HomeSurveysView_Previews: PreviewProvider {
             ]),
             configuration: .init(
                 bottomPadding: 54.0
-            )
+            ),
+            isLoading: false
         )
         .frame(width: UIScreen.main.bounds.width)
         .edgesIgnoringSafeArea(.all)
