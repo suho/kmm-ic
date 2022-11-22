@@ -57,6 +57,25 @@ final class HomeUISpec: QuickSpec {
                     let detailSurveyButton = app.buttons[AccessibilityIdentifier.Home.detailSurvey]
                     expect(detailSurveyButton.exists).toEventually(equal(true), timeout: .seconds(5))
                 }
+
+                it("it shows list of surveys") {
+                    let pageControl = app.pageIndicators[AccessibilityIdentifier.Home.pageControl]
+                    expect(pageControl.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let firstSurveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
+                    let firstSurveyTitle = firstSurveyTitleText.label
+                    app.swipeLeft()
+
+                    let nextSurveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
+                    let nextSurveyTitle = nextSurveyTitleText.label
+                    expect(firstSurveyTitle) != nextSurveyTitle
+
+                    app.swipeRight()
+
+                    let previousSurveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
+                    let previousSurveyTitle = previousSurveyTitleText.label
+                    expect(firstSurveyTitle) == previousSurveyTitle
+                }
             }
         }
     }
