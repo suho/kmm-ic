@@ -1,4 +1,4 @@
-package co.nimblehq.ic.kmm.suv.android.ui.screens.home
+package co.nimblehq.ic.kmm.suv.android.ui.screens.home.views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -13,6 +13,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.HomeContentDescription
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import coil.compose.AsyncImage
 import com.google.accompanist.placeholder.PlaceholderHighlight
