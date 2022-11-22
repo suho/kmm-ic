@@ -36,7 +36,7 @@ class GetSurveysUseCaseTest {
     fun `when the use case is succeeded - it returns surveys`() = runTest {
         given(mockSurveyRepository)
             .function(mockSurveyRepository::getSurveys)
-            .whenInvokedWith(any(), any())
+            .whenInvokedWith(any(), any(), any())
             .thenReturn(flow { emit(listOf(mockSurvey)) })
 
         useCase(1, 1).test {
@@ -49,7 +49,7 @@ class GetSurveysUseCaseTest {
     fun `when the use case is failed - it returns error`() = runTest {
         given(mockSurveyRepository)
             .function(mockSurveyRepository::getSurveys)
-            .whenInvokedWith(any(), any())
+            .whenInvokedWith(any(), any(), any())
             .thenReturn(flow { throw mockThrowable })
 
         useCase(1, 1).test {

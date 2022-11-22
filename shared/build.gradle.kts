@@ -86,7 +86,7 @@ kotlin {
                 implementation(Dependency.KOTEST_FRAMEWORK)
                 implementation(Dependency.KOTEST_ASSERTIONS)
                 implementation(Dependency.KOTEST_PROPERTY)
-                implementation("app.cash.turbine:turbine:0.12.1")
+                implementation(Dependency.TURBINE)
             }
         }
         val androidMain by getting {
