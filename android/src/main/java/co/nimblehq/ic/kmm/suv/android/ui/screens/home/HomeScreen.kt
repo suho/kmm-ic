@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.ic.kmm.suv.android.ui.components.ErrorAlertDialog
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.HomeHeaderView
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.HomeSurveysUiModel
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.HomeSurveysView
 import org.koin.androidx.compose.getViewModel
 
@@ -36,41 +37,47 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
     }
 
     // TODO: Update survey data later
-    HomeScreenContent(
+    val uiModel = HomeUiModel(
         currentDate,
         avatarUrlString,
-        "Working from home Check-In Check-In",
-        "We would like to know what are your goals and skills you wanted!",
+        HomeSurveysUiModel(
+            "Working from home Check-In Check-In",
+            "We would like to know what are your goals and skills you wanted!",
+            "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
+            3,
+            1,
+            isLoading
+        ),
         isLoading
+    )
+    HomeScreenContent(
+        uiModel
     )
 }
 
+private data class HomeUiModel(
+    val currentDate: String,
+    val avatarUrlString: String,
+    val surveysUiModel: HomeSurveysUiModel,
+    val isLoading: Boolean
+)
+
 @Composable
-private fun HomeScreenContent(
-    currentDate: String,
-    imageUrlString: String,
-    surveyTitle: String,
-    surveyDescription: String,
-    isLoading: Boolean
-) {
+private fun HomeScreenContent(uiModel: HomeUiModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        HomeSurveysView(
-            surveyTitle,
-            surveyDescription,
-            isLoading
-        )
+        HomeSurveysView(uiModel.surveysUiModel)
         Column(
             modifier = Modifier
                 .statusBarsPadding()
         ) {
             HomeHeaderView(
-                currentDate,
-                imageUrlString,
-                isLoading
+                uiModel.currentDate,
+                uiModel.avatarUrlString,
+                uiModel.isLoading
             )
         }
     }
@@ -80,11 +87,19 @@ private fun HomeScreenContent(
 @Composable
 fun HomeScreenContentLoadingPreview() {
     HomeScreenContent(
-        "TUESDAY, NOVEMBER 8",
-        "image_url",
-        "Working from home Check-In",
-        "We would like to know what are your goals and skills you wanted",
-        true
+        HomeUiModel(
+            "TUESDAY, NOVEMBER 8",
+            "image_url",
+            HomeSurveysUiModel(
+                "Working from home Check-In",
+                "We would like to know what are your goals and skills you wanted",
+                "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
+                3,
+                1,
+                true
+            ),
+            true
+        )
     )
 }
 
@@ -92,10 +107,18 @@ fun HomeScreenContentLoadingPreview() {
 @Composable
 fun HomeScreenContentPreview() {
     HomeScreenContent(
-        "TUESDAY, NOVEMBER 8",
-        "image_url",
-        "Working from home Check-In",
-        "We would like to know what are your goals and skills you wanted",
-        false
+        HomeUiModel(
+            "TUESDAY, NOVEMBER 8",
+            "image_url",
+            HomeSurveysUiModel(
+                "Working from home Check-In",
+                "We would like to know what are your goals and skills you wanted",
+                "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
+                3,
+                1,
+                false
+            ),
+            false
+        )
     )
 }
