@@ -30,33 +30,35 @@ final class HomeViewModel: ObservableObject {
             .uppercased()
     }
 
-    func loadProfile() {
+    func loadProfileAndSurveys() {
         state = .loading
         getProfileUseCase()
             // TODO: - Improve this later when having paging logic
             .combineLatest(getSurveysUseCase(pageNumber: 1, pageSize: 5))
             .receive(on: RunLoop.main)
             .sink { [weak self] completion in
-                guard let self else { return }
-                switch completion {
-                case let .failure(error):
-                    self.state = .failure(error.appError?.message ?? "-")
-                case .finished: break
+                self.let {
+                    switch completion {
+                    case let .failure(error):
+                        $0.state = .failure(error.appError?.message ?? "-")
+                    case .finished: break
+                    }
                 }
             } receiveValue: { [weak self] user, surveys in
-                guard let self else { return }
-                self.avatarURLString = user.avatarUrl
-                self.surveysUIModel = .init(
-                    surveys: surveys.map {
-                        .init(
-                            title: $0.title,
-                            description: $0.description_,
-                            isActive: $0.isActive,
-                            imageURLString: $0.coverImageUrl
-                        )
-                    }
-                )
-                self.state = .loaded
+                self.let {
+                    $0.avatarURLString = user.avatarUrl
+                    $0.surveysUIModel = .init(
+                        surveys: surveys.map {
+                            .init(
+                                title: $0.title,
+                                description: $0.description_,
+                                isActive: $0.isActive,
+                                imageURLString: $0.coverImageUrl
+                            )
+                        }
+                    )
+                    $0.state = .loaded
+                }
             }
             .store(in: &bag)
     }

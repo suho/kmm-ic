@@ -17,7 +17,7 @@ struct HomeView: View {
         case .idle:
             homeContent()
                 .onAppear {
-                    viewModel.loadProfile()
+                    viewModel.loadProfileAndSurveys()
                 }
         case .loading:
             homeContent(isLoading: true)
@@ -38,7 +38,6 @@ struct HomeView: View {
     private func homeContent(isLoading: Bool = false) -> some View {
         GeometryReader { proxy in
             ZStack {
-                // TODO: - Remove dummy data later
                 HomeSurveysView(
                     model: viewModel.surveysUIModel,
                     configuration: .init(

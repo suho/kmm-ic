@@ -41,6 +41,21 @@ final class HomeUISpec: QuickSpec {
 
                     let avatarImage = app.images[AccessibilityIdentifier.Home.avatar]
                     expect(avatarImage.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let surveyImage = app.images[AccessibilityIdentifier.Home.surveyImage]
+                    expect(surveyImage.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let pageControl = app.pageIndicators[AccessibilityIdentifier.Home.pageControl]
+                    expect(pageControl.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let surveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
+                    expect(surveyTitleText.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let surveyDescriptionText = app.staticTexts[AccessibilityIdentifier.Home.surveyDescription]
+                    expect(surveyDescriptionText.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let detailSurveyButton = app.buttons[AccessibilityIdentifier.Home.detailSurvey]
+                    expect(detailSurveyButton.exists).toEventually(equal(true), timeout: .seconds(5))
                 }
             }
         }

@@ -6,8 +6,8 @@
 //  Copyright © 2022 Nimble. All rights reserved.
 //
 
-import SwiftUI
 import ShimmerView
+import SwiftUI
 
 struct HomeSurveysView: View {
 
@@ -30,6 +30,7 @@ struct HomeSurveysView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: proxy.maxWidth, height: proxy.maxHeight)
+                        .accessibilityIdentifier(AccessibilityIdentifier.Home.surveyImage)
                 }
             }
             .ignoresSafeArea()
@@ -49,6 +50,8 @@ struct HomeSurveysView: View {
                     numberOfPages: model.surveys.count
                 )
                 .frame(width: 15.0 * CGFloat(model.surveys.count), height: 44.0)
+                .accessibilityIdentifier(AccessibilityIdentifier.Home.pageControl)
+
                 if let item = currentItem {
                     Text(item.title)
                         .font(Typography.neuzeitSLTStdBookHeavy.font(size: 28.0))
@@ -57,6 +60,7 @@ struct HomeSurveysView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .transition(.opacity)
                         .id(item.title)
+                        .accessibilityIdentifier(AccessibilityIdentifier.Home.surveyTitle)
                     HStack {
                         Text(item.description)
                             .font(Typography.neuzeitSLTStdBook.font(size: 17.0))
@@ -64,6 +68,7 @@ struct HomeSurveysView: View {
                             .lineLimit(2)
                             .transition(.opacity)
                             .id(item.description)
+                            .accessibilityIdentifier(AccessibilityIdentifier.Home.surveyDescription)
                         Spacer()
                         if item.isActive {
                             Button {
@@ -73,6 +78,7 @@ struct HomeSurveysView: View {
                                     .resizable()
                                     .frame(width: 56.0, height: 56.0)
                             }
+                            .accessibilityIdentifier(AccessibilityIdentifier.Home.detailSurvey)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -164,6 +170,10 @@ extension HomeSurveysView {
         let bottomPadding: CGFloat
     }
 }
+
+extension HomeSurveysView.UIModel: Equatable {}
+
+extension HomeSurveysView.SurveyUIModel: Equatable {}
 
 struct HomeSurveysView_Previews: PreviewProvider {
 

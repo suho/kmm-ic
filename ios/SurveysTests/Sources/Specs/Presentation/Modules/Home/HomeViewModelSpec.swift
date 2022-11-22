@@ -18,6 +18,7 @@ final class HomeViewModelSpec: QuickSpec {
     override func spec() {
 
         var getProfileUseCaseProtocolMock: GetProfileUseCaseProtocolMock!
+        var getSurveysUseCaseProtocolMock: GetSurveysUseCaseProtocolMock!
         var dateTimeMock: DateTimeProtocolMock!
         var viewModel: HomeViewModel!
 
@@ -25,35 +26,30 @@ final class HomeViewModelSpec: QuickSpec {
 
             beforeEach {
                 getProfileUseCaseProtocolMock = GetProfileUseCaseProtocolMock()
+                getSurveysUseCaseProtocolMock = GetSurveysUseCaseProtocolMock()
                 dateTimeMock = DateTimeProtocolMock()
+                dateTimeMock.todayReturnValue = LocalDate(year: 2_022, monthNumber: 11, dayOfMonth: 7)
                 Container.dateTime.register { dateTimeMock }
                 Container.getProfileUseCase.register { getProfileUseCaseProtocolMock }
+                Container.getSurveysUseCase.register { getSurveysUseCaseProtocolMock }
+                viewModel = HomeViewModel()
             }
 
             describe("its init") {
-
-                beforeEach {
-                    dateTimeMock.todayReturnValue = LocalDate(year: 2_022, monthNumber: 11, dayOfMonth: 7)
-                    viewModel = HomeViewModel()
-                }
 
                 it("returns today with the right format") {
                     expect(viewModel.today) == "MONDAY, NOVEMBER 7"
                 }
             }
 
-            describe("its load profile") {
+            describe("its load profile and surveys") {
 
-                beforeEach {
-                    dateTimeMock.todayReturnValue = LocalDate(year: 2_022, monthNumber: 11, dayOfMonth: 7)
-                    viewModel = HomeViewModel()
-                }
-
-                context("when get profile use case emits success") {
+                context("when get profile and get surveys use cases emit success") {
 
                     beforeEach {
                         getProfileUseCaseProtocolMock.callAsFunctionReturnValue = .success(.dummy)
-                        viewModel.loadProfile()
+                        getSurveysUseCaseProtocolMock.callAsFunctionPageNumberPageSizeReturnValue = .success([.dummy])
+                        viewModel.loadProfileAndSurveys()
                     }
 
                     it("state changes to loaded") {
@@ -65,15 +61,32 @@ final class HomeViewModelSpec: QuickSpec {
                         let avatarURLString = try self.awaitPublisher(viewModel.$avatarURLString.collectNext(1)).last
                         expect(avatarURLString) == "avatar_url"
                     }
+
+                    it("get the right surveys list") {
+                        let actualUIModel = try self.awaitPublisher(viewModel.$surveysUIModel.collectNext(1)).last
+                        let expectedSurveys: [Survey] = [.dummy]
+                        let expectedUIModel: HomeSurveysView.UIModel = .init(
+                            surveys: expectedSurveys.map {
+                                .init(
+                                    title: $0.title,
+                                    description: $0.description_,
+                                    isActive: $0.isActive,
+                                    imageURLString: $0.coverImageUrl
+                                )
+                            }
+                        )
+                        expect(actualUIModel) == expectedUIModel
+                    }
                 }
 
                 context("when get profile use case emits fail with app error") {
 
-                    let errorMessage = "Login failed!"
+                    let errorMessage = "Get profile failed!"
 
                     beforeEach {
                         getProfileUseCaseProtocolMock.callAsFunctionReturnValue = .failure(errorMessage)
-                        viewModel.loadProfile()
+                        getSurveysUseCaseProtocolMock.callAsFunctionPageNumberPageSizeReturnValue = .success([.dummy])
+                        viewModel.loadProfileAndSurveys()
                     }
 
                     it("state changes to failed with expected message") {
@@ -86,12 +99,31 @@ final class HomeViewModelSpec: QuickSpec {
 
                     beforeEach {
                         getProfileUseCaseProtocolMock.callAsFunctionReturnValue = .failure(NSError.test)
-                        viewModel.loadProfile()
+                        getSurveysUseCaseProtocolMock.callAsFunctionPageNumberPageSizeReturnValue = .success([.dummy])
+                        viewModel.loadProfileAndSurveys()
                     }
 
                     it("state changes to failed with expected message") {
                         let state = try self.awaitPublisher(viewModel.$state.collectNext(1)).last
                         expect(state) == .failure("-")
+                    }
+                }
+
+                context("when get surveys use case emits fail with app error") {
+
+                    let errorMessage = "Get surveys failed!"
+
+                    beforeEach {
+                        getProfileUseCaseProtocolMock.callAsFunctionReturnValue = .success(.dummy)
+                        getSurveysUseCaseProtocolMock.callAsFunctionPageNumberPageSizeReturnValue = .failure(
+                            errorMessage
+                        )
+                        viewModel.loadProfileAndSurveys()
+                    }
+
+                    it("state changes to failed with expected message") {
+                        let state = try self.awaitPublisher(viewModel.$state.collectNext(1)).last
+                        expect(state) == .failure(errorMessage)
                     }
                 }
             }
