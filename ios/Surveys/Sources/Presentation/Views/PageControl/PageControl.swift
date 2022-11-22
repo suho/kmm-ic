@@ -38,6 +38,7 @@ struct PageControl: UIViewRepresentable {
 extension PageControl {
 
     class Coordinator: NSObject {
+
         var control: PageControl
 
         init(_ control: PageControl) {

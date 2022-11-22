@@ -21,7 +21,7 @@ extension DragGesture.Value {
 
 extension DragGesture.Value {
 
-    func detectDirection(_ tolerance: Double = 24) -> Direction? {
+    func detectDirection(_ tolerance: Double = 24.0) -> Direction? {
         if startLocation.x < location.x - tolerance { return .left }
         if startLocation.x > location.x + tolerance { return .right }
         if startLocation.y > location.y + tolerance { return .up }
