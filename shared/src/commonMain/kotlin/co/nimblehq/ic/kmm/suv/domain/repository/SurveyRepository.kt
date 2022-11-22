@@ -5,5 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface SurveyRepository {
 
-    fun getSurveys(pageNumber: Int, pageSize: Int): Flow<List<Survey>>
+    fun getSurveys(
+        pageNumber: Int,
+        pageSize: Int,
+        isForceLatestData: Boolean = false
+    ): Flow<List<Survey>>
 }

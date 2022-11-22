@@ -12,17 +12,27 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.last
 
+private const val FIRST_PAGE_NUMBER = 1
+
 class SurveyRepositoryImpl(
     private val surveyRemoteDataSource: SurveyRemoteDataSource,
     private val surveyLocalDataSource: SurveyLocalDataSource
 ) : SurveyRepository {
 
-    override fun getSurveys(pageNumber: Int, pageSize: Int): Flow<List<Survey>> {
+    override fun getSurveys(
+        pageNumber: Int,
+        pageSize: Int,
+        isForceLatestData: Boolean
+    ): Flow<List<Survey>> {
         // TODO: Check this logic again when we have pull to refresh
         return flow {
-            val localSurveys = surveyLocalDataSource.getSurveys().map { it.toSurvey() }
-            if (localSurveys.isNotEmpty()) {
-                emit(localSurveys)
+            if (isForceLatestData) {
+                surveyLocalDataSource.deleteAllSurveys()
+            } else if (pageNumber == FIRST_PAGE_NUMBER) {
+                val localSurveys = surveyLocalDataSource.getSurveys().map { it.toSurvey() }
+                if (localSurveys.isNotEmpty()) {
+                    emit(localSurveys)
+                }
             }
 
             val apiSurveys = surveyRemoteDataSource
@@ -31,9 +41,7 @@ class SurveyRepositoryImpl(
 
             val latestSurveys = apiSurveys.map { it.toSurvey() }
 
-            if (localSurveys != latestSurveys) {
-                emit(latestSurveys)
-            }
+            emit(latestSurveys)
 
             surveyLocalDataSource.saveSurveys(apiSurveys.map { it.toSurveyRealmObject() })
         }

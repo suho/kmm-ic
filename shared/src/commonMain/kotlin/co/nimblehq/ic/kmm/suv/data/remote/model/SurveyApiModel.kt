@@ -28,13 +28,11 @@ fun SurveyApiModel.toSurvey() = Survey(
     coverImageUrl
 )
 
-fun SurveyApiModel.toSurveyRealmObject(): SurveyRealmObject {
-    val survey = SurveyRealmObject()
-    survey.id = id
-    survey.type = type
-    survey.title = title
-    survey.description = description
-    survey.isActive = isActive
-    survey.coverImageUrl = coverImageUrl
-    return survey
-}
+fun SurveyApiModel.toSurveyRealmObject() = SurveyRealmObject(
+    id = id,
+    type = type,
+    title = title,
+    description = description,
+    isActive = isActive,
+    coverImageUrl = coverImageUrl
+)
