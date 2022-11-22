@@ -10,6 +10,7 @@ plugins {
     id(Plugin.NATIVE_COROUTINES).version(Version.NATIVE_COROUTINES_KOTLIN)
     id(Plugin.BUILD_KONFIG)
     id(Plugin.KSP).version(Version.KSP)
+    id(Plugin.REALM)
 }
 
 version = "1.0"
@@ -66,6 +67,9 @@ kotlin {
 
                 // Date
                 implementation(Dependency.DATE_TIME)
+
+                // Realm
+                implementation(Dependency.REALM_LIBRARY_BASE)
             }
         }
         val commonTest by getting {

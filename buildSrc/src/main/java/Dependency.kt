@@ -59,6 +59,10 @@ object Dependency {
     const val SETTINGS_SERIALIZATION = "com.russhwolf:multiplatform-settings-serialization:${Version.SETTINGS}"
     const val SECURITY_CRYPTO_KTX = "androidx.security:security-crypto-ktx:${Version.SECURITY_CRYPTO}"
 
+    // Realm
+    const val REALM_GRADLE_PLUGIN = "io.realm.kotlin:gradle-plugin:${Version.REALM}"
+    const val REALM_LIBRARY_BASE = "io.realm.kotlin:library-base:${Version.REALM}"
+
     // Tests
     const val JUNIT = "junit:junit:${Version.JUNIT}"
     const val JUNIT_EXT = "androidx.test.ext:junit:${Version.JUNIT_EXT}"
