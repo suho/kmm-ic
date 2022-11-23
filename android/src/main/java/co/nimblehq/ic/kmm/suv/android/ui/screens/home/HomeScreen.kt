@@ -24,9 +24,10 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
     val avatarUrl by viewModel.avatarUrlString.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
+    val surveysUiModel by viewModel.surveysUiModel.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadProfile()
+        viewModel.loadProfileAndSurveys()
     }
 
     errorMessage?.let {
@@ -36,43 +37,51 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
         )
     }
 
-    // TODO: Update survey data later
     val uiModel = HomeUiModel(
         HomeHeaderUiModel(
             currentDate,
             avatarUrl,
             isLoading
         ),
-        HomeSurveysUiModel(
-            surveys = List(3) {
-                HomeSurveyUiModel(
-                    "Working from home Check-In",
-                    "We would like to know what are your goals and skills you wanted",
-                    "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-                )
-            },
-            currentPageIndex = 1,
-            isLoading
+        HomeContentUiModel(
+            isLoading,
+            surveysUiModel
         )
     )
     HomeScreenContent(
-        uiModel
+        uiModel,
+        onSwipe = {
+            when (it) {
+                SwipeDirection.LEFT -> {
+                    viewModel.showNextSurvey()
+
+                }
+                SwipeDirection.RIGHT -> {
+                    viewModel.showPreviousSurvey()
+                }
+                else -> {}
+            }
+        }
     )
 }
 
 private data class HomeUiModel(
     val headerUiModel: HomeHeaderUiModel,
-    val surveysUiModel: HomeSurveysUiModel,
+    val contentUiModel: HomeContentUiModel
 )
 
 @Composable
-private fun HomeScreenContent(uiModel: HomeUiModel) {
+private fun HomeScreenContent(uiModel: HomeUiModel, onSwipe: (SwipeDirection) -> Unit = {}) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        HomeSurveysView(uiModel.surveysUiModel)
+        HomeSurveysView(
+            uiModel.contentUiModel.isLoading,
+            uiModel.contentUiModel.surveysUiModel,
+            onSwipe
+        )
         Column(
             modifier = Modifier
                 .statusBarsPadding()
@@ -94,16 +103,18 @@ fun HomeScreenContentPreview(
                 "image_url",
                 isLoading
             ),
-            HomeSurveysUiModel(
-                surveys = List(3) {
-                    HomeSurveyUiModel(
-                        "Working from home Check-In",
-                        "We would like to know what are your goals and skills you wanted",
-                        "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-                    )
-                },
-                currentPageIndex = 1,
-                isLoading
+            HomeContentUiModel(
+                isLoading,
+                HomeSurveysUiModel(
+                    surveys = List(3) {
+                        HomeSurveyUiModel(
+                            "Working from home Check-In",
+                            "We would like to know what are your goals and skills you wanted",
+                            "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
+                        )
+                    },
+                    currentPageIndex = 1
+                )
             )
         )
     )

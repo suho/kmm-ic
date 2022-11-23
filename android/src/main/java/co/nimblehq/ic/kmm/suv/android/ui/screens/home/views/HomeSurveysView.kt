@@ -1,11 +1,13 @@
 package co.nimblehq.ic.kmm.suv.android.ui.screens.home.views
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -14,17 +16,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.extension.placeholder
 import co.nimblehq.ic.kmm.suv.android.ui.components.DotsIndicator
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.HomeContentDescription
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import co.nimblehq.ic.kmm.suv.android.util.LoadingParameterProvider
 import coil.compose.AsyncImage
-import timber.log.Timber
 
 data class HomeSurveyUiModel(
     val title: String,
@@ -35,7 +39,6 @@ data class HomeSurveyUiModel(
 data class HomeSurveysUiModel(
     val surveys: List<HomeSurveyUiModel>,
     val currentPageIndex: Int,
-    val isLoading: Boolean
 ) {
     val totalPages: Int
         get() = surveys.size
@@ -43,22 +46,34 @@ data class HomeSurveysUiModel(
         get() = surveys[currentPageIndex]
 }
 
+data class HomeContentUiModel(
+    val isLoading: Boolean,
+    val surveysUiModel: HomeSurveysUiModel?
+)
+
 @Composable
-fun HomeSurveysView(uiModel: HomeSurveysUiModel) {
-    if (uiModel.isLoading) {
+fun HomeSurveysView(
+    isLoading: Boolean,
+    uiModel: HomeSurveysUiModel?,
+    onSwipe: (SwipeDirection) -> Unit = {}
+) {
+    if (isLoading) {
         HomeSurveysLoadingContent()
-    } else {
-        HomeSurveysContent(uiModel)
+    } else uiModel?.let {
+        HomeSurveysContent(uiModel, onSwipe)
     }
 }
 
-private enum class SwipeDirection {
+enum class SwipeDirection {
     IDLE, LEFT, RIGHT
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
-private fun HomeSurveysContent(uiModel: HomeSurveysUiModel) {
+private fun HomeSurveysContent(
+    uiModel: HomeSurveysUiModel,
+    onSwipe: (SwipeDirection) -> Unit = {}
+) {
     val swipeableState = rememberSwipeableState(initialValue = SwipeDirection.IDLE)
     val endAnchor = LocalDensity
         .current
@@ -72,7 +87,7 @@ private fun HomeSurveysContent(uiModel: HomeSurveysUiModel) {
     )
 
     LaunchedEffect(swipeableState.currentValue) {
-        Timber.d("${swipeableState.currentValue}")
+        onSwipe(swipeableState.currentValue)
         swipeableState.snapTo(SwipeDirection.IDLE)
     }
 
@@ -111,28 +126,54 @@ private fun HomeSurveysContent(uiModel: HomeSurveysUiModel) {
                     .fillMaxSize()
                     .padding(horizontal = AppTheme.dimensions.mediumPadding)
             ) {
-                DotsIndicator(uiModel.totalPages, uiModel.currentPageIndex)
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.mediumPadding))
-                Text(
-                    text = uiModel.currentSurveyUiModel.title,
-                    color = Color.White,
-                    style = Typography.h5,
-                    maxLines = 4
+                DotsIndicator(
+                    uiModel.totalPages,
+                    uiModel.currentPageIndex,
+                    modifier = Modifier
+                        .semantics { contentDescription = HomeContentDescription.INDICATOR }
                 )
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.mediumPadding))
+                AnimatedContent(
+                    targetState = uiModel.currentSurveyUiModel.title,
+                    transitionSpec = {
+                        fadeIn() with fadeOut()
+                    }
+                ) { text ->
+                    Text(
+                        text = text,
+                        color = Color.White,
+                        style = Typography.h5,
+                        maxLines = 4,
+                        modifier = Modifier
+                            .semantics { contentDescription = HomeContentDescription.SURVEY_TITLE }
+                    )
+                }
                 Spacer(modifier = Modifier.width(5.dp))
                 Row(
-                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 54.dp)
                 ) {
-                    Text(
-                        text = uiModel.currentSurveyUiModel.description,
-                        color = Color.White.copy(alpha = 0.7f),
-                        style = Typography.subtitle1,
-                        maxLines = 2,
-                        modifier = Modifier.weight(1f)
-                    )
+                    AnimatedContent(
+                        targetState = uiModel.currentSurveyUiModel.description,
+                        transitionSpec = {
+                            fadeIn() with fadeOut()
+                        }
+                    ) { text ->
+                        Text(
+                            text = text,
+                            color = Color.White.copy(alpha = 0.7f),
+                            style = Typography.subtitle1,
+                            maxLines = 2,
+                            modifier = Modifier
+                                .weight(1f)
+                                .semantics {
+                                    contentDescription = HomeContentDescription.SURVEY_DESCRIPTION
+                                }
+                        )
+                    }
                     Spacer(modifier = Modifier.width(AppTheme.dimensions.mediumPadding))
                     Button(
                         onClick = {
@@ -141,7 +182,12 @@ private fun HomeSurveysContent(uiModel: HomeSurveysUiModel) {
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = Color.Transparent
                         ),
-                        contentPadding = PaddingValues(0.dp)
+                        elevation = null,
+                        contentPadding = PaddingValues(0.dp),
+                        modifier = Modifier
+                            .semantics {
+                                contentDescription = HomeContentDescription.SURVEY_DETAIL_BUTTON
+                            }
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_survey_detail_arrow),
@@ -210,6 +256,7 @@ fun HomeSurveysViewLoadingPreview(
     @PreviewParameter(LoadingParameterProvider::class) isLoading: Boolean
 ) {
     HomeSurveysView(
+        isLoading,
         HomeSurveysUiModel(
             surveys = List(3) {
                 HomeSurveyUiModel(
@@ -218,8 +265,7 @@ fun HomeSurveysViewLoadingPreview(
                     imageUrl = "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
                 )
             },
-            currentPageIndex = 1,
-            isLoading
+            currentPageIndex = 1
         )
     )
 }
