@@ -17,7 +17,7 @@ struct HomeView: View {
         case .idle:
             homeContent()
                 .onAppear {
-                    viewModel.loadProfile()
+                    viewModel.loadProfileAndSurveys()
                 }
         case .loading:
             homeContent(isLoading: true)
@@ -38,31 +38,12 @@ struct HomeView: View {
     private func homeContent(isLoading: Bool = false) -> some View {
         GeometryReader { proxy in
             ZStack {
-                // TODO: - Remove dummy data later
                 HomeSurveysView(
-                    model: .init(surveys: [
-                        .init(
-                            title: "Scarlett Bangkok",
-                            description: "We'd love to hear from you!",
-                            isActive: true,
-                            imageURLString: "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l"
-                        ),
-                        .init(
-                            title: "ibis Bangkok Riverside",
-                            description: "We'd love to hear from you!",
-                            isActive: true,
-                            imageURLString: "https://dhdbhh0jsld0o.cloudfront.net/m/287db81c5e4242412cc0_l"
-                        ),
-                        .init(
-                            title: "21 on Rajah",
-                            description: "We'd love to hear from you!",
-                            isActive: true,
-                            imageURLString: "https://dhdbhh0jsld0o.cloudfront.net/m/0221e768b99dc3576210_l"
-                        )
-                    ]),
+                    model: viewModel.surveysUIModel,
                     configuration: .init(
                         bottomPadding: proxy.safeAreaInsets.bottom
-                    )
+                    ),
+                    isLoading: isLoading
                 )
                 VStack {
                     HomeHeaderView(

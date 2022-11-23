@@ -6,6 +6,7 @@ import co.nimblehq.ic.kmm.suv.data.local.model.SurveyRealmObject
 import co.nimblehq.ic.kmm.suv.data.local.model.toSurvey
 import co.nimblehq.ic.kmm.suv.data.remote.datasource.SurveyRemoteDataSource
 import co.nimblehq.ic.kmm.suv.data.remote.model.SurveyApiModel
+import co.nimblehq.ic.kmm.suv.data.remote.model.Url
 import co.nimblehq.ic.kmm.suv.data.remote.model.toSurvey
 import co.nimblehq.ic.kmm.suv.domain.repository.SurveyRepository
 import io.kotest.matchers.shouldBe
@@ -34,7 +35,7 @@ class SurveyRepositoryTest {
         "title",
         "description",
         true,
-        "coverImageUrl"
+        Url("coverImageUrl")
     )
 
     private lateinit var repository: SurveyRepository

@@ -52,6 +52,8 @@
 		8BCC662A28FF9237003D87AD /* Navigator+Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC662928FF9237003D87AD /* Navigator+Screen.swift */; };
 		8BCC662D28FF948A003D87AD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC662C28FF948A003D87AD /* AppError.swift */; };
 		8BCC662F28FF9540003D87AD /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC662E28FF9540003D87AD /* AppNavigator.swift */; };
+		8BD791A5292B481200EF4AF9 /* GetSurveysUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD791A4292B481200EF4AF9 /* GetSurveysUseCase.swift */; };
+		8BD791A7292BE02D00EF4AF9 /* Survey+Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD791A6292BE02D00EF4AF9 /* Survey+Dummy.swift */; };
 		8BDBEBC428C6DD1800519A4F /* View+PrimaryFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDBEBC328C6DD1800519A4F /* View+PrimaryFieldStyle.swift */; };
 		8BF3A6AC28BF58F60068A143 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF3A6AB28BF58F60068A143 /* LoginView.swift */; };
 		8BF3A6B028C468530068A143 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8BF3A6B228C468530068A143 /* Localizable.strings */; };
@@ -176,6 +178,8 @@
 		8BCC662928FF9237003D87AD /* Navigator+Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigator+Screen.swift"; sourceTree = "<group>"; };
 		8BCC662C28FF948A003D87AD /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		8BCC662E28FF9540003D87AD /* AppNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
+		8BD791A4292B481200EF4AF9 /* GetSurveysUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSurveysUseCase.swift; sourceTree = "<group>"; };
+		8BD791A6292BE02D00EF4AF9 /* Survey+Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Survey+Dummy.swift"; sourceTree = "<group>"; };
 		8BDBEBC328C6DD1800519A4F /* View+PrimaryFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+PrimaryFieldStyle.swift"; sourceTree = "<group>"; };
 		8BF3A6AB28BF58F60068A143 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		8BF3A6B128C468530068A143 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -428,6 +432,7 @@
 			children = (
 				8B45FADC2905A4AC009091AC /* Token+Dummy.swift */,
 				8B2C46DA2918ED1900994FC4 /* User+Dummy.swift */,
+				8BD791A6292BE02D00EF4AF9 /* Survey+Dummy.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -445,6 +450,7 @@
 			children = (
 				8B45FACB2904DD8F009091AC /* LogInUseCase.swift */,
 				8B98712129150DE800BA6B99 /* GetProfileUseCase.swift */,
+				8BD791A4292B481200EF4AF9 /* GetSurveysUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1349,6 +1355,7 @@
 			files = (
 				0C205FD636A87848DD90D15E /* AutoMockable.generated.swift in Sources */,
 				8B45FADD2905A4AC009091AC /* Token+Dummy.swift in Sources */,
+				8BD791A7292BE02D00EF4AF9 /* Survey+Dummy.swift in Sources */,
 				8B45FAD72905A0A8009091AC /* TestError.swift in Sources */,
 				8BA566B62905B20400440858 /* Combine+Collect.swift in Sources */,
 				8B2C46D82918E95200994FC4 /* HomeViewModelSpec.swift in Sources */,
@@ -1391,6 +1398,7 @@
 				8B6B03DB292783D600296983 /* KFImage+Image.swift in Sources */,
 				8B98711D2913CA7000BA6B99 /* HomeView.swift in Sources */,
 				8BCC662F28FF9540003D87AD /* AppNavigator.swift in Sources */,
+				8BD791A5292B481200EF4AF9 /* GetSurveysUseCase.swift in Sources */,
 				A0562C2F673B4C4DCABFBDB8 /* R.generated.swift in Sources */,
 				8B138CC928D8445A00DC161C /* Typealias+Koin.swift in Sources */,
 				8BCC662828FF9202003D87AD /* Navigator.swift in Sources */,

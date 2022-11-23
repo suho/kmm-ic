@@ -41,6 +41,40 @@ final class HomeUISpec: QuickSpec {
 
                     let avatarImage = app.images[AccessibilityIdentifier.Home.avatar]
                     expect(avatarImage.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let surveyImage = app.images[AccessibilityIdentifier.Home.surveyImage]
+                    expect(surveyImage.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let pageControl = app.pageIndicators[AccessibilityIdentifier.Home.pageControl]
+                    expect(pageControl.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let surveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
+                    expect(surveyTitleText.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let surveyDescriptionText = app.staticTexts[AccessibilityIdentifier.Home.surveyDescription]
+                    expect(surveyDescriptionText.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let detailSurveyButton = app.buttons[AccessibilityIdentifier.Home.detailSurvey]
+                    expect(detailSurveyButton.exists).toEventually(equal(true), timeout: .seconds(5))
+                }
+
+                it("it shows list of surveys") {
+                    let pageControl = app.pageIndicators[AccessibilityIdentifier.Home.pageControl]
+                    expect(pageControl.exists).toEventually(equal(true), timeout: .seconds(5))
+
+                    let firstSurveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
+                    let firstSurveyTitle = firstSurveyTitleText.label
+                    app.swipeLeft()
+
+                    let nextSurveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
+                    let nextSurveyTitle = nextSurveyTitleText.label
+                    expect(firstSurveyTitle) != nextSurveyTitle
+
+                    app.swipeRight()
+
+                    let previousSurveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
+                    let previousSurveyTitle = previousSurveyTitleText.label
+                    expect(firstSurveyTitle) == previousSurveyTitle
                 }
             }
         }

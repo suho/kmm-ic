@@ -13,5 +13,10 @@ extension AccessibilityIdentifier {
         static let today = "today"
         static let currentDate = "currentDate"
         static let avatar = "avatar"
+        static let surveyImage = "surveyImage"
+        static let pageControl = "pageControl"
+        static let surveyTitle = "surveyTitle"
+        static let surveyDescription = "surveyDescription"
+        static let detailSurvey = "detailSurvey"
     }
 }
