@@ -10,12 +10,18 @@ import SwiftUI
 
 extension DragGesture.Value {
 
-    enum Direction {
+    struct Direction: OptionSet {
 
-        case left
-        case right
-        case up
-        case down
+        let rawValue: Int
+
+        static let left = Direction(rawValue: 1 << 0)
+        static let right = Direction(rawValue: 1 << 1)
+        static let up = Direction(rawValue: 1 << 2)
+        static let down = Direction(rawValue: 1 << 3)
+
+        static let horizontal: Direction = [.left, .right]
+
+        static let all: Direction = [.left, .right, .up, .down]
     }
 }
 
@@ -32,13 +38,16 @@ extension DragGesture.Value {
 
 extension View {
 
-    func leftOrRightGesture(action: @escaping (DragGesture.Value.Direction) -> Void) -> some View {
+    func swipe(
+        _ direction: DragGesture.Value.Direction = .all,
+        action: @escaping (DragGesture.Value.Direction) -> Void
+    ) -> some View {
         gesture(
             DragGesture()
                 .onEnded { value in
-                    guard let direction = value.detectDirection() else { return }
-                    if direction == .left || direction == .right {
-                        action(direction)
+                    guard let detectedDirection = value.detectDirection() else { return }
+                    if direction.contains(detectedDirection) {
+                        action(detectedDirection)
                     }
                 }
         )

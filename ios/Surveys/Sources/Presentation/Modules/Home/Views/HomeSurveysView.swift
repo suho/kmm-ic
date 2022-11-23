@@ -85,7 +85,7 @@ struct HomeSurveysView: View {
                 )
             )
         }
-        .leftOrRightGesture { direction in
+        .swipe(.horizontal) { direction in
             switch direction {
             case .left where currentPage > 0:
                 withAnimation(.linear(duration: 0.25)) {
