@@ -59,23 +59,11 @@ private fun HomeSurveysContent(uiModel: HomeSurveysUiModel) {
         0f to SwipeDirection.LEFT,
         endAnchor to SwipeDirection.RIGHT
     )
-    var swipeDirection by remember { mutableStateOf(SwipeDirection.IDLE) }
 
-    LaunchedEffect(keys = arrayOf(swipeableState.offset.value), block = {
-        val currentOffset = swipeableState.offset.value
-        when {
-            currentOffset < endAnchor / 2 -> {
-                swipeDirection = SwipeDirection.LEFT
-            }
-            currentOffset > endAnchor / 2 -> {
-                swipeDirection = SwipeDirection.RIGHT
-            }
-            currentOffset == endAnchor / 2 -> {
-                Timber.d(swipeDirection.name)
-            }
-        }
+    LaunchedEffect(swipeableState.currentValue) {
+        Timber.d("${swipeableState.currentValue}")
         swipeableState.snapTo(SwipeDirection.IDLE)
-    })
+    }
 
     Box(
         modifier = Modifier
