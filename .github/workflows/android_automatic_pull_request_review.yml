@@ -2,7 +2,7 @@ name: Android - Automatic pull request review
 
 on:
   pull_request:
-    types: [ opened, reopened, edited, synchronize ]
+    types: [ opened, reopened, edited, synchronize, ready_for_review ]
 
 jobs:
   review_android_pull_request:
@@ -39,7 +39,7 @@ jobs:
 
       - name: Setup Konfig Properties
         env:
-          KMM_KONFIG_PROPERTIES:  ${{ secrets.KMM_KONFIG_PROPERTIES }}
+          KMM_KONFIG_PROPERTIES: ${{ secrets.KMM_KONFIG_PROPERTIES }}
         run: |
           touch buildKonfig.properties
           echo $KMM_KONFIG_PROPERTIES | base64 --decode > buildKonfig.properties
