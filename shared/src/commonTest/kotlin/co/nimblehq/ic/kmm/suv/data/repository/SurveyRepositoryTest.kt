@@ -5,6 +5,7 @@ import co.nimblehq.ic.kmm.suv.data.local.datasource.SurveyLocalDataSource
 import co.nimblehq.ic.kmm.suv.data.local.model.SurveyRealmObject
 import co.nimblehq.ic.kmm.suv.data.local.model.toSurvey
 import co.nimblehq.ic.kmm.suv.data.remote.datasource.SurveyRemoteDataSource
+import co.nimblehq.ic.kmm.suv.data.remote.model.QuestionApiModel
 import co.nimblehq.ic.kmm.suv.data.remote.model.SurveyApiModel
 import co.nimblehq.ic.kmm.suv.data.remote.model.Url
 import co.nimblehq.ic.kmm.suv.data.remote.model.toSurvey
@@ -35,7 +36,18 @@ class SurveyRepositoryTest {
         "title",
         "description",
         true,
-        Url("coverImageUrl")
+        Url("coverImageUrl"),
+        listOf(
+            QuestionApiModel(
+                "id",
+                "text",
+                0,
+                "type",
+                "pick",
+                Url("string"),
+                emptyList()
+            )
+        )
     )
 
     private lateinit var repository: SurveyRepository
@@ -130,6 +142,33 @@ class SurveyRepositoryTest {
                 )
             repository.getSurveys(1, 1).test {
                 this.awaitItem() shouldBe listOf(mockSurveyRealmObject.toSurvey())
+                this.awaitError().message shouldBe mockThrowable.message
+            }
+        }
+
+    @Test
+    fun `when get detail survey is succeeded - it returns survey`() =
+        runTest {
+            given(mockSurveyRemoteDataSource)
+                .function(mockSurveyRemoteDataSource::getSurvey)
+                .whenInvokedWith(any())
+                .thenReturn(flow { emit(mockSurveyApiModel) })
+
+            repository.getSurvey("id").test {
+                this.awaitItem() shouldBe mockSurveyApiModel.toSurvey()
+                this.awaitComplete()
+            }
+        }
+
+    @Test
+    fun `when get detail survey is failed - it returns error`() =
+        runTest {
+            given(mockSurveyRemoteDataSource)
+                .function(mockSurveyRemoteDataSource::getSurvey)
+                .whenInvokedWith(any())
+                .thenReturn(flow { throw mockThrowable })
+
+            repository.getSurvey("id").test {
                 this.awaitError().message shouldBe mockThrowable.message
             }
         }

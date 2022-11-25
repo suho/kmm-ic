@@ -11,6 +11,7 @@ import co.nimblehq.ic.kmm.suv.domain.repository.SurveyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.map
 
 private const val FIRST_PAGE_NUMBER = 1
 
@@ -45,5 +46,9 @@ class SurveyRepositoryImpl(
 
             surveyLocalDataSource.saveSurveys(apiSurveys.map { it.toSurveyRealmObject() })
         }
+    }
+
+    override fun getSurvey(id: String): Flow<Survey> {
+        return surveyRemoteDataSource.getSurvey(id).map { it.toSurvey() }
     }
 }

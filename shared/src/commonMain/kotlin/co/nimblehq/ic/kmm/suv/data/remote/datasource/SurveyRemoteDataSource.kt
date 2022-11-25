@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SurveyRemoteDataSource {
     fun getSurveys(params: GetSurveysApiQueryParams): Flow<List<SurveyApiModel>>
+    fun getSurvey(id: String): Flow<SurveyApiModel>
 }
 
 class SurveyRemoteDataSourceImpl(private val apiClient: ApiClient) : SurveyRemoteDataSource {
@@ -21,6 +22,15 @@ class SurveyRemoteDataSourceImpl(private val apiClient: ApiClient) : SurveyRemot
                 path("/v1/surveys")
                 method = HttpMethod.Get
                 setQueryParameters(params)
+            }
+        )
+    }
+
+    override fun getSurvey(id: String): Flow<SurveyApiModel> {
+        return apiClient.body(
+            HttpRequestBuilder().apply {
+                path("/v1/surveys/${id}")
+                method = HttpMethod.Get
             }
         )
     }
