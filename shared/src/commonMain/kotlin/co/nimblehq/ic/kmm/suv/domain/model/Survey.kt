@@ -6,5 +6,5 @@ data class Survey(
     val description: String,
     val isActive: Boolean,
     val coverImageUrl: String,
-    val questions: List<Question>
+    val questions: List<Question>? = null
 )

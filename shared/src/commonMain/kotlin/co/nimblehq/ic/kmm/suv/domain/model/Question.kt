@@ -10,6 +10,6 @@ data class Question(
     val answers: List<Answer>
 )
 
-fun Question.shortedAnswers(): List<Answer> {
+fun Question.sortedAnswers(): List<Answer> {
     return answers.sortedBy { displayOrder }
 }

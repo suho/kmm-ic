@@ -11,9 +11,11 @@ import Shared
 extension Survey {
 
     static let dummy = Survey(
+        id: "id",
         title: "title",
         description: "description",
         isActive: true,
-        coverImageUrl: "coverImageUrl"
+        coverImageUrl: "coverImageUrl",
+        questions: nil
     )
 }
