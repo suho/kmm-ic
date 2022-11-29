@@ -12,10 +12,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import co.nimblehq.ic.kmm.suv.android.ui.components.ErrorAlertDialog
-import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.HomeHeaderView
-import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.HomeSurveysUiModel
-import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.HomeSurveysView
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.*
+import co.nimblehq.ic.kmm.suv.android.util.LoadingParameterProvider
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -38,17 +38,22 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
 
     // TODO: Update survey data later
     val uiModel = HomeUiModel(
-        currentDate,
-        avatarUrlString,
-        HomeSurveysUiModel(
-            "Working from home Check-In Check-In",
-            "We would like to know what are your goals and skills you wanted!",
-            "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-            3,
-            1,
+        HomeHeaderUiModel(
+            currentDate,
+            avatarUrlString,
             isLoading
         ),
-        isLoading
+        HomeSurveysUiModel(
+            surveys = List(3) {
+                HomeSurveyUiModel(
+                    "Working from home Check-In",
+                    "We would like to know what are your goals and skills you wanted",
+                    "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
+                )
+            },
+            currentPageIndex = 1,
+            isLoading
+        )
     )
     HomeScreenContent(
         uiModel
@@ -56,10 +61,8 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
 }
 
 private data class HomeUiModel(
-    val currentDate: String,
-    val avatarUrlString: String,
+    val headerUiModel: HomeHeaderUiModel,
     val surveysUiModel: HomeSurveysUiModel,
-    val isLoading: Boolean
 )
 
 @Composable
@@ -74,51 +77,34 @@ private fun HomeScreenContent(uiModel: HomeUiModel) {
             modifier = Modifier
                 .statusBarsPadding()
         ) {
-            HomeHeaderView(
-                uiModel.currentDate,
-                uiModel.avatarUrlString,
-                uiModel.isLoading
-            )
+            HomeHeaderView(uiModel.headerUiModel)
         }
     }
 }
 
 @Preview
 @Composable
-fun HomeScreenContentLoadingPreview() {
+fun HomeScreenContentPreview(
+    @PreviewParameter(LoadingParameterProvider::class) isLoading: Boolean
+) {
     HomeScreenContent(
         HomeUiModel(
-            "TUESDAY, NOVEMBER 8",
-            "image_url",
-            HomeSurveysUiModel(
-                "Working from home Check-In",
-                "We would like to know what are your goals and skills you wanted",
-                "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-                3,
-                1,
-                true
+            headerUiModel = HomeHeaderUiModel(
+                "TUESDAY, NOVEMBER 8",
+                "image_url",
+                isLoading
             ),
-            true
-        )
-    )
-}
-
-@Preview
-@Composable
-fun HomeScreenContentPreview() {
-    HomeScreenContent(
-        HomeUiModel(
-            "TUESDAY, NOVEMBER 8",
-            "image_url",
             HomeSurveysUiModel(
-                "Working from home Check-In",
-                "We would like to know what are your goals and skills you wanted",
-                "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-                3,
-                1,
-                false
-            ),
-            false
+                surveys = List(3) {
+                    HomeSurveyUiModel(
+                        "Working from home Check-In",
+                        "We would like to know what are your goals and skills you wanted",
+                        "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
+                    )
+                },
+                currentPageIndex = 1,
+                isLoading
+            )
         )
     )
 }

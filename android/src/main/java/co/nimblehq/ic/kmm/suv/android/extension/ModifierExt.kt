@@ -17,7 +17,7 @@ fun Modifier.placeholder(
         color = Color.Gray,
         shape = RoundedCornerShape(shapeValue),
         highlight = PlaceholderHighlight.shimmer(
-            highlightColor = Color.White,
-        ),
+            highlightColor = Color.White
+        )
     )
 }

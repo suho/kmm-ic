@@ -15,22 +15,31 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.extension.placeholder
 import co.nimblehq.ic.kmm.suv.android.ui.components.DotsIndicator
+import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
+import co.nimblehq.ic.kmm.suv.android.util.LoadingParameterProvider
 import coil.compose.AsyncImage
 import timber.log.Timber
 
-data class HomeSurveysUiModel(
+data class HomeSurveyUiModel(
     val title: String,
     val description: String,
-    val imageUrlString: String,
-    val totalPages: Int,
+    val imageUrl: String
+)
+
+data class HomeSurveysUiModel(
+    val surveys: List<HomeSurveyUiModel>,
     val currentPageIndex: Int,
     val isLoading: Boolean
-)
+) {
+    val totalPages: Int = surveys.size
+    val currentSurveyUiModel: HomeSurveyUiModel = surveys[currentPageIndex]
+}
 
 @Composable
 fun HomeSurveysView(uiModel: HomeSurveysUiModel) {
@@ -76,7 +85,7 @@ private fun HomeSurveysContent(uiModel: HomeSurveysUiModel) {
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
-                model = uiModel.imageUrlString,
+                model = uiModel.currentSurveyUiModel.imageUrl,
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier.matchParentSize()
@@ -98,12 +107,12 @@ private fun HomeSurveysContent(uiModel: HomeSurveysUiModel) {
                 verticalArrangement = Arrangement.Bottom,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = AppTheme.dimensions.mediumPadding)
             ) {
                 DotsIndicator(uiModel.totalPages, uiModel.currentPageIndex)
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.mediumPadding))
                 Text(
-                    text = uiModel.title,
+                    text = uiModel.currentSurveyUiModel.title,
                     color = Color.White,
                     style = Typography.h5,
                     maxLines = 4
@@ -116,15 +125,17 @@ private fun HomeSurveysContent(uiModel: HomeSurveysUiModel) {
                         .padding(bottom = 54.dp)
                 ) {
                     Text(
-                        text = uiModel.description,
+                        text = uiModel.currentSurveyUiModel.description,
                         color = Color.White.copy(alpha = 0.7f),
                         style = Typography.subtitle1,
                         maxLines = 2,
                         modifier = Modifier.weight(1f)
                     )
-                    Spacer(modifier = Modifier.width(20.dp))
+                    Spacer(modifier = Modifier.width(AppTheme.dimensions.mediumPadding))
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            /*TODO: Open survey detail screen - will handle this action in another story*/
+                        },
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = Color.Transparent
                         ),
@@ -155,7 +166,7 @@ private fun HomeSurveysLoadingContent() {
             verticalArrangement = Arrangement.Bottom,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = AppTheme.dimensions.mediumPadding)
         ) {
             Spacer(
                 modifier = Modifier
@@ -193,31 +204,20 @@ private fun HomeSurveysLoadingContent() {
 
 @Preview
 @Composable
-fun HomeSurveysViewLoadingPreview() {
+fun HomeSurveysViewLoadingPreview(
+    @PreviewParameter(LoadingParameterProvider::class) isLoading: Boolean
+) {
     HomeSurveysView(
         HomeSurveysUiModel(
-            title = "Working from home Check-In!",
-            description = "We would like to know what are your goals and skills you wanted",
-            imageUrlString = "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-            totalPages = 3,
+            surveys = List(3) {
+                HomeSurveyUiModel(
+                    title = "Working from home Check-In!",
+                    description = "We would like to know what are your goals and skills you wanted",
+                    imageUrl = "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
+                )
+            },
             currentPageIndex = 1,
-            true
-        ),
-
-        )
-}
-
-@Preview
-@Composable
-fun HomeSurveysViewPreview() {
-    HomeSurveysView(
-        HomeSurveysUiModel(
-            title = "Working from home Check-In!",
-            description = "We would like to know what are your goals and skills you wanted",
-            imageUrlString = "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-            totalPages = 3,
-            currentPageIndex = 1,
-            false
+            isLoading
         )
     )
 }
