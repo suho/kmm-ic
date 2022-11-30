@@ -37,8 +37,10 @@ data class HomeSurveysUiModel(
     val currentPageIndex: Int,
     val isLoading: Boolean
 ) {
-    val totalPages: Int = surveys.size
-    val currentSurveyUiModel: HomeSurveyUiModel = surveys[currentPageIndex]
+    val totalPages: Int
+        get() = surveys.size
+    val currentSurveyUiModel: HomeSurveyUiModel
+        get() = surveys[currentPageIndex]
 }
 
 @Composable

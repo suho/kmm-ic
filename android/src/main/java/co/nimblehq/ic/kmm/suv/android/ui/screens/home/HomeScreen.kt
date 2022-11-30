@@ -21,7 +21,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
     val currentDate by viewModel.currentDate.collectAsState()
-    val avatarUrlString by viewModel.avatarUrlString.collectAsState()
+    val avatarUrl by viewModel.avatarUrlString.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
 
@@ -40,7 +40,7 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
     val uiModel = HomeUiModel(
         HomeHeaderUiModel(
             currentDate,
-            avatarUrlString,
+            avatarUrl,
             isLoading
         ),
         HomeSurveysUiModel(

@@ -20,21 +20,18 @@ fun DotsIndicator(
             .wrapContentWidth()
             .wrapContentHeight()
     ) {
-        val boxModifier = Modifier
-            .size(8.dp)
-            .clip(CircleShape)
         items(totalDots) { index ->
-            if (index == selectedIndex) {
-                Box(
-                    modifier = boxModifier
-                        .background(Color.White)
-                )
+            val backgroundColor = if (index == selectedIndex) {
+                Color.White
             } else {
-                Box(
-                    modifier = boxModifier
-                        .background(Color.White.copy(alpha = 0.2f))
-                )
+                Color.White.copy(alpha = 0.2f)
             }
+            Box(
+                modifier = Modifier
+                    .size(8.dp)
+                    .clip(CircleShape)
+                    .background(backgroundColor)
+            )
             if (index != totalDots - 1) {
                 Spacer(modifier = Modifier.width(10.dp))
             }
