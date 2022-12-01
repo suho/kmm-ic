@@ -12,5 +12,5 @@ data class QuestionSubmission(
 
 data class AnswerSubmission(
     val id: String,
-    val answer: String?
+    val answer: String? = null
 )

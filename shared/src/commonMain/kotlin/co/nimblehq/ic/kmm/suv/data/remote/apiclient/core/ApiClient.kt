@@ -108,4 +108,15 @@ class ApiClient(
             }
         }
     }
+
+    fun emptyBody(builder: HttpRequestBuilder): Flow<Unit> {
+        return flow {
+            httpClient.request(
+                builder.apply {
+                    contentType(ContentType.Application.Json)
+                }
+            )
+            emit(Unit)
+        }
+    }
 }

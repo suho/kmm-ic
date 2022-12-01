@@ -38,7 +38,7 @@ class SurveyRemoteDataSourceImpl(private val apiClient: ApiClient) : SurveyRemot
     }
 
     override fun submitSurvey(body: SurveySubmissionApiBody): Flow<Unit> {
-        return apiClient.body(
+        return apiClient.emptyBody(
             HttpRequestBuilder().apply {
                 path("/v1/responses")
                 method = HttpMethod.Post
