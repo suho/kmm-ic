@@ -1,4 +1,4 @@
-package co.nimblehq.ic.kmm.suv.android.ui.screens.home
+package co.nimblehq.ic.kmm.suv.android.ui.screens.home.views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -13,28 +13,40 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.HomeContentDescription
+import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import coil.compose.AsyncImage
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
 
+data class HomeHeaderUiModel(
+    val title: String,
+    val imageUrl: String,
+    val isLoading: Boolean
+)
+
 @Composable
-fun HomeHeaderView(title: String, imageUrlString: String, isLoading: Boolean) {
+fun HomeHeaderView(uiModel: HomeHeaderUiModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, top = 16.dp, end = 20.dp),
+            .padding(
+                start = AppTheme.dimensions.mediumPadding,
+                top = 16.dp,
+                end = AppTheme.dimensions.mediumPadding
+            ),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
             Text(
-                text = title,
+                text = uiModel.title,
                 color = Color.White,
                 style = Typography.caption,
                 modifier = Modifier
                     .placeholder(
-                        visible = isLoading,
+                        visible = uiModel.isLoading,
                         color = Color.Gray,
                         shape = RoundedCornerShape(6.5.dp),
                         highlight = PlaceholderHighlight.shimmer(
@@ -50,7 +62,7 @@ fun HomeHeaderView(title: String, imageUrlString: String, isLoading: Boolean) {
                 style = Typography.h4,
                 modifier = Modifier
                     .placeholder(
-                        visible = isLoading,
+                        visible = uiModel.isLoading,
                         color = Color.Gray,
                         shape = RoundedCornerShape(6.5.dp),
                         highlight = PlaceholderHighlight.shimmer(
@@ -61,14 +73,14 @@ fun HomeHeaderView(title: String, imageUrlString: String, isLoading: Boolean) {
             )
         }
         AsyncImage(
-            model = imageUrlString,
+            model = uiModel.imageUrl,
             contentDescription = null,
             modifier = Modifier
                 .padding(top = 19.dp)
                 .size(36.dp)
                 .clip(CircleShape)
                 .placeholder(
-                    visible = isLoading,
+                    visible = uiModel.isLoading,
                     color = Color.Gray,
                     shape = RoundedCornerShape(4.dp),
                     highlight = PlaceholderHighlight.shimmer(

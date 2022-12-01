@@ -24,6 +24,7 @@ import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.ui.components.ErrorAlertDialog
 import co.nimblehq.ic.kmm.suv.android.ui.components.PrimaryButton
 import co.nimblehq.ic.kmm.suv.android.ui.components.PrimaryTextField
+import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
@@ -33,7 +34,7 @@ fun LoginScreen(
     viewModel: LoginViewModel = getViewModel(),
     defaultComponentsVisible: Boolean = false
 ) {
-    var componentsVisible by remember {  mutableStateOf(defaultComponentsVisible) }
+    var componentsVisible by remember { mutableStateOf(defaultComponentsVisible) }
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -100,7 +101,7 @@ private fun LoginScreenContent(
                 .align(Alignment.Center)
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp),
+                verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.mediumPadding),
                 modifier = Modifier
                     .fillMaxSize()
                     .wrapContentHeight()
@@ -153,8 +154,8 @@ private fun BackgroundImage(modifier: Modifier) {
 
 @Composable
 private fun NimbleLogo(modifier: Modifier = Modifier) {
-    var visible by remember {  mutableStateOf(false) }
-    var offsetState by remember {  mutableStateOf(Offset(0f, 0f))  }
+    var visible by remember { mutableStateOf(false) }
+    var offsetState by remember { mutableStateOf(Offset(0f, 0f)) }
     var scaleLogoState by remember { mutableStateOf(1f) }
     val animateOffset by animateOffsetAsState(
         targetValue = offsetState,
