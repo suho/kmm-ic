@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -37,14 +38,10 @@ data class HomeSurveyUiModel(
 )
 
 data class HomeSurveysUiModel(
-    val surveys: List<HomeSurveyUiModel>,
-    val currentPageIndex: Int,
-) {
-    val totalPages: Int
-        get() = surveys.size
-    val currentSurveyUiModel: HomeSurveyUiModel
-        get() = surveys[currentPageIndex]
-}
+    val currentSurveyUiModel: HomeSurveyUiModel,
+    val totalPages: Int,
+    val currentPageIndex: Int
+)
 
 data class HomeContentUiModel(
     val isLoading: Boolean,
@@ -53,14 +50,13 @@ data class HomeContentUiModel(
 
 @Composable
 fun HomeSurveysView(
-    isLoading: Boolean,
-    uiModel: HomeSurveysUiModel?,
+    uiModel: HomeContentUiModel,
     onSwipe: (SwipeDirection) -> Unit = {}
 ) {
-    if (isLoading) {
+    if (uiModel.isLoading) {
         HomeSurveysLoadingContent()
-    } else uiModel?.let {
-        HomeSurveysContent(uiModel, onSwipe)
+    } else uiModel.surveysUiModel?.let {
+        HomeSurveysContent(it, onSwipe)
     }
 }
 
@@ -133,17 +129,13 @@ private fun HomeSurveysContent(
                         .semantics { contentDescription = HomeContentDescription.INDICATOR }
                 )
                 Spacer(modifier = Modifier.height(AppTheme.dimensions.mediumPadding))
-                AnimatedContent(
-                    targetState = uiModel.currentSurveyUiModel.title,
-                    transitionSpec = {
-                        fadeIn() with fadeOut()
-                    }
-                ) { text ->
+                Crossfade(targetState = uiModel.currentSurveyUiModel.title) {
                     Text(
-                        text = text,
+                        text = it,
                         color = Color.White,
                         style = Typography.h5,
                         maxLines = 4,
+                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .semantics { contentDescription = HomeContentDescription.SURVEY_TITLE }
                     )
@@ -156,19 +148,17 @@ private fun HomeSurveysContent(
                         .fillMaxWidth()
                         .padding(bottom = 54.dp)
                 ) {
-                    AnimatedContent(
+                    Crossfade(
                         targetState = uiModel.currentSurveyUiModel.description,
-                        transitionSpec = {
-                            fadeIn() with fadeOut()
-                        }
-                    ) { text ->
+                        modifier = Modifier.weight(1f)
+                    ) {
                         Text(
-                            text = text,
+                            text = it,
                             color = Color.White.copy(alpha = 0.7f),
                             style = Typography.subtitle1,
                             maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
                             modifier = Modifier
-                                .weight(1f)
                                 .semantics {
                                     contentDescription = HomeContentDescription.SURVEY_DESCRIPTION
                                 }
@@ -256,16 +246,17 @@ fun HomeSurveysViewLoadingPreview(
     @PreviewParameter(LoadingParameterProvider::class) isLoading: Boolean
 ) {
     HomeSurveysView(
-        isLoading,
-        HomeSurveysUiModel(
-            surveys = List(3) {
+        HomeContentUiModel(
+            isLoading,
+            HomeSurveysUiModel(
                 HomeSurveyUiModel(
                     title = "Working from home Check-In!",
-                    description = "We would like to know what are your goals and skills you wanted",
+                    description = "We would like to know what are your goals and skills you wanted!",
                     imageUrl = "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-                )
-            },
-            currentPageIndex = 1
+                ),
+                totalPages = 3,
+                currentPageIndex = 1
+            )
         )
     )
 }

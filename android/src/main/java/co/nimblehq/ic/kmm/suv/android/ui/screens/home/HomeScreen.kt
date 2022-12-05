@@ -78,8 +78,7 @@ private fun HomeScreenContent(uiModel: HomeUiModel, onSwipe: (SwipeDirection) ->
             .background(Color.Black)
     ) {
         HomeSurveysView(
-            uiModel.contentUiModel.isLoading,
-            uiModel.contentUiModel.surveysUiModel,
+            uiModel.contentUiModel,
             onSwipe
         )
         Column(
@@ -106,13 +105,12 @@ fun HomeScreenContentPreview(
             HomeContentUiModel(
                 isLoading,
                 HomeSurveysUiModel(
-                    surveys = List(3) {
-                        HomeSurveyUiModel(
-                            "Working from home Check-In",
-                            "We would like to know what are your goals and skills you wanted",
-                            "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
-                        )
-                    },
+                    HomeSurveyUiModel(
+                        "Working from home Check-In",
+                        "We would like to know what are your goals and skills you wanted",
+                        "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
+                    ),
+                    totalPages = 3,
                     currentPageIndex = 1
                 )
             )
