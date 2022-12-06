@@ -7,6 +7,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.Modifier
 
 private val DarkColorPalette = darkColors(
@@ -41,16 +43,30 @@ fun MyApplicationTheme(
         LightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes
+    val dimensions = LocalDimensions.current
+
+    CompositionLocalProvider(
+        LocalDimensions provides dimensions
     ) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+        MaterialTheme(
+            colors = colors,
+            typography = Typography,
+            shapes = Shapes
         ) {
-            content()
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background
+            ) {
+                content()
+            }
         }
     }
+}
+
+object AppTheme {
+
+    val dimensions: Dimensions
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalDimensions.current
 }

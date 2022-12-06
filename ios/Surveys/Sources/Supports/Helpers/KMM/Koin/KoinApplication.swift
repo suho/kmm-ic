@@ -20,20 +20,10 @@ extension KoinApplication {
 
 extension KoinApplication {
 
-    private static let keyPaths: [PartialKeyPath<Koin>] = [
-        \.logInUseCase
-    ]
-
-    static func inject<T>() -> T {
-        shared.inject()
-    }
-
-    func inject<T>() -> T {
-        for partialKeyPath in Self.keyPaths {
-            guard let keyPath = partialKeyPath as? KeyPath<Koin, T> else { continue }
-            return koin[keyPath: keyPath]
+    static func inject<T>(_ keyPath: PartialKeyPath<Koin>) -> T {
+        guard let keyPath = keyPath as? KeyPath<Koin, T> else {
+            fatalError("\(T.self) is not registered with KoinApplication")
         }
-
-        fatalError("\(T.self) is not registered with KoinApplication")
+        return shared.koin[keyPath: keyPath]
     }
 }

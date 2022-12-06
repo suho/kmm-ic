@@ -19,7 +19,7 @@ struct AppNavigator: View {
             case .login:
                 LoginView()
             case .home:
-                Text("Home")
+                HomeView()
             }
         }
         .environmentObject(navigator)

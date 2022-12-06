@@ -27,7 +27,6 @@ opt_in_rules:
   - explicit_init
   - fallthrough
   - fatal_error_message
-  - file_name
   - file_types_order
   - first_where
   - force_unwrapping
@@ -111,9 +110,4 @@ custom_rules:
     name: 'Multiline Collection One Per Line'
     message: 'Collection should be either on the same line, or one per line.'
     regex: '\[\n([^\[\(])*(,([^\n\r])*[\w]+)([^\[])*\n(\s)*]'
-    severity: warning
-  multiline_arguments_one_per_line:
-    name: 'Multiline Arguments One Per Line'
-    message: 'Arguments should be either on the same line, or one per line.'
-    regex: '[^\n\r]\(\n([^\(])*([^\n\r],([^\n\r])*[\w]+)([^\)])*\n(\s)*\)'
     severity: warning

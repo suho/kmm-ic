@@ -7,4 +7,6 @@
     <string name="login_button">Log in</string>
 
     <string name="error_button_confirm">Got it!</string>
+
+    <string name="home_today">Today</string>
 </resources>

@@ -4,7 +4,7 @@ object Version {
     const val ANDROID_MIN_SDK_VERSION = 23
     const val ANDROID_TARGET_SDK_VERSION = 32
     const val ANDROID_VERSION_CODE = 1
-    const val ANDROID_VERSION_NAME = "0.1.0"
+    const val ANDROID_VERSION_NAME = "0.3.0"
 
     // Dependencies
     const val BUILD_GRADLE_VERSION = "7.2.2"
@@ -24,6 +24,8 @@ object Version {
     const val LIFECYCLE_RUNTIME_KTX = "2.5.1"
     const val NAVIGATION_COMPOSE = "2.5.1"
     const val VIEW_MODEL_COMPOSE = "2.5.1"
+    const val COIL_COMPOSE = "2.2.2"
+    const val ACCOMPANIST = "0.25.1"
 
     const val KOIN = "3.2.0"
     const val KOIN_ANDROID = "3.3.0"
@@ -36,6 +38,8 @@ object Version {
     const val TIMBER = "5.0.1"
     const val SETTINGS = "1.0.0-RC"
     const val SECURITY_CRYPTO = "1.1.0-alpha03"
+    const val DATE_TIME = "0.4.0"
+    const val REALM = "1.3.0"
 
     // Tests
     const val JUNIT = "4.13.2"
@@ -44,4 +48,5 @@ object Version {
     const val MOCKATIVE = "1.2.6"
     const val KOTEST = "5.5.1"
     const val MOCKK = "1.13.2"
+    const val TURBINE = "0.12.1"
 }

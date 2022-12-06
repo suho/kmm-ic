@@ -1,5 +1,6 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
 
 plugins {
     kotlin(Plugin.MULTIPLATFORM)
@@ -10,6 +11,7 @@ plugins {
     id(Plugin.NATIVE_COROUTINES).version(Version.NATIVE_COROUTINES_KOTLIN)
     id(Plugin.BUILD_KONFIG)
     id(Plugin.KSP).version(Version.KSP)
+    id(Plugin.REALM)
 }
 
 version = "1.0"
@@ -29,12 +31,16 @@ kotlin {
         framework {
             baseName = "Shared"
         }
-        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_STAGING] = NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_PRODUCTION] = NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_STAGING] = NativeBuildType.RELEASE
-        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_PRODUCTION] = NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_STAGING] =
+            NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.DEBUG_PRODUCTION] =
+            NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_STAGING] =
+            NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType[XcodeConfiguration.RELEASE_PRODUCTION] =
+            NativeBuildType.RELEASE
     }
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -48,6 +54,7 @@ kotlin {
                 implementation(Dependency.KTOR_CIO)
                 implementation(Dependency.KTOR_CONTENT_NEGOTIATION)
                 implementation(Dependency.KTOR_JSON)
+                implementation(Dependency.KTOR_AUTH)
 
                 // Logging
                 implementation(Dependency.NAPIER)
@@ -62,6 +69,12 @@ kotlin {
                 // settings
                 implementation(Dependency.SETTINGS)
                 implementation(Dependency.SETTINGS_SERIALIZATION)
+
+                // Date
+                implementation(Dependency.DATE_TIME)
+
+                // Realm
+                implementation(Dependency.REALM_LIBRARY_BASE)
             }
         }
         val commonTest by getting {
@@ -73,6 +86,7 @@ kotlin {
                 implementation(Dependency.KOTEST_FRAMEWORK)
                 implementation(Dependency.KOTEST_ASSERTIONS)
                 implementation(Dependency.KOTEST_PROPERTY)
+                implementation(Dependency.TURBINE)
             }
         }
         val androidMain by getting {
@@ -191,7 +205,10 @@ tasks.withType<com.google.devtools.ksp.gradle.KspTask>().configureEach {
     when (this) {
         is com.google.devtools.ksp.gradle.KspTaskNative -> {
             this.compilerPluginOptions.addPluginArgument(
-                tasks.named<org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile>(compilation.compileKotlinTaskName).get().compilerPluginOptions
+                tasks
+                    .named<KotlinNativeCompile>(compilation.compileKotlinTaskName)
+                    .get()
+                    .compilerPluginOptions
             )
         }
     }

@@ -9,7 +9,7 @@ interface LogInUseCase {
     operator fun invoke(email: String, password: String): Flow<Token>
 }
 
-class LogInUseCaseImpl(private val repository: TokenRepository): LogInUseCase {
+class LogInUseCaseImpl(private val repository: TokenRepository) : LogInUseCase {
 
     override operator fun invoke(email: String, password: String): Flow<Token> {
         return repository

@@ -10,6 +10,7 @@ buildscript {
         classpath(Dependency.GOOGLE_SERVICES)
         classpath(Dependency.KOTLIN_SERIALIZATION)
         classpath(Dependency.BUILD_KONFIG)
+        classpath(Dependency.REALM_GRADLE_PLUGIN)
     }
 }
 

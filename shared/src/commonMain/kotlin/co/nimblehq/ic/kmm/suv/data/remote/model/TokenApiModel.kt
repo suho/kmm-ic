@@ -6,7 +6,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TokenApiModel(
+    @SerialName("id")
     val id: String,
+    @SerialName("type")
     val type: String,
     @SerialName("access_token")
     val accessToken: String,
@@ -19,7 +21,7 @@ data class TokenApiModel(
     @SerialName("created_at")
     val createdAt: Int
 ) {
-    constructor(token: Token): this(
+    constructor(token: Token) : this(
         "-",
         "-",
         token.accessToken,

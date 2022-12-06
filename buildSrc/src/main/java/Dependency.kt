@@ -15,10 +15,13 @@ object Dependency {
     const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Version.ACTIVITY_COMPOSE}"
     const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Version.NAVIGATION_COMPOSE}"
     const val VIEW_MODEL_COMPOSE = "androidx.lifecycle:lifecycle-viewmodel-compose:${Version.VIEW_MODEL_COMPOSE}"
+    const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Version.COIL_COMPOSE}"
+    const val ACCOMPANIST_PLACEHOLDER = "com.google.accompanist:accompanist-placeholder:${Version.ACCOMPANIST}"
 
     // Kotlinx
     const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINES_CORE}"
     const val COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.COROUTINES_CORE}"
+    const val DATE_TIME = "org.jetbrains.kotlinx:kotlinx-datetime:${Version.DATE_TIME}"
 
     // Ktor
     const val KTOR_CORE = "io.ktor:ktor-client-core:${Version.KTOR}"
@@ -27,6 +30,7 @@ object Dependency {
     const val KTOR_CIO = "io.ktor:ktor-client-cio:${Version.KTOR}"
     const val KTOR_CONTENT_NEGOTIATION = "io.ktor:ktor-client-content-negotiation:${Version.KTOR}"
     const val KTOR_JSON = "io.ktor:ktor-serialization-kotlinx-json:${Version.KTOR}"
+    const val KTOR_AUTH = "io.ktor:ktor-client-auth:${Version.KTOR}"
     const val KTOR_ANDROID = "io.ktor:ktor-client-android:${Version.KTOR}"
     const val KTOR_IOS = "io.ktor:ktor-client-ios:${Version.KTOR}"
 
@@ -55,6 +59,10 @@ object Dependency {
     const val SETTINGS_SERIALIZATION = "com.russhwolf:multiplatform-settings-serialization:${Version.SETTINGS}"
     const val SECURITY_CRYPTO_KTX = "androidx.security:security-crypto-ktx:${Version.SECURITY_CRYPTO}"
 
+    // Realm
+    const val REALM_GRADLE_PLUGIN = "io.realm.kotlin:gradle-plugin:${Version.REALM}"
+    const val REALM_LIBRARY_BASE = "io.realm.kotlin:library-base:${Version.REALM}"
+
     // Tests
     const val JUNIT = "junit:junit:${Version.JUNIT}"
     const val JUNIT_EXT = "androidx.test.ext:junit:${Version.JUNIT_EXT}"
@@ -68,4 +76,5 @@ object Dependency {
     const val MOCKK = "io.mockk:mockk:${Version.MOCKK}"
     const val KOTLIN_COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.COROUTINES_CORE}"
     const val MOCKK_ANDROID = "io.mockk:mockk-android:${Version.MOCKK}"
+    const val TURBINE = "app.cash.turbine:turbine:${Version.TURBINE}"
 }

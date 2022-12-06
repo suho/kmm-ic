@@ -97,11 +97,16 @@ dependencies {
     implementation(Dependency.ACTIVITY_COMPOSE)
     implementation(Dependency.NAVIGATION_COMPOSE)
     implementation(Dependency.VIEW_MODEL_COMPOSE)
+    implementation(Dependency.COIL_COMPOSE)
+    implementation(Dependency.ACCOMPANIST_PLACEHOLDER)
 
     // Koin
     implementation(Dependency.KOIN_CORE)
     implementation(Dependency.KOIN_ANDROID)
     implementation(Dependency.KOIN_COMPOSE)
+
+    // Date
+    implementation(Dependency.DATE_TIME)
 
     // Debug
     implementation(Dependency.TIMBER)
