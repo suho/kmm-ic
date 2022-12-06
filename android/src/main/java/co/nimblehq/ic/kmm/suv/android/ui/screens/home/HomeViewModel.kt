@@ -2,7 +2,11 @@ package co.nimblehq.ic.kmm.suv.android.ui.screens.home
 
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.ic.kmm.suv.android.ui.base.BaseViewModel
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.HomeSurveyUiModel
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.HomeSurveysUiModel
+import co.nimblehq.ic.kmm.suv.domain.model.Survey
 import co.nimblehq.ic.kmm.suv.domain.usecase.GetProfileUseCase
+import co.nimblehq.ic.kmm.suv.domain.usecase.GetSurveysUseCase
 import co.nimblehq.ic.kmm.suv.helper.date.DateFormat
 import co.nimblehq.ic.kmm.suv.helper.date.DateTime
 import co.nimblehq.ic.kmm.suv.helper.date.DateTimeFormatter
@@ -14,6 +18,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getProfileUseCase: GetProfileUseCase,
+    private val getSurveysUseCase: GetSurveysUseCase,
     dateTime: DateTime,
     dateTimeFormatter: DateTimeFormatter
 ) : BaseViewModel() {
@@ -24,6 +29,12 @@ class HomeViewModel(
     private val _avatarUrlString = MutableStateFlow("")
     val avatarUrlString: StateFlow<String> = _avatarUrlString.asStateFlow()
 
+    private val _surveysUiModel: MutableStateFlow<HomeSurveysUiModel?> = MutableStateFlow(null)
+    val surveysUiModel: StateFlow<HomeSurveysUiModel?> = _surveysUiModel.asStateFlow()
+
+    private lateinit var surveys: List<Survey>
+    private var currentSurveyIndex: Int = 0
+
     init {
         _currentDate.value = dateTimeFormatter.getFormattedString(
             dateTime.today(),
@@ -31,7 +42,26 @@ class HomeViewModel(
         ).uppercase()
     }
 
-    fun loadProfile() {
+    fun loadProfileAndSurveys() {
+        loadProfile()
+        loadSurveys()
+    }
+
+    fun showPreviousSurvey() {
+        if (currentSurveyIndex > 0) {
+            currentSurveyIndex -= 1
+            updateCurrentSurvey()
+        }
+    }
+
+    fun showNextSurvey() {
+        if (currentSurveyIndex < surveys.size - 1) {
+            currentSurveyIndex += 1
+            updateCurrentSurvey()
+        }
+    }
+
+    private fun loadProfile() {
         showLoading()
         viewModelScope.launch {
             getProfileUseCase()
@@ -43,5 +73,36 @@ class HomeViewModel(
                 }
             hideLoading()
         }
+    }
+
+    private fun loadSurveys() {
+        showLoading()
+        viewModelScope.launch {
+            // TODO: Improve this when we have paging implementation
+            getSurveysUseCase(1, 5)
+                .catch { e ->
+                    showError(e.message)
+                }
+                .collect {
+                    surveys = it
+                    if (surveys.isNotEmpty()) updateCurrentSurvey()
+                }
+            hideLoading()
+        }
+    }
+
+    private fun updateCurrentSurvey() {
+        val surveysUiModel = surveys[currentSurveyIndex].run {
+            HomeSurveysUiModel(
+                HomeSurveyUiModel(
+                    title,
+                    description,
+                    coverImageUrl
+                ),
+                totalPages = surveys.size,
+                currentPageIndex = currentSurveyIndex
+            )
+        }
+        _surveysUiModel.value = surveysUiModel
     }
 }
