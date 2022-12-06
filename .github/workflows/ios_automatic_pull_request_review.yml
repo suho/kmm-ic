@@ -2,7 +2,7 @@ name: iOS - Automatic pull request review
 
 on:
   pull_request:
-    types: [ opened, reopened, edited, synchronize ]
+    types: [ opened, reopened, edited, synchronize, ready_for_review ]
 
 defaults:
   run:
@@ -30,91 +30,91 @@ jobs:
     name: Pull request review for iOS
     runs-on: macos-12
     steps:
-    - name: Cancel Previous Runs
-      uses: styfle/cancel-workflow-action@0.5.0
-      with:
-        access_token: ${{ github.token }}
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.5.0
+        with:
+          access_token: ${{ github.token }}
 
-    - name: Checkout source code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        submodules: recursive
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
 
-    - name: Setup Google Services for Staging
-      env:
-        IOS_GOOGLE_SERVICE_INFO_STAGING: ${{ secrets.IOS_GOOGLE_SERVICE_INFO_STAGING }}
-      run: |
-        mkdir -p Surveys/Configurations/Plists/GoogleService/Staging
-        touch Surveys/Configurations/Plists/GoogleService/Staging/GoogleService-Info.plist
-        echo $IOS_GOOGLE_SERVICE_INFO_STAGING | base64 --decode > ./Surveys/Configurations/Plists/GoogleService/Staging/GoogleService-Info.plist
+      - name: Setup Google Services for Staging
+        env:
+          IOS_GOOGLE_SERVICE_INFO_STAGING: ${{ secrets.IOS_GOOGLE_SERVICE_INFO_STAGING }}
+        run: |
+          mkdir -p Surveys/Configurations/Plists/GoogleService/Staging
+          touch Surveys/Configurations/Plists/GoogleService/Staging/GoogleService-Info.plist
+          echo $IOS_GOOGLE_SERVICE_INFO_STAGING | base64 --decode > ./Surveys/Configurations/Plists/GoogleService/Staging/GoogleService-Info.plist
 
-    - name: Setup Android Signing
-      env:
-        ANDROID_RELEASE_KEYSTORE: ${{ secrets.ANDROID_RELEASE_KEYSTORE }}
-        ANDROID_SIGNING_PROPERTIES: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
-      run: |
-        touch ../config/release.keystore
-        echo $ANDROID_RELEASE_KEYSTORE | base64 --decode > ../config/release.keystore
-        touch ../signing.properties
-        echo $ANDROID_SIGNING_PROPERTIES | base64 --decode > ../signing.properties
+      - name: Setup Android Signing
+        env:
+          ANDROID_RELEASE_KEYSTORE: ${{ secrets.ANDROID_RELEASE_KEYSTORE }}
+          ANDROID_SIGNING_PROPERTIES: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
+        run: |
+          touch ../config/release.keystore
+          echo $ANDROID_RELEASE_KEYSTORE | base64 --decode > ../config/release.keystore
+          touch ../signing.properties
+          echo $ANDROID_SIGNING_PROPERTIES | base64 --decode > ../signing.properties
 
-    - name: Setup Konfig Properties
-      env:
-        KMM_KONFIG_PROPERTIES: ${{ secrets.KMM_KONFIG_PROPERTIES }}
-      run: |
-        touch ../buildKonfig.properties
-        echo $KMM_KONFIG_PROPERTIES | base64 --decode > ../buildKonfig.properties
+      - name: Setup Konfig Properties
+        env:
+          KMM_KONFIG_PROPERTIES: ${{ secrets.KMM_KONFIG_PROPERTIES }}
+        run: |
+          touch ../buildKonfig.properties
+          echo $KMM_KONFIG_PROPERTIES | base64 --decode > ../buildKonfig.properties
 
-    - name: Setup Java JDK
-      uses: actions/setup-java@v2.1.0
-      with:
-        distribution: 'adopt'
-        java-version: '11'
+      - name: Setup Java JDK
+        uses: actions/setup-java@v2.1.0
+        with:
+          distribution: 'adopt'
+          java-version: '11'
 
-    - name: Cache Gradle
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.gradle/caches/modules-*
-          ~/.gradle/caches/jars-*
-          ~/.gradle/caches/build-cache-*
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches/modules-*
+            ~/.gradle/caches/jars-*
+            ~/.gradle/caches/build-cache-*
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-    - name: Generate KMM frameworks for Cocoapods
-      run: |
-        cd ..
-        ./gradlew generateDummyFramework
+      - name: Generate KMM frameworks for Cocoapods
+        run: |
+          cd ..
+          ./gradlew generateDummyFramework
 
-    - uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: ${{ runner.os }}-gems-
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
 
-    - name: Bundle install
-      run: |
-        ruby --version
-        bundle --version
-        bundle install
+      - name: Bundle install
+        run: |
+          ruby --version
+          bundle --version
+          bundle install
 
-    - name: Cache Pods
-      uses: actions/cache@v2
-      with:
-        path: Pods
-        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-pods-
+      - name: Cache Pods
+        uses: actions/cache@v2
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
 
-    - name: Install Pods Dependencies
-      run: bundle exec pod install
+      - name: Install Pods Dependencies
+        run: bundle exec pod install
 
-    - name: Build and Test
-      run: bundle exec fastlane build_and_test
-      env:
-        CI: true
+      - name: Build and Test
+        run: bundle exec fastlane build_and_test
+        env:
+          CI: true
 
 # TODO: Will integrate Danger and Xcov later
 #    - name: Clean up previous code coverage report
