@@ -4,33 +4,56 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.navigation
-import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.HomeScreen
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.SurveyArgument
+import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginScreen
+import co.nimblehq.ic.kmm.suv.android.ui.screens.surveydetail.SurveyDetailScreen
+import co.nimblehq.ic.kmm.suv.android.ui.screens.surveydetail.SurveyDetailViewModel
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun NavGraph() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Route.AUTHENTICATION) {
+    NavHost(navController = navController, startDestination = AppDestination.Authentication.route) {
         authenticationGraph(navController)
         mainGraph(navController)
     }
 }
 
 fun NavGraphBuilder.authenticationGraph(navController: NavController) {
-    navigation(startDestination = Route.LOGIN, route = Route.AUTHENTICATION) {
-        composable(Route.LOGIN) {
+    navigation(
+        startDestination = AppDestination.Login,
+        destination = AppDestination.Authentication
+    ) {
+        composable(AppDestination.Login) {
             LoginScreen(onLogInSuccess = {
-                navController.navigate(Route.HOME)
+                navController.navigate(AppDestination.Home)
             })
         }
     }
 }
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
-    composable(Route.HOME) {
-        HomeScreen()
+    composable(AppDestination.Home) {
+        HomeScreen(onSurveyDetailClick = {
+            navController.currentBackStackEntry?.arguments?.putParcelable(Argument.survey, it)
+            navController.navigate(AppDestination.Survey)
+        })
+    }
+
+    composable(AppDestination.Survey) {
+        val arguments = navController.previousBackStackEntry?.arguments
+        val survey = arguments?.getParcelable<SurveyArgument>(Argument.survey)
+        val viewModel: SurveyDetailViewModel = getViewModel(
+            parameters = { parametersOf(survey) }
+        )
+        SurveyDetailScreen(
+            viewModel,
+            onBackClick = {
+                navController.popBackStack()
+            }
+        )
     }
 }

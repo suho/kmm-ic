@@ -29,8 +29,22 @@ class HomeScreenTest {
     private val mockGetSurveysUseCase: GetSurveysUseCase = mockk()
     private val mockDateTime: DateTime = mockk()
     private val user = User("email", "name", "avatarUrl")
-    private val mockFirstSurvey = Survey("firstTitle", "firstDescription", true, "coverImageUrl")
-    private val mockSecondSurvey = Survey("secondTitle", "secondTitle", true, "coverImageUrl")
+    private val mockFirstSurvey = Survey(
+        id = "firstID",
+        title = "firstTitle",
+        description = "firstDescription",
+        isActive = true,
+        coverImageUrl = "coverImageUrl",
+        questions = emptyList()
+    )
+    private val mockSecondSurvey = Survey(
+        id = "firstID",
+        title = "secondTitle",
+        description = "secondTitle",
+        isActive = true,
+        coverImageUrl = "coverImageUrl",
+        questions = emptyList()
+    )
 
     @Before
     fun setup() {

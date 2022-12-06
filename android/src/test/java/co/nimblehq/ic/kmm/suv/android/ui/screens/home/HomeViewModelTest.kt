@@ -87,8 +87,8 @@ class HomeViewModelTest {
 
             viewModel.avatarUrlString.value shouldBe mockUser.avatarUrl
 
-            testCurrentSurveyPage(mockFirstSurvey)
-            testTotalPagesAndIndex(2, 0)
+            verifyCurrentSurveyPage(mockFirstSurvey)
+            verifyTotalPagesAndIndex(2, 0)
         }
 
     @Test
@@ -127,8 +127,8 @@ class HomeViewModelTest {
         advanceUntilIdle()
         viewModel.showNextSurvey()
 
-        testCurrentSurveyPage(mockSecondSurvey)
-        testTotalPagesAndIndex(2, 1)
+        verifyCurrentSurveyPage(mockSecondSurvey)
+        verifyTotalPagesAndIndex(2, 1)
     }
 
     @Test
@@ -137,14 +137,28 @@ class HomeViewModelTest {
         advanceUntilIdle()
 
         viewModel.showNextSurvey()
-        testTotalPagesAndIndex(2, 1)
+        verifyTotalPagesAndIndex(2, 1)
 
         viewModel.showPreviousSurvey()
-        testCurrentSurveyPage(mockFirstSurvey)
-        testTotalPagesAndIndex(2, 0)
+        verifyCurrentSurveyPage(mockFirstSurvey)
+        verifyTotalPagesAndIndex(2, 0)
     }
 
-    private fun testCurrentSurveyPage(survey: Survey) {
+    @Test
+    fun `When get current survey argument, it should return the right survey argument`() =
+        runTest {
+            viewModel.loadProfileAndSurveys()
+            advanceUntilIdle()
+
+            val firstCurrentSurveyArgument = viewModel.getCurrentSurveyArgument()
+            verifyCurrentSurveyArgument(firstCurrentSurveyArgument, mockFirstSurvey)
+
+            viewModel.showNextSurvey()
+            val secondCurrentSurveyArgument = viewModel.getCurrentSurveyArgument()
+            verifyCurrentSurveyArgument(secondCurrentSurveyArgument, mockSecondSurvey)
+        }
+
+    private fun verifyCurrentSurveyPage(survey: Survey) {
         viewModel.surveysUiModel.value.apply {
             this shouldNot beNull()
             this?.currentSurveyUiModel?.title shouldBe survey.title
@@ -152,11 +166,15 @@ class HomeViewModelTest {
         }
     }
 
-    private fun testTotalPagesAndIndex(totalPages: Int, currentIndex: Int) {
+    private fun verifyTotalPagesAndIndex(totalPages: Int, currentIndex: Int) {
         viewModel.surveysUiModel.value.apply {
             this shouldNot beNull()
             this?.totalPages shouldBe totalPages
             this?.currentPageIndex shouldBe currentIndex
         }
+    }
+
+    private fun verifyCurrentSurveyArgument(surveyArgument: SurveyArgument, survey: Survey) {
+        surveyArgument shouldBe survey.run { SurveyArgument(id, title, description, coverImageUrl) }
     }
 }
