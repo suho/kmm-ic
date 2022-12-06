@@ -85,36 +85,24 @@ class HomeViewModel(
                 }
                 .collect {
                     surveys = it
-                    if (surveys.isNotEmpty()) {
-                        val firstHomeSurveyUiModel = surveys.first().run {
-                            HomeSurveyUiModel(
-                                title,
-                                description,
-                                coverImageUrl
-                            )
-                        }
-                        _surveysUiModel.value = HomeSurveysUiModel(
-                            firstHomeSurveyUiModel,
-                            totalPages = surveys.size,
-                            currentPageIndex = 0
-                        )
-                    }
+                    if (surveys.isNotEmpty()) updateCurrentSurvey()
                 }
             hideLoading()
         }
     }
 
     private fun updateCurrentSurvey() {
-        val homeSurveyUiModel = surveys[currentSurveyIndex].run {
-            HomeSurveyUiModel(
-                title,
-                description,
-                coverImageUrl
+        val surveysUiModel = surveys[currentSurveyIndex].run {
+            HomeSurveysUiModel(
+                HomeSurveyUiModel(
+                    title,
+                    description,
+                    coverImageUrl
+                ),
+                totalPages = surveys.size,
+                currentPageIndex = currentSurveyIndex
             )
         }
-        _surveysUiModel.value = _surveysUiModel.value?.copy(
-            currentSurveyUiModel = homeSurveyUiModel,
-            currentPageIndex = currentSurveyIndex
-        )
+        _surveysUiModel.value = surveysUiModel
     }
 }

@@ -8,7 +8,9 @@ import co.nimblehq.ic.kmm.suv.domain.usecase.GetProfileUseCase
 import co.nimblehq.ic.kmm.suv.domain.usecase.GetSurveysUseCase
 import co.nimblehq.ic.kmm.suv.helper.date.DateTime
 import co.nimblehq.ic.kmm.suv.helper.date.DateTimeFormatterImpl
+import io.kotest.matchers.nulls.beNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNot
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -70,8 +72,9 @@ class HomeViewModelTest {
             advanceUntilIdle()
 
             viewModel.avatarUrlString.value shouldBe mockUser.avatarUrl
-            viewModel.surveysUiModel.value?.currentSurveyUiModel?.title shouldBe mockFirstSurvey.title
-            viewModel.surveysUiModel.value?.currentSurveyUiModel?.description shouldBe mockFirstSurvey.description
+
+            testCurrentSurveyPage(mockFirstSurvey)
+            testTotalPagesAndIndex(2, 0)
         }
 
     @Test
@@ -110,18 +113,36 @@ class HomeViewModelTest {
         advanceUntilIdle()
         viewModel.showNextSurvey()
 
-        viewModel.surveysUiModel.value?.currentSurveyUiModel?.title shouldBe mockSecondSurvey.title
-        viewModel.surveysUiModel.value?.currentSurveyUiModel?.description shouldBe mockSecondSurvey.description
+        testCurrentSurveyPage(mockSecondSurvey)
+        testTotalPagesAndIndex(2, 1)
     }
 
     @Test
     fun `When show previous survey, the survey ui model should be updated`() = runTest {
         viewModel.loadProfileAndSurveys()
         advanceUntilIdle()
-        viewModel.showNextSurvey()
-        viewModel.showPreviousSurvey()
 
-        viewModel.surveysUiModel.value?.currentSurveyUiModel?.title shouldBe mockFirstSurvey.title
-        viewModel.surveysUiModel.value?.currentSurveyUiModel?.description shouldBe mockFirstSurvey.description
+        viewModel.showNextSurvey()
+        testTotalPagesAndIndex(2, 1)
+
+        viewModel.showPreviousSurvey()
+        testCurrentSurveyPage(mockFirstSurvey)
+        testTotalPagesAndIndex(2, 0)
+    }
+
+    private fun testCurrentSurveyPage(survey: Survey) {
+        viewModel.surveysUiModel.value.apply {
+            this shouldNot beNull()
+            this?.currentSurveyUiModel?.title shouldBe survey.title
+            this?.currentSurveyUiModel?.description shouldBe survey.description
+        }
+    }
+
+    private fun testTotalPagesAndIndex(totalPages: Int, currentIndex: Int) {
+        viewModel.surveysUiModel.value.apply {
+            this shouldNot beNull()
+            this?.totalPages shouldBe totalPages
+            this?.currentPageIndex shouldBe currentIndex
+        }
     }
 }
