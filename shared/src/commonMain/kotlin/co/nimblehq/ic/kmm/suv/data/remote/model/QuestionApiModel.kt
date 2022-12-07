@@ -23,11 +23,11 @@ data class QuestionApiModel(
 )
 
 fun QuestionApiModel.toQuestion(): Question = Question(
-    id,
-    text,
-    displayOrder,
-    displayType,
-    pick,
-    coverImageUrl.string,
-    answers.map { it.toAnswer() }
+    id = id,
+    text = text,
+    displayOrder = displayOrder,
+    displayType = displayType,
+    pick = pick,
+    coverImageUrl = coverImageUrl.string,
+    answers = answers.map { it.toAnswer() }
 )

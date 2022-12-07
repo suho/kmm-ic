@@ -19,12 +19,12 @@ class GetSurveyDetailUseCaseTest {
 
     private val mockThrowable = Throwable("mock")
     private val mockSurvey = Survey(
-        "id",
-        "title",
-        "description",
-        true,
-        "coverImageUrl",
-        emptyList()
+        id = "id",
+        title = "title",
+        description = "description",
+        isActive = true,
+        coverImageUrl = "coverImageUrl",
+        questions = emptyList()
     )
 
     private lateinit var useCase: GetSurveyDetailUseCase
@@ -37,7 +37,7 @@ class GetSurveyDetailUseCaseTest {
     @Test
     fun `when the use case is succeeded - it returns survey`() = runTest {
         given(mockSurveyRepository)
-            .function(mockSurveyRepository::getSurvey)
+            .function(mockSurveyRepository::getSurveyDetail)
             .whenInvokedWith(any())
             .thenReturn(flow { emit(mockSurvey) })
 
@@ -50,7 +50,7 @@ class GetSurveyDetailUseCaseTest {
     @Test
     fun `when the use case is failed - it returns error`() = runTest {
         given(mockSurveyRepository)
-            .function(mockSurveyRepository::getSurvey)
+            .function(mockSurveyRepository::getSurveyDetail)
             .whenInvokedWith(any())
             .thenReturn(flow { throw mockThrowable })
 

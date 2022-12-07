@@ -34,10 +34,10 @@ open class SurveyRealmObject : RealmObject {
 }
 
 fun SurveyRealmObject.toSurvey() = Survey(
-    id,
-    title,
-    description,
-    isActive,
-    coverImageUrl,
-    emptyList()
+    id = id,
+    title = title,
+    description = description,
+    isActive = isActive,
+    coverImageUrl = coverImageUrl,
+    questions = emptyList()
 )

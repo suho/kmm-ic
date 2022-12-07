@@ -31,13 +31,13 @@ class SurveyRepositoryTest {
     private val mockSurveyRealmObject = SurveyRealmObject()
         .apply { id = "id-survey-realm-object" }
     private val mockSurveyApiModel = SurveyApiModel(
-        "id-survey-api-model",
-        "type",
-        "title",
-        "description",
-        true,
-        Url("coverImageUrl"),
-        listOf(
+        id = "id-survey-api-model",
+        type = "type",
+        title = "title",
+        description = "description",
+        isActive = true,
+        coverImageUrl = Url("coverImageUrl"),
+        questions = listOf(
             QuestionApiModel(
                 "id",
                 "text",
@@ -154,7 +154,7 @@ class SurveyRepositoryTest {
                 .whenInvokedWith(any())
                 .thenReturn(flow { emit(mockSurveyApiModel) })
 
-            repository.getSurvey("id").test {
+            repository.getSurveyDetail("id").test {
                 this.awaitItem() shouldBe mockSurveyApiModel.toSurvey()
                 this.awaitComplete()
             }
@@ -168,7 +168,7 @@ class SurveyRepositoryTest {
                 .whenInvokedWith(any())
                 .thenReturn(flow { throw mockThrowable })
 
-            repository.getSurvey("id").test {
+            repository.getSurveyDetail("id").test {
                 this.awaitError().message shouldBe mockThrowable.message
             }
         }

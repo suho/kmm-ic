@@ -36,20 +36,18 @@ class HomeViewModelTest {
     private val mockDateTime: DateTime = mockk()
     private val mockUser = User("email", "name", "avatarUrl")
     private val mockFirstSurvey = Survey(
-        "id",
-        "firstTitle",
-        "firstDescription",
-        true,
-        "coverImageUrl",
-        emptyList()
+        id = "id",
+        title = "firstTitle",
+        description = "firstDescription",
+        isActive = true,
+        coverImageUrl = "coverImageUrl"
     )
     private val mockSecondSurvey = Survey(
-        "id",
-        "secondTitle",
-        "secondTitle",
-        true,
-        "coverImageUrl",
-        emptyList()
+        id = "id",
+        title = "secondTitle",
+        description = "secondTitle",
+        isActive = true,
+        coverImageUrl = "coverImageUrl"
     )
 
     @ExperimentalCoroutinesApi

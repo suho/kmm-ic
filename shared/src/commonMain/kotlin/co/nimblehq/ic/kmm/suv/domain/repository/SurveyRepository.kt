@@ -11,5 +11,5 @@ interface SurveyRepository {
         isForceLatestData: Boolean = false
     ): Flow<List<Survey>>
 
-    fun getSurvey(id: String): Flow<Survey>
+    fun getSurveyDetail(id: String): Flow<Survey>
 }

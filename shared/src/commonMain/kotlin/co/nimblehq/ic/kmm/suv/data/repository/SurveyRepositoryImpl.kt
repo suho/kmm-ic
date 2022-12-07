@@ -48,7 +48,7 @@ class SurveyRepositoryImpl(
         }
     }
 
-    override fun getSurvey(id: String): Flow<Survey> {
+    override fun getSurveyDetail(id: String): Flow<Survey> {
         return surveyRemoteDataSource.getSurvey(id).map { it.toSurvey() }
     }
 }

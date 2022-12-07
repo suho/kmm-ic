@@ -13,6 +13,6 @@ class GetSurveyDetailUseCaseImpl(
 ) : GetSurveyDetailUseCase {
 
     override operator fun invoke(id: String): Flow<Survey> {
-        return surveyRepository.getSurvey(id)
+        return surveyRepository.getSurveyDetail(id)
     }
 }

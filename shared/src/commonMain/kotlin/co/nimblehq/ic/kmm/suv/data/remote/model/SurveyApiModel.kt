@@ -24,12 +24,12 @@ data class SurveyApiModel(
 )
 
 fun SurveyApiModel.toSurvey() = Survey(
-    id,
-    title,
-    description,
-    isActive,
-    coverImageUrl.string,
-    questions?.map { it.toQuestion() }
+    id = id,
+    title = title,
+    description = description,
+    isActive = isActive,
+    coverImageUrl = coverImageUrl.string,
+    questions = questions?.map { it.toQuestion() }
 )
 
 fun SurveyApiModel.toSurveyRealmObject() = SurveyRealmObject(
