@@ -24,6 +24,7 @@ object Version {
     const val LIFECYCLE_RUNTIME_KTX = "2.5.1"
     const val NAVIGATION_COMPOSE = "2.5.1"
     const val VIEW_MODEL_COMPOSE = "2.5.1"
+    const val CONSTRAINT_LAYOUT_COMPOSE = "1.0.1"
     const val COIL_COMPOSE = "2.2.2"
     const val ACCOMPANIST = "0.25.1"
 
