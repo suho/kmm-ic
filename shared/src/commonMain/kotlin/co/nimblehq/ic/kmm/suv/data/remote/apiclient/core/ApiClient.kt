@@ -92,7 +92,7 @@ class ApiClient(
         }
     }
 
-    inline fun <reified T> body(builder: HttpRequestBuilder): Flow<T> {
+    inline fun <reified T> responseBody(builder: HttpRequestBuilder): Flow<T> {
         return flow {
             val body = httpClient.request(
                 builder.apply {
@@ -109,7 +109,7 @@ class ApiClient(
         }
     }
 
-    fun emptyBody(builder: HttpRequestBuilder): Flow<Unit> {
+    fun emptyResponseBody(builder: HttpRequestBuilder): Flow<Unit> {
         return flow {
             httpClient.request(
                 builder.apply {

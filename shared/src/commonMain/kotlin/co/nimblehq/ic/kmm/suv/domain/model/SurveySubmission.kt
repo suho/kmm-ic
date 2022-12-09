@@ -1,7 +1,7 @@
 package co.nimblehq.ic.kmm.suv.domain.model
 
 data class SurveySubmission(
-    val surveyID: String,
+    val id: String,
     val questions: List<QuestionSubmission>
 )
 

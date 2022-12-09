@@ -19,7 +19,7 @@ interface SurveyRemoteDataSource {
 class SurveyRemoteDataSourceImpl(private val apiClient: ApiClient) : SurveyRemoteDataSource {
 
     override fun getSurveys(params: GetSurveysApiQueryParams): Flow<List<SurveyApiModel>> {
-        return apiClient.body(
+        return apiClient.responseBody(
             HttpRequestBuilder().apply {
                 path("/v1/surveys")
                 method = HttpMethod.Get
@@ -29,7 +29,7 @@ class SurveyRemoteDataSourceImpl(private val apiClient: ApiClient) : SurveyRemot
     }
 
     override fun getSurvey(id: String): Flow<SurveyApiModel> {
-        return apiClient.body(
+        return apiClient.responseBody(
             HttpRequestBuilder().apply {
                 path("/v1/surveys/${id}")
                 method = HttpMethod.Get
@@ -38,7 +38,7 @@ class SurveyRemoteDataSourceImpl(private val apiClient: ApiClient) : SurveyRemot
     }
 
     override fun submitSurvey(body: SurveySubmissionApiBody): Flow<Unit> {
-        return apiClient.emptyBody(
+        return apiClient.emptyResponseBody(
             HttpRequestBuilder().apply {
                 path("/v1/responses")
                 method = HttpMethod.Post
