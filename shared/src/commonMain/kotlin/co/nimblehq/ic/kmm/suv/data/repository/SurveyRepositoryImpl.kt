@@ -2,11 +2,13 @@ package co.nimblehq.ic.kmm.suv.data.repository
 
 import co.nimblehq.ic.kmm.suv.data.local.datasource.SurveyLocalDataSource
 import co.nimblehq.ic.kmm.suv.data.local.model.toSurvey
+import co.nimblehq.ic.kmm.suv.data.remote.body.SurveySubmissionApiBody
 import co.nimblehq.ic.kmm.suv.data.remote.datasource.SurveyRemoteDataSource
 import co.nimblehq.ic.kmm.suv.data.remote.model.toSurvey
 import co.nimblehq.ic.kmm.suv.data.remote.model.toSurveyRealmObject
 import co.nimblehq.ic.kmm.suv.data.remote.parameter.GetSurveysApiQueryParams
 import co.nimblehq.ic.kmm.suv.domain.model.Survey
+import co.nimblehq.ic.kmm.suv.domain.model.SurveySubmission
 import co.nimblehq.ic.kmm.suv.domain.repository.SurveyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -50,5 +52,9 @@ class SurveyRepositoryImpl(
 
     override fun getSurvey(id: String): Flow<Survey> {
         return surveyRemoteDataSource.getSurvey(id).map { it.toSurvey() }
+    }
+
+    override fun submitSurvey(submission: SurveySubmission): Flow<Unit> {
+        return surveyRemoteDataSource.submitSurvey(SurveySubmissionApiBody(submission))
     }
 }

@@ -9,6 +9,7 @@ import co.nimblehq.ic.kmm.suv.data.remote.model.QuestionApiModel
 import co.nimblehq.ic.kmm.suv.data.remote.model.SurveyApiModel
 import co.nimblehq.ic.kmm.suv.data.remote.model.Url
 import co.nimblehq.ic.kmm.suv.data.remote.model.toSurvey
+import co.nimblehq.ic.kmm.suv.domain.model.SurveySubmission
 import co.nimblehq.ic.kmm.suv.domain.repository.SurveyRepository
 import io.kotest.matchers.shouldBe
 import io.mockative.*
@@ -169,6 +170,33 @@ class SurveyRepositoryTest {
                 .thenReturn(flow { throw mockThrowable })
 
             repository.getSurvey("id").test {
+                this.awaitError().message shouldBe mockThrowable.message
+            }
+        }
+
+    @Test
+    fun `when submit survey is succeeded - it returns empty response`() =
+        runTest {
+            given(mockSurveyRemoteDataSource)
+                .function(mockSurveyRemoteDataSource::submitSurvey)
+                .whenInvokedWith(any())
+                .thenReturn(flow { emit(Unit) })
+
+            repository.submitSurvey(SurveySubmission("survey_id", emptyList())).test {
+                this.awaitItem() shouldBe Unit
+                this.awaitComplete()
+            }
+        }
+
+    @Test
+    fun `when submit survey is failed - it returns error`() =
+        runTest {
+            given(mockSurveyRemoteDataSource)
+                .function(mockSurveyRemoteDataSource::submitSurvey)
+                .whenInvokedWith(any())
+                .thenReturn(flow { throw mockThrowable })
+
+            repository.submitSurvey(SurveySubmission("survey_id", emptyList())).test {
                 this.awaitError().message shouldBe mockThrowable.message
             }
         }
