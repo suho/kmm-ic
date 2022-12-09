@@ -34,8 +34,10 @@ open class SurveyRealmObject : RealmObject {
 }
 
 fun SurveyRealmObject.toSurvey() = Survey(
+    id,
     title,
     description,
     isActive,
-    coverImageUrl
+    coverImageUrl,
+    emptyList()
 )

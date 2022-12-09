@@ -12,7 +12,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @ExperimentalCoroutinesApi
-class GetSurveysUseCaseTest {
+class GetSurveyDetailUseCaseTest {
 
     @Mock
     private val mockSurveyRepository = mock(classOf<SurveyRepository>())
@@ -27,22 +27,22 @@ class GetSurveysUseCaseTest {
         emptyList()
     )
 
-    private lateinit var useCase: GetSurveysUseCase
+    private lateinit var useCase: GetSurveyDetailUseCase
 
     @BeforeTest
     fun setUp() {
-        useCase = GetSurveysUseCaseImpl(mockSurveyRepository)
+        useCase = GetSurveyDetailUseCaseImpl(mockSurveyRepository)
     }
 
     @Test
-    fun `when the use case is succeeded - it returns surveys`() = runTest {
+    fun `when the use case is succeeded - it returns survey`() = runTest {
         given(mockSurveyRepository)
-            .function(mockSurveyRepository::getSurveys)
-            .whenInvokedWith(any(), any(), any())
-            .thenReturn(flow { emit(listOf(mockSurvey)) })
+            .function(mockSurveyRepository::getSurvey)
+            .whenInvokedWith(any())
+            .thenReturn(flow { emit(mockSurvey) })
 
-        useCase(1, 1).test {
-            this.awaitItem() shouldBe listOf(mockSurvey)
+        useCase("id").test {
+            this.awaitItem() shouldBe mockSurvey
             this.awaitComplete()
         }
     }
@@ -50,11 +50,11 @@ class GetSurveysUseCaseTest {
     @Test
     fun `when the use case is failed - it returns error`() = runTest {
         given(mockSurveyRepository)
-            .function(mockSurveyRepository::getSurveys)
-            .whenInvokedWith(any(), any(), any())
+            .function(mockSurveyRepository::getSurvey)
+            .whenInvokedWith(any())
             .thenReturn(flow { throw mockThrowable })
 
-        useCase(1, 1).test {
+        useCase("id").test {
             this.awaitError().message shouldBe mockThrowable.message
         }
     }

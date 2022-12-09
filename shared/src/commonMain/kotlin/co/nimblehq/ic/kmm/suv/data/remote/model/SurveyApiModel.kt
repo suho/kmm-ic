@@ -18,14 +18,18 @@ data class SurveyApiModel(
     @SerialName("is_active")
     val isActive: Boolean,
     @SerialName("cover_image_url")
-    val coverImageUrl: Url
+    val coverImageUrl: Url,
+    @SerialName("questions")
+    val questions: List<QuestionApiModel>? = null
 )
 
 fun SurveyApiModel.toSurvey() = Survey(
+    id,
     title,
     description,
     isActive,
-    coverImageUrl.string
+    coverImageUrl.string,
+    questions?.map { it.toQuestion() }
 )
 
 fun SurveyApiModel.toSurveyRealmObject() = SurveyRealmObject(

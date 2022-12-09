@@ -10,4 +10,6 @@ interface SurveyRepository {
         pageSize: Int,
         isForceLatestData: Boolean = false
     ): Flow<List<Survey>>
+
+    fun getSurvey(id: String): Flow<Survey>
 }

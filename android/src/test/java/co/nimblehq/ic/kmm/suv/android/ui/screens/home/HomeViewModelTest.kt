@@ -35,8 +35,22 @@ class HomeViewModelTest {
     private val mockGetSurveysUseCase: GetSurveysUseCase = mockk()
     private val mockDateTime: DateTime = mockk()
     private val mockUser = User("email", "name", "avatarUrl")
-    private val mockFirstSurvey = Survey("firstTitle", "firstDescription", true, "coverImageUrl")
-    private val mockSecondSurvey = Survey("secondTitle", "secondTitle", true, "coverImageUrl")
+    private val mockFirstSurvey = Survey(
+        "id",
+        "firstTitle",
+        "firstDescription",
+        true,
+        "coverImageUrl",
+        emptyList()
+    )
+    private val mockSecondSurvey = Survey(
+        "id",
+        "secondTitle",
+        "secondTitle",
+        true,
+        "coverImageUrl",
+        emptyList()
+    )
 
     @ExperimentalCoroutinesApi
     @get:Rule
