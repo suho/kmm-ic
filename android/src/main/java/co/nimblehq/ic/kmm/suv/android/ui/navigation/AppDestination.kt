@@ -4,6 +4,7 @@ import androidx.navigation.NamedNavArgument
 
 object Argument {
     const val survey = "survey"
+    const val surveyQuestions = "surveyQuestions"
 }
 
 sealed class AppDestination(var route: String) {
@@ -18,5 +19,5 @@ sealed class AppDestination(var route: String) {
 
     object Survey : AppDestination("survey/{${Argument.survey}}")
 
-    object SurveyQuestions : AppDestination("surveyQuestions")
+    object SurveyQuestions : AppDestination("surveyQuestions/{${Argument.surveyQuestions}}")
 }
