@@ -8,3 +8,7 @@ data class Survey(
     val coverImageUrl: String,
     val questions: List<Question>? = null
 )
+
+fun Survey.sortedQuestions(): List<Question>? {
+    return questions?.sortedBy { it.displayOrder }
+}

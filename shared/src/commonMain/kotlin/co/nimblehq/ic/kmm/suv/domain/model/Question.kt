@@ -11,5 +11,5 @@ data class Question(
 )
 
 fun Question.sortedAnswers(): List<Answer> {
-    return answers.sortedBy { displayOrder }
+    return answers.sortedBy { it.displayOrder }
 }
