@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SurveyQuestionsViewModel(
     private val getSurveyDetailUseCase: GetSurveyDetailUseCase
@@ -40,7 +41,8 @@ class SurveyQuestionsViewModel(
                                 questions.mapIndexed { index, question ->
                                     QuestionContentUiModel(
                                         progress = "${index + 1}/$totalOfQuestions",
-                                        title = question.text
+                                        title = question.text,
+                                        displayType = question.displayType
                                     )
                                 }
                         }
@@ -48,5 +50,9 @@ class SurveyQuestionsViewModel(
                 hideLoading()
             }
         }
+    }
+
+    fun answerQuestion(questionAnswer: Pair<Int, Int>) {
+        Timber.d("question ${questionAnswer.first} - answer ${questionAnswer.second}")
     }
 }

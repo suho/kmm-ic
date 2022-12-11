@@ -21,11 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.extension.placeholder
-import co.nimblehq.ic.kmm.suv.android.ui.components.ErrorAlertDialog
-import co.nimblehq.ic.kmm.suv.android.ui.components.ImageBackground
+import co.nimblehq.ic.kmm.suv.android.ui.components.*
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import co.nimblehq.ic.kmm.suv.android.util.LoadingParameterProvider
+import co.nimblehq.ic.kmm.suv.domain.model.QuestionDisplayType
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -60,14 +60,16 @@ fun SurveyQuestionsScreen(
             backgroundUrl = coverImageUrl,
             questions = questionUiModels
         ),
-        onCloseClick
+        onCloseClick,
+        onAnswerClick = viewModel::answerQuestion
     )
 }
 
 @Composable
 private fun SurveyQuestionsScreenContent(
     uiModel: SurveyQuestionsContentUiModel,
-    onCloseClick: () -> Unit = {}
+    onCloseClick: () -> Unit = {},
+    onAnswerClick: (Pair<Int, Int>) -> Unit
 ) {
     ImageBackground(uiModel.backgroundUrl)
     Row(
@@ -99,7 +101,7 @@ private fun SurveyQuestionsScreenContent(
     if (uiModel.isLoading) {
         SurveyQuestionsLoadingContent()
     } else {
-        SurveyQuestionsContent(uiModel.questions)
+        SurveyQuestionsContent(uiModel.questions, onAnswerClick)
     }
 }
 
@@ -134,12 +136,15 @@ private fun SurveyQuestionsLoadingContent() {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-private fun SurveyQuestionsContent(questions: List<QuestionContentUiModel>) {
+private fun SurveyQuestionsContent(
+    questionUiModels: List<QuestionContentUiModel>,
+    onAnswerClick: (Pair<Int, Int>) -> Unit
+) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
     HorizontalPager(
-        count = questions.size,
+        count = questionUiModels.size,
         verticalAlignment = Alignment.Top,
         state = pagerState,
         modifier = Modifier
@@ -153,23 +158,29 @@ private fun SurveyQuestionsContent(questions: List<QuestionContentUiModel>) {
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = AppTheme.dimensions.mediumPadding)
         ) {
+            val uiModel = questionUiModels[index]
             Text(
-                text = questions[index].progress,
+                text = uiModel.progress,
                 color = Color.White.copy(alpha = 0.5f),
                 style = Typography.body2
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = questions[index].title,
+                text = uiModel.title,
                 color = Color.White,
                 style = Typography.h4
             )
+            Spacer(modifier = Modifier.height(80.dp))
             Column(
-                verticalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // TODO: Add answer view here!
+                Answer(type = uiModel.displayType, onAnswerClick = {
+                    onAnswerClick(Pair(index, it))
+                })
             }
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
 
@@ -217,6 +228,35 @@ private fun SurveyQuestionsContent(questions: List<QuestionContentUiModel>) {
     }
 }
 
+@Composable
+private fun Answer(type: QuestionDisplayType, onAnswerClick: (Int) -> Unit) {
+    when (type) {
+        QuestionDisplayType.STAR -> EmojiRatingAnswer(
+            emojis = MutableList(5) {
+                { Emoji(name = STAR_EMOJI) }
+            },
+            onIndexChange = onAnswerClick
+        )
+        QuestionDisplayType.HEART -> EmojiRatingAnswer(
+            emojis = MutableList(5) {
+                { Emoji(name = HEART_EMOJI) }
+            },
+            onIndexChange = onAnswerClick
+        )
+        QuestionDisplayType.SMILEY -> EmojiRatingAnswer(
+            emojis = listOf(
+                { Emoji(name = POUTING_FACE_EMOJI) },
+                { Emoji(name = CONFUSED_FACE_EMOJI) },
+                { Emoji(name = NEUTRAL_FACE_EMOJI) },
+                { Emoji(name = SLIGHTLY_SMILING_FACE_EMOJI) },
+                { Emoji(name = GRINNING_FACE_WITH_SMILING_EYES_EMOJI) }
+            ),
+            onIndexChange = onAnswerClick
+        )
+        else -> Text(text = type.value) // TODO: Remove this later
+    }
+}
+
 @Preview
 @Composable
 fun SurveyQuestionsScreenPreview(
@@ -229,13 +269,16 @@ fun SurveyQuestionsScreenPreview(
             questions = listOf(
                 QuestionContentUiModel(
                     "1/2",
-                    "What your name?"
+                    "What your name?",
+                    displayType = QuestionDisplayType.INTRO
                 ),
                 QuestionContentUiModel(
                     "2/2",
-                    "How old are you?"
+                    "How old are you?",
+                    displayType = QuestionDisplayType.INTRO
                 )
             )
-        )
+        ),
+        onAnswerClick = {}
     )
 }
