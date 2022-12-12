@@ -1,7 +1,6 @@
 package co.nimblehq.ic.kmm.suv.data.remote.model
 
-import co.nimblehq.ic.kmm.suv.domain.model.Question
-import co.nimblehq.ic.kmm.suv.domain.model.QuestionDisplayType
+import co.nimblehq.ic.kmm.suv.domain.model.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,9 +26,7 @@ fun QuestionApiModel.toQuestion(): Question = Question(
     id = id,
     text = text,
     displayOrder = displayOrder,
-    displayType =
-    QuestionDisplayType.values().firstOrNull { displayType == it.value }
-        ?: QuestionDisplayType.UNSUPPORTED,
+    displayType = displayType,
     pick = pick,
     coverImageUrl = coverImageUrl.string,
     answers = answers.map { it.toAnswer() }
