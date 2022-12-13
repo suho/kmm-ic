@@ -9,9 +9,6 @@ import co.nimblehq.ic.kmm.suv.android.ui.screens.home.HomeScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.SurveyArgument
 import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.surveydetail.SurveyDetailScreen
-import co.nimblehq.ic.kmm.suv.android.ui.screens.surveydetail.SurveyDetailViewModel
-import org.koin.androidx.compose.getViewModel
-import org.koin.core.parameter.parametersOf
 
 @Composable
 fun NavGraph() {
@@ -46,11 +43,8 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
     composable(AppDestination.Survey) {
         val arguments = navController.previousBackStackEntry?.arguments
         val survey = arguments?.getParcelable<SurveyArgument>(Argument.survey)
-        val viewModel: SurveyDetailViewModel = getViewModel(
-            parameters = { parametersOf(survey) }
-        )
         SurveyDetailScreen(
-            viewModel,
+            survey,
             onBackClick = {
                 navController.popBackStack()
             }

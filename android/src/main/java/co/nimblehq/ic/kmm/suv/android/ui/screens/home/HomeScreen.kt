@@ -25,13 +25,10 @@ fun HomeScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val surveysUiModel by viewModel.surveysUiModel.collectAsState()
-    var isLaunched by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        if (!isLaunched) {
-            viewModel.loadProfileAndSurveys()
-            isLaunched = true
-        }
+        // TODO: Improve re-call API logic later
+        viewModel.loadProfileAndSurveys()
     }
 
     errorMessage?.let {

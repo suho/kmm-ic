@@ -2,7 +2,9 @@ package co.nimblehq.ic.kmm.suv.android.ui.screens.surveydetail
 
 import co.nimblehq.ic.kmm.suv.android.rule.MainCoroutinesRule
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.SurveyArgument
+import io.kotest.matchers.nulls.beNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
@@ -26,13 +28,17 @@ class SurveyDetailViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = SurveyDetailViewModel(mockSurveyArgument)
+        viewModel = SurveyDetailViewModel()
     }
 
     @Test
-    fun `When its init, the ui model should be right`() {
-        viewModel.contentUiModel.title shouldBe mockSurveyArgument.title
-        viewModel.contentUiModel.description shouldBe mockSurveyArgument.description
-        viewModel.contentUiModel.imageUrl shouldBe mockSurveyArgument.coverImageUrl
+    fun `When its set survey argument, the ui model should be right`() {
+        viewModel.set(mockSurveyArgument)
+        viewModel.contentUiModel.value.let {
+            it shouldNot beNull()
+            it?.title shouldBe mockSurveyArgument.title
+            it?.description shouldBe mockSurveyArgument.description
+            it?.imageUrl shouldBe mockSurveyArgument.coverImageUrl
+        }
     }
 }

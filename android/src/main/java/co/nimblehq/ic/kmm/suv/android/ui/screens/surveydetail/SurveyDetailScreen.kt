@@ -9,6 +9,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -18,18 +21,27 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.ui.components.BackButton
+import co.nimblehq.ic.kmm.suv.android.ui.screens.home.SurveyArgument
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun SurveyDetailScreen(
-    viewModel: SurveyDetailViewModel,
+    surveyArgument: SurveyArgument?,
+    viewModel: SurveyDetailViewModel = getViewModel(),
     onBackClick: () -> Unit = {}
 ) {
-    SurveyDetailScreenContent(
-        viewModel.contentUiModel,
-        onBackClick
-    )
+    val contentUiModel by viewModel.contentUiModel.collectAsState()
+    LaunchedEffect(Unit) {
+        viewModel.set(surveyArgument)
+    }
+    contentUiModel?.let {
+        SurveyDetailScreenContent(
+            it,
+            onBackClick
+        )
+    }
 }
 
 data class SurveyDetailContentUiModel(
@@ -85,7 +97,7 @@ private fun SurveyDetailScreenContent(
         drawerBackgroundColor = Color.Transparent,
         contentColor = Color.Transparent,
         backgroundColor = Color.Transparent
-    ) { _ ->
+    ) {
         Column(
             modifier = Modifier
                 .padding(horizontal = 20.dp, vertical = 12.dp)
