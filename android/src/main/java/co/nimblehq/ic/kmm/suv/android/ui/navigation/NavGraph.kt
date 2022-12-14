@@ -46,7 +46,7 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         SurveyDetailScreen(
             survey,
             onBackClick = {
-                navController.popBackStack()
+                navController.navigateUp()
             }
         )
     }
