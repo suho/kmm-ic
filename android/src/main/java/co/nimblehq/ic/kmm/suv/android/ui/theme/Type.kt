@@ -32,6 +32,10 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 17.sp
     ),
+    body2 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 15.sp
+    ),
     caption = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 13.sp

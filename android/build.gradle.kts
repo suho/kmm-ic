@@ -100,6 +100,8 @@ dependencies {
     implementation(Dependency.VIEW_MODEL_COMPOSE)
     implementation(Dependency.COIL_COMPOSE)
     implementation(Dependency.ACCOMPANIST_PLACEHOLDER)
+    implementation(Dependency.ACCOMPANIST_PAGER)
+    implementation(Dependency.COMPOSE_CONSTRAINT_LAYOUT)
 
     // Koin
     implementation(Dependency.KOIN_CORE)
