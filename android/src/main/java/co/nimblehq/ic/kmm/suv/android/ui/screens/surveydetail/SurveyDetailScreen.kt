@@ -11,9 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -21,11 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.ui.components.BackButton
+import co.nimblehq.ic.kmm.suv.android.ui.components.ImageBackground
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.SurveyArgument
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Shapes
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
-import coil.compose.AsyncImage
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -48,6 +46,7 @@ fun SurveyDetailScreen(
     }
 }
 
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun SurveyDetailScreenContent(
@@ -60,26 +59,7 @@ private fun SurveyDetailScreenContent(
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            AsyncImage(
-                model = uiModel.imageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.FillHeight,
-                modifier = Modifier.matchParentSize()
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                Color.Black.copy(alpha = 0.6f)
-                            )
-                        )
-                    )
-            )
-        }
+        ImageBackground(uiModel.imageUrl)
     }
     Scaffold(
         topBar = {

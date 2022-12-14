@@ -46,17 +46,13 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         val survey = arguments?.getParcelable<SurveyArgument>(Argument.survey)
         SurveyDetailScreen(
             survey,
-            onBackClick = {
-                navController.navigateUp()
-            },
+            onBackClick = navController::navigateUp,
             onStartSurveyClick = {
                 navController.navigate(AppDestination.SurveyQuestions)
             }
         )
     }
     composable(AppDestination.SurveyQuestions) {
-        SurveyQuestionsScreen(onCloseClick = {
-            navController.popBackStack()
-        })
+        SurveyQuestionsScreen(onCloseClick = navController::navigateUp)
     }
 }
