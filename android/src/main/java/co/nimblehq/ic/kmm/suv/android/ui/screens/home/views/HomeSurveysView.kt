@@ -51,12 +51,13 @@ data class HomeContentUiModel(
 @Composable
 fun HomeSurveysView(
     uiModel: HomeContentUiModel,
-    onSwipe: (SwipeDirection) -> Unit = {}
+    onSwipe: (SwipeDirection) -> Unit = {},
+    onSurveyDetailClick: () -> Unit = {}
 ) {
     if (uiModel.isLoading) {
         HomeSurveysLoadingContent()
     } else uiModel.surveysUiModel?.let {
-        HomeSurveysContent(it, onSwipe)
+        HomeSurveysContent(it, onSwipe, onSurveyDetailClick)
     }
 }
 
@@ -68,7 +69,8 @@ enum class SwipeDirection {
 @Composable
 private fun HomeSurveysContent(
     uiModel: HomeSurveysUiModel,
-    onSwipe: (SwipeDirection) -> Unit = {}
+    onSwipe: (SwipeDirection) -> Unit = {},
+    onSurveyDetailClick: () -> Unit = {}
 ) {
     val swipeableState = rememberSwipeableState(initialValue = SwipeDirection.IDLE)
     val endAnchor = LocalDensity
@@ -167,7 +169,7 @@ private fun HomeSurveysContent(
                     Spacer(modifier = Modifier.width(AppTheme.dimensions.mediumPadding))
                     Button(
                         onClick = {
-                            /*TODO: Open survey detail screen - will handle this action in another story*/
+                            onSurveyDetailClick()
                         },
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = Color.Transparent

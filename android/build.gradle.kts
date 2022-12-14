@@ -2,6 +2,7 @@ plugins {
     id(Plugin.ANDROID_APPLICATION)
     id(Plugin.GOOGLE_SERVICE)
     kotlin(Plugin.ANDROID)
+    id(Plugin.PARCELIZE)
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")

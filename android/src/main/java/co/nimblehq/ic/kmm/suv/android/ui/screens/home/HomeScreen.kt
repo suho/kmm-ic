@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,7 +16,10 @@ import co.nimblehq.ic.kmm.suv.android.util.LoadingParameterProvider
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
+fun HomeScreen(
+    viewModel: HomeViewModel = getViewModel(),
+    onSurveyDetailClick: (SurveyArgument) -> Unit = {}
+) {
     val currentDate by viewModel.currentDate.collectAsState()
     val avatarUrl by viewModel.avatarUrlString.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -27,6 +27,7 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
     val surveysUiModel by viewModel.surveysUiModel.collectAsState()
 
     LaunchedEffect(Unit) {
+        // TODO: Improve re-call API logic later
         viewModel.loadProfileAndSurveys()
     }
 
@@ -61,6 +62,9 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
                 }
                 else -> {}
             }
+        },
+        onSurveyDetailClick = {
+            onSurveyDetailClick(viewModel.getCurrentSurveyArgument())
         }
     )
 }
@@ -71,7 +75,11 @@ private data class HomeUiModel(
 )
 
 @Composable
-private fun HomeScreenContent(uiModel: HomeUiModel, onSwipe: (SwipeDirection) -> Unit = {}) {
+private fun HomeScreenContent(
+    uiModel: HomeUiModel,
+    onSwipe: (SwipeDirection) -> Unit = {},
+    onSurveyDetailClick: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -79,7 +87,8 @@ private fun HomeScreenContent(uiModel: HomeUiModel, onSwipe: (SwipeDirection) ->
     ) {
         HomeSurveysView(
             uiModel.contentUiModel,
-            onSwipe
+            onSwipe,
+            onSurveyDetailClick
         )
         Column(
             modifier = Modifier

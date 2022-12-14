@@ -61,6 +61,17 @@ class HomeViewModel(
         }
     }
 
+    fun getCurrentSurveyArgument(): SurveyArgument {
+        return surveys[currentSurveyIndex].run {
+            SurveyArgument(
+                id,
+                title,
+                description,
+                coverImageUrl
+            )
+        }
+    }
+
     private fun loadProfile() {
         showLoading()
         viewModelScope.launch {
