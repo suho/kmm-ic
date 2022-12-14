@@ -61,7 +61,7 @@ fun SurveyQuestionsScreen(
             questions = questionUiModels
         ),
         onCloseClick,
-        onAnswerClick = viewModel::answerQuestion
+        onAnswerChange = viewModel::answerQuestion
     )
 }
 
@@ -69,7 +69,7 @@ fun SurveyQuestionsScreen(
 private fun SurveyQuestionsScreenContent(
     uiModel: SurveyQuestionsContentUiModel,
     onCloseClick: () -> Unit = {},
-    onAnswerClick: (Pair<Int, List<Int>>) -> Unit
+    onAnswerChange: (Pair<Int, List<AnswerInput>>) -> Unit
 ) {
     ImageBackground(uiModel.backgroundUrl)
     Row(
@@ -101,7 +101,7 @@ private fun SurveyQuestionsScreenContent(
     if (uiModel.isLoading) {
         SurveyQuestionsLoadingContent()
     } else {
-        SurveyQuestionsContent(uiModel.questions, onAnswerClick)
+        SurveyQuestionsContent(uiModel.questions, onAnswerChange)
     }
 }
 
@@ -138,7 +138,7 @@ private fun SurveyQuestionsLoadingContent() {
 @Composable
 private fun SurveyQuestionsContent(
     questionUiModels: List<QuestionContentUiModel>,
-    onAnswerClick: (Pair<Int, List<Int>>) -> Unit
+    onAnswerChange: (Pair<Int, List<AnswerInput>>) -> Unit
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -176,8 +176,8 @@ private fun SurveyQuestionsContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Answer(type = uiModel.displayType, onAnswersClick = {
-                    onAnswerClick(index to it)
+                Answer(type = uiModel.displayType, onAnswersChange = {
+                    onAnswerChange(index to it)
                 })
             }
             Spacer(modifier = Modifier.height(80.dp))
@@ -229,14 +229,14 @@ private fun SurveyQuestionsContent(
 }
 
 @Composable
-private fun Answer(type: QuestionDisplayType, onAnswersClick: (List<Int>) -> Unit) {
+private fun Answer(type: QuestionDisplayType, onAnswersChange: (List<AnswerInput>) -> Unit) {
     when (type) {
         is QuestionDisplayType.Star -> EmojiRatingAnswer(
             emojis = List(5) {
                 { Emoji(name = EMOJI_STAR) }
             },
             onIndexChange = {
-                onAnswersClick(listOf(it))
+                onAnswersChange(listOf(AnswerInput.Index(it)))
             }
         )
         is QuestionDisplayType.Heart -> EmojiRatingAnswer(
@@ -244,7 +244,7 @@ private fun Answer(type: QuestionDisplayType, onAnswersClick: (List<Int>) -> Uni
                 { Emoji(name = EMOJI_HEART) }
             },
             onIndexChange = {
-                onAnswersClick(listOf(it))
+                onAnswersChange(listOf(AnswerInput.Index(it)))
             }
         )
         is QuestionDisplayType.Smiley -> EmojiRatingAnswer(
@@ -257,17 +257,24 @@ private fun Answer(type: QuestionDisplayType, onAnswersClick: (List<Int>) -> Uni
             ).map { { Emoji(name = it) } },
             highlightStyle = EmojiHighlightStyle.ONE,
             onIndexChange = {
-                onAnswersClick(listOf(it))
+                onAnswersChange(listOf(AnswerInput.Index(it)))
             }
         )
         is QuestionDisplayType.Nps -> NpsAnswer(onIndexChange = {
-            onAnswersClick(listOf(it))
+            onAnswersChange(listOf(AnswerInput.Index(it)))
         })
         is QuestionDisplayType.Choice -> MultipleChoicesAnswer(
             choices = type.answers,
             onIndexesChange = {
-                onAnswersClick(it.toList())
+                onAnswersChange(it.toList().map(AnswerInput::Index))
             }
+        )
+        is QuestionDisplayType.Textarea -> TextareaAnswer(
+            onTextChange = {
+                onAnswersChange(listOf(AnswerInput.Content(index = 0, content = it)))
+            },
+            placeholder = type.placeholder,
+            modifier = Modifier.height(170.dp)
         )
         else -> Text(text = type.toString()) // TODO: Remove this later
     }
@@ -295,6 +302,6 @@ fun SurveyQuestionsScreenPreview(
                 )
             )
         ),
-        onAnswerClick = {}
+        onAnswerChange = {}
     )
 }
