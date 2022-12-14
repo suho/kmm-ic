@@ -49,17 +49,6 @@ fun SurveyQuestionsScreen(
     )
 }
 
-data class QuestionContentUiModel(
-    val order: String,
-    val title: String
-)
-
-data class SurveyQuestionsContentUiModel(
-    val isLoading: Boolean,
-    val backgroundUrl: String,
-    val questions: List<QuestionContentUiModel>
-)
-
 @Composable
 private fun SurveyQuestionsScreenContent(
     uiModel: SurveyQuestionsContentUiModel,

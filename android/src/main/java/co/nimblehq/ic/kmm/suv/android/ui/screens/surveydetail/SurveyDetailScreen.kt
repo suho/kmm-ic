@@ -46,14 +46,7 @@ fun SurveyDetailScreen(
             onStartSurveyClick
         )
     }
-
 }
-
-data class SurveyDetailContentUiModel(
-    val title: String,
-    val description: String,
-    val imageUrl: String
-)
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
