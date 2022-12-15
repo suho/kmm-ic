@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.ic.kmm.suv.android.R
+import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 
 @Composable
 fun ErrorAlertDialog(
@@ -17,8 +18,18 @@ fun ErrorAlertDialog(
 ) {
     AlertDialog(
         onDismissRequest = { onButtonClick() },
-        title = { Text(text = stringResource(id = R.string.app_name)) },
-        text = { Text(text = message) },
+        title = {
+            Text(
+                text = stringResource(id = R.string.app_name),
+                style = Typography.subtitle2
+            )
+        },
+        text = {
+            Text(
+                text = message,
+                style = Typography.overline
+            )
+        },
         backgroundColor = Color.White,
         confirmButton = {
             Button(

@@ -14,4 +14,8 @@
     <string name="submit_button">Submit</string>
     <string name="nps_not_at_all_likely">Not at all Likely</string>
     <string name="nps_extremely_likely">Extremely Likely</string>
+    <string name="exit_warning_title">Warning!</string>
+    <string name="exit_detail_message">Are you sure you want to quit the survey</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -4,9 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,6 +40,7 @@ fun SurveyQuestionsScreen(
     val errorMessage by viewModel.errorMessage.collectAsState()
     val coverImageUrl by viewModel.coverImageUrl.collectAsState()
     val questionUiModels by viewModel.questionContentUiModels.collectAsState()
+    val showExitDialog by viewModel.showExitDialog.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadSurveyDetail(surveyQuestionsArgument)
@@ -54,14 +53,26 @@ fun SurveyQuestionsScreen(
         )
     }
 
+    showExitDialog.let {
+        if (showExitDialog) {
+            ExitAlertDialog(
+                onConfirmClick = {
+                    viewModel.onExitDialogConfirm()
+                    onCloseClick()
+                },
+                onDismissClick = viewModel::onExitDialogDismiss
+            )
+        }
+    }
+
     SurveyQuestionsScreenContent(
         SurveyQuestionsContentUiModel(
             isLoading = isLoading,
             backgroundUrl = coverImageUrl,
             questions = questionUiModels
         ),
-        onCloseClick,
         onAnswerChange = viewModel::answerQuestion
+        onCloseClick = viewModel::onOpenExitDialogClicked
     )
 }
 
@@ -103,6 +114,57 @@ private fun SurveyQuestionsScreenContent(
     } else {
         SurveyQuestionsContent(uiModel.questions, onAnswerChange)
     }
+}
+
+@Composable
+private fun ExitAlertDialog(
+    onConfirmClick: () -> Unit,
+    onDismissClick: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismissClick,
+        title = {
+            Text(
+                text = stringResource(R.string.exit_warning_title),
+                style = Typography.subtitle2
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(R.string.exit_detail_message),
+                style = Typography.overline
+            )
+        },
+        backgroundColor = Color.White,
+        confirmButton = {
+            Button(
+                onClick = onConfirmClick,
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Black
+                ),
+            ) {
+                Text(
+                    text = stringResource(R.string.yes),
+                    color = Color.White,
+                    style = Typography.overline
+                )
+            }
+        },
+        dismissButton = {
+            Button(
+                onClick = onDismissClick,
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White
+                ),
+            ) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    color = Color.Black,
+                    style = Typography.caption
+                )
+            }
+        }
+    )
 }
 
 @Composable

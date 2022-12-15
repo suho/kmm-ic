@@ -43,5 +43,9 @@ val Typography = Typography(
     caption = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 13.sp
-    )
+    ),
+    overline = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp
+    ),
 )
