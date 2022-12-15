@@ -31,14 +31,10 @@ sealed class QuestionDisplayType {
     object Star : QuestionDisplayType()
     object Heart : QuestionDisplayType()
     object Smiley : QuestionDisplayType()
-    data class Choice(val answers: List<String>) :
-        QuestionDisplayType()
-
+    data class Choice(val answers: List<String>) : QuestionDisplayType()
     object Nps : QuestionDisplayType()
-    data class Textarea(val placeholder: String) :
-        QuestionDisplayType()
-
-    object Textfield : QuestionDisplayType()
+    data class Textarea(val placeholder: String) : QuestionDisplayType()
+    data class Textfield(val placeholders: List<String>) : QuestionDisplayType()
     object Dropdown : QuestionDisplayType()
     object Outro : QuestionDisplayType()
     object Unsupported : QuestionDisplayType()
@@ -51,14 +47,18 @@ fun Question.displayType(): QuestionDisplayType {
         QUESTION_DISPLAY_TYPE_STAR -> QuestionDisplayType.Star
         QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart
         QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley
-        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(sortedAnswers.map {
-            it.text.orEmpty()
-        })
+        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(
+            answers = sortedAnswers.map {
+                it.text.orEmpty()
+            }
+        )
         QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps
         QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(
             sortedAnswers.first().inputMaskPlaceholder.orEmpty()
         )
-        QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield
+        QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield(
+            placeholders = sortedAnswers.map { it.text ?: "" }
+        )
         QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown
         QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro
         else -> QuestionDisplayType.Unsupported
