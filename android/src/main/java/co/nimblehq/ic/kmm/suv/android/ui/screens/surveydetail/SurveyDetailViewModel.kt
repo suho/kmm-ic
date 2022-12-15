@@ -8,27 +8,23 @@ import kotlinx.coroutines.flow.StateFlow
 
 class SurveyDetailViewModel : BaseViewModel() {
 
-    private lateinit var surveyArgument: SurveyArgument
+    private var surveyArgument: SurveyArgument? = null
     private val _contentUiModel = MutableStateFlow<SurveyDetailContentUiModel?>(null)
 
     val contentUiModel: StateFlow<SurveyDetailContentUiModel?>
         get() = _contentUiModel
 
     val surveyQuestionsArgument: SurveyQuestionsArgument?
-        get() {
-            return if (this::surveyArgument.isInitialized) {
-                SurveyQuestionsArgument(
-                    id = surveyArgument.id,
-                    coverImageUrl = surveyArgument.coverImageUrl
-                )
-            } else {
-                null
-            }
+        get() = surveyArgument?.let {
+            SurveyQuestionsArgument(
+                id = it.id,
+                coverImageUrl = it.coverImageUrl
+            )
         }
 
     fun set(surveyArgument: SurveyArgument?) {
+        this.surveyArgument = surveyArgument
         surveyArgument?.let {
-            this.surveyArgument = surveyArgument
             _contentUiModel.value = SurveyDetailContentUiModel(
                 it.title,
                 it.description,
