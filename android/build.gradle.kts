@@ -102,6 +102,7 @@ dependencies {
     implementation(Dependency.ACCOMPANIST_PLACEHOLDER)
     implementation(Dependency.ACCOMPANIST_PAGER)
     implementation(Dependency.COMPOSE_CONSTRAINT_LAYOUT)
+    implementation(Dependency.COMPOSE_UI_UTIL)
 
     // Koin
     implementation(Dependency.KOIN_CORE)

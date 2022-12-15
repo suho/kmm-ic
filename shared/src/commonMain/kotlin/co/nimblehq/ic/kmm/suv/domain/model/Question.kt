@@ -23,6 +23,12 @@ data class Question(
 ) {
     val sortedAnswers: List<Answer>
         get() = answers.sortedBy { it.displayOrder }
+
+    val answerTexts: List<String>
+        get() = sortedAnswers.map { it.text ?: "" }
+
+    val answerPlaceholders: List<String>
+        get() = sortedAnswers.map { it.inputMaskPlaceholder ?: "" }
 }
 
 sealed class QuestionDisplayType {
@@ -35,11 +41,10 @@ sealed class QuestionDisplayType {
     object Nps : QuestionDisplayType()
     data class Textarea(val placeholder: String) : QuestionDisplayType()
     data class Textfield(val placeholders: List<String>) : QuestionDisplayType()
-    object Dropdown : QuestionDisplayType()
+    data class Dropdown(val answers: List<String>) : QuestionDisplayType()
     object Outro : QuestionDisplayType()
     object Unsupported : QuestionDisplayType()
 }
-
 
 fun Question.displayType(): QuestionDisplayType {
     return when (displayType) {
@@ -47,19 +52,11 @@ fun Question.displayType(): QuestionDisplayType {
         QUESTION_DISPLAY_TYPE_STAR -> QuestionDisplayType.Star
         QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart
         QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley
-        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(
-            answers = sortedAnswers.map {
-                it.text.orEmpty()
-            }
-        )
+        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(answerTexts)
         QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps
-        QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(
-            sortedAnswers.first().inputMaskPlaceholder.orEmpty()
-        )
-        QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield(
-            placeholders = sortedAnswers.map { it.text ?: "" }
-        )
-        QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown
+        QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(answerPlaceholders.first())
+        QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield(answerTexts)
+        QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown(answerTexts)
         QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro
         else -> QuestionDisplayType.Unsupported
     }
