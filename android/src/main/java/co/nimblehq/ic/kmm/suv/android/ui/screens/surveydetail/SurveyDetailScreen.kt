@@ -23,7 +23,6 @@ import co.nimblehq.ic.kmm.suv.android.ui.components.ImageBackground
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.SurveyArgument
 import co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions.SurveyQuestionsArgument
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
-import co.nimblehq.ic.kmm.suv.android.ui.theme.Shapes
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import org.koin.androidx.compose.getViewModel
 
@@ -117,14 +116,14 @@ private fun SurveyDetailScreenContent(
                     .padding(bottom = 54.dp)
             ) {
                 Button(
-                    shape = Shapes.medium,
+                    shape = AppTheme.shapes.medium,
                     onClick = onStartSurveyClick,
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.White
                     ),
                     modifier = Modifier
                         .width(140.dp)
-                        .height(56.dp)
+                        .height(AppTheme.dimensions.defaultComponentHeight)
                 ) {
                     Text(
                         text = stringResource(id = R.string.start_survey),

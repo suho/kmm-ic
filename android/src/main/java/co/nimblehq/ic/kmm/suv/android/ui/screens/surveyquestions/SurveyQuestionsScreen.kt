@@ -3,11 +3,9 @@ package co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -156,7 +154,7 @@ private fun SurveyQuestionsContent(questions: List<QuestionContentUiModel>) {
                 .padding(horizontal = AppTheme.dimensions.mediumPadding)
         ) {
             Text(
-                text = questions[index].order,
+                text = questions[index].progress,
                 color = Color.White.copy(alpha = 0.5f),
                 style = Typography.body2
             )
@@ -189,7 +187,7 @@ private fun SurveyQuestionsContent(questions: List<QuestionContentUiModel>) {
             ),
             elevation = null,
             contentPadding = PaddingValues(0.dp),
-            shape = if (isLastPage) RoundedCornerShape(10.dp) else MaterialTheme.shapes.small,
+            shape = if (isLastPage) AppTheme.shapes.medium else AppTheme.shapes.small,
             modifier = Modifier.constrainAs(nextButton) {
                 bottom.linkTo(parent.bottom, margin = 54.dp)
                 end.linkTo(parent.end, margin = 20.dp)
@@ -202,16 +200,17 @@ private fun SurveyQuestionsContent(questions: List<QuestionContentUiModel>) {
                     style = Typography.subtitle2,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .width(120.dp)
-                        .height(56.dp)
+                        .wrapContentWidth()
+                        .height(AppTheme.dimensions.defaultComponentHeight)
                         .wrapContentHeight()
+                        .padding(horizontal = AppTheme.dimensions.mediumPadding)
                 )
             } else {
                 Image(
                     painter = painterResource(id = R.drawable.ic_survey_detail_arrow),
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth,
-                    modifier = Modifier.size(56.dp)
+                    modifier = Modifier.size(AppTheme.dimensions.defaultComponentHeight)
                 )
             }
         }

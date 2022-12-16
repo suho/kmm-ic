@@ -105,7 +105,7 @@ class SurveyQuestionsViewModelTest {
         questionIndex: Int,
         questionsCount: Int
     ) {
-        uiModel.order shouldBe "${questionIndex + 1}/$questionsCount"
+        uiModel.progress shouldBe "${questionIndex + 1}/$questionsCount"
         uiModel.title shouldBe question.text
     }
 }

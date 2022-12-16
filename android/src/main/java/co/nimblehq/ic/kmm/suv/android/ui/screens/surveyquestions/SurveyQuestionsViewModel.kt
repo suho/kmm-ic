@@ -39,7 +39,7 @@ class SurveyQuestionsViewModel(
                             _questionContentUiModels.value =
                                 questions.mapIndexed { index, question ->
                                     QuestionContentUiModel(
-                                        order = "${index + 1}/$totalOfQuestions",
+                                        progress = "${index + 1}/$totalOfQuestions",
                                         title = question.text
                                     )
                                 }

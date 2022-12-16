@@ -2,14 +2,12 @@ package co.nimblehq.ic.kmm.suv.android.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.Modifier
+import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme.shapes
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -51,7 +49,7 @@ fun MyApplicationTheme(
         MaterialTheme(
             colors = colors,
             typography = Typography,
-            shapes = Shapes
+            shapes = shapes
         ) {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -69,4 +67,9 @@ object AppTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalDimensions.current
+
+    val shapes: Shapes
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalShapes.current
 }
