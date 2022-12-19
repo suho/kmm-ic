@@ -233,25 +233,26 @@ private fun Answer(type: QuestionDisplayType, onAnswerClick: (Int) -> Unit) {
     when (type) {
         QuestionDisplayType.STAR -> EmojiRatingAnswer(
             emojis = MutableList(5) {
-                { Emoji(name = STAR_EMOJI) }
+                { Emoji(name = EMOJI_STAR) }
             },
             onIndexChange = onAnswerClick
         )
         QuestionDisplayType.HEART -> EmojiRatingAnswer(
             emojis = MutableList(5) {
-                { Emoji(name = HEART_EMOJI) }
+                { Emoji(name = EMOJI_HEART) }
             },
             onIndexChange = onAnswerClick
         )
         QuestionDisplayType.SMILEY -> EmojiRatingAnswer(
             emojis = listOf(
-                { Emoji(name = POUTING_FACE_EMOJI) },
-                { Emoji(name = CONFUSED_FACE_EMOJI) },
-                { Emoji(name = NEUTRAL_FACE_EMOJI) },
-                { Emoji(name = SLIGHTLY_SMILING_FACE_EMOJI) },
-                { Emoji(name = GRINNING_FACE_WITH_SMILING_EYES_EMOJI) }
+                { Emoji(name = EMOJI_POUTING_FACE) },
+                { Emoji(name = EMOJI_CONFUSED_FACE) },
+                { Emoji(name = EMOJI_NEUTRAL_FACE) },
+                { Emoji(name = EMOJI_SLIGHTLY_SMILING_FACE) },
+                { Emoji(name = EMOJI_GRINNING_FACE_WITH_SMILING_EYES) }
             ),
-            onIndexChange = onAnswerClick
+            onIndexChange = onAnswerClick,
+            highlightStyle = EmojiHighlightStyle.ONE
         )
         else -> Text(text = type.value) // TODO: Remove this later
     }
