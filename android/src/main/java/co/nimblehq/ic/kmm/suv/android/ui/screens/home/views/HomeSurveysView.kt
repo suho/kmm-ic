@@ -165,7 +165,7 @@ private fun HomeSurveysContent(
                             painter = painterResource(id = R.drawable.ic_survey_detail_arrow),
                             contentDescription = null,
                             contentScale = ContentScale.FillWidth,
-                            modifier = Modifier.size(56.dp),
+                            modifier = Modifier.size(AppTheme.dimensions.defaultComponentHeight),
                         )
                     }
                 }

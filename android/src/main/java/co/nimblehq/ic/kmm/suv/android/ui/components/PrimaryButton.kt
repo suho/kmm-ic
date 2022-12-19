@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import co.nimblehq.ic.kmm.suv.android.ui.theme.Shapes
+import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 
 @Composable
 fun PrimaryButton(text: String, isLoading: Boolean, onClick: () -> Unit) {
     Button(
-        shape = Shapes.medium,
+        shape = AppTheme.shapes.medium,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.White
@@ -26,7 +26,7 @@ fun PrimaryButton(text: String, isLoading: Boolean, onClick: () -> Unit) {
         enabled = !isLoading,
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(AppTheme.dimensions.defaultComponentHeight)
             .padding(start = 24.dp, end = 24.dp)
     ) {
         if (isLoading) {

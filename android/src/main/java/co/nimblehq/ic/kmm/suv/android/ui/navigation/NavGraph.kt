@@ -9,6 +9,7 @@ import co.nimblehq.ic.kmm.suv.android.ui.screens.home.HomeScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.SurveyArgument
 import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.surveydetail.SurveyDetailScreen
+import co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions.SurveyQuestionsArgument
 import co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions.SurveyQuestionsScreen
 
 @Composable
@@ -48,11 +49,21 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             survey,
             onBackClick = navController::navigateUp,
             onStartSurveyClick = {
+                navController.currentBackStackEntry?.arguments?.putParcelable(
+                    Argument.surveyQuestions,
+                    it
+                )
                 navController.navigate(AppDestination.SurveyQuestions)
             }
         )
     }
     composable(AppDestination.SurveyQuestions) {
-        SurveyQuestionsScreen(onCloseClick = navController::navigateUp)
+        val arguments = navController.previousBackStackEntry?.arguments
+        val surveyQuestionsArgument =
+            arguments?.getParcelable<SurveyQuestionsArgument>(Argument.surveyQuestions)
+        SurveyQuestionsScreen(
+            surveyQuestionsArgument,
+            onCloseClick = navController::navigateUp
+        )
     }
 }

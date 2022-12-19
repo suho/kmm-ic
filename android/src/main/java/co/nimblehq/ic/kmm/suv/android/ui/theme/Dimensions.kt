@@ -5,11 +5,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Stable
-class Dimensions(mediumPadding: Dp) {
+class Dimensions(mediumPadding: Dp, defaultComponentHeight: Dp) {
     var mediumPadding by mutableStateOf(mediumPadding, structuralEqualityPolicy())
+        internal set
+
+    var defaultComponentHeight by mutableStateOf(defaultComponentHeight, structuralEqualityPolicy())
         internal set
 }
 
-fun appDimensions(mediumPadding: Dp = 20.dp): Dimensions = Dimensions(mediumPadding)
+fun appDimensions(
+    mediumPadding: Dp = 20.dp,
+    defaultComponentHeight: Dp = 56.dp
+): Dimensions = Dimensions(mediumPadding, defaultComponentHeight)
 
 internal val LocalDimensions = staticCompositionLocalOf { appDimensions() }
