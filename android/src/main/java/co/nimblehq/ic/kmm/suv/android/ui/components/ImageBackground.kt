@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 
 @Composable
 fun ImageBackground(
-    imageUrl: String
+    imageUrl: String,
+    isBlur: Boolean = false
 ) {
     Box(
         modifier = Modifier
@@ -24,7 +27,9 @@ fun ImageBackground(
                 model = imageUrl,
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight,
-                modifier = Modifier.matchParentSize()
+                modifier = Modifier
+                    .matchParentSize()
+                    .blur(if (isBlur) 20.dp else 0.dp)
             )
             Box(
                 modifier = Modifier

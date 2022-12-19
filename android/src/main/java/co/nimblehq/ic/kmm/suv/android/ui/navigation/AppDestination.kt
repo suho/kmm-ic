@@ -22,4 +22,6 @@ sealed class AppDestination(var route: String) {
     object Survey : AppDestination("survey/{${Argument.survey}}")
 
     object SurveyQuestions : AppDestination("surveyQuestions/{${Argument.surveyQuestions}}")
+
+    object SurveyThanks : AppDestination("surveyThanks")
 }

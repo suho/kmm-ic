@@ -12,35 +12,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
+import co.nimblehq.ic.kmm.suv.domain.model.Answer
+import co.nimblehq.ic.kmm.suv.domain.model.AnswerInput
+import co.nimblehq.ic.kmm.suv.domain.model.Answerable
 
 private const val NPS_SIZE = 10
 private val NPS_VIEW_HEIGHT = 56.dp
 private val NPS_VIEW_WIDTH = 345.5.dp
 
+object NpsAnswerContentDescription {
+    private const val NPS = "NPS"
+
+    fun nps(index: Int) = "$NPS-$index"
+}
+
+@Suppress("NAME_SHADOWING")
 @Composable
 fun NpsAnswer(
-    currentIndex: Int = -1,
-    onIndexChange: (Int) -> Unit,
+    answers: List<Answerable>,
+    onInputChange: (AnswerInput) -> Unit,
+    input: AnswerInput? = null
 ) {
-    var selectedIndex by remember { mutableStateOf(currentIndex) }
+    var input by remember { mutableStateOf(input) }
+    val currentIndex = answers.map { it.id }.indexOf(input?.id.orEmpty())
     Column {
         Row(
             modifier = Modifier
                 .border(BorderStroke(0.5.dp, Color.White), AppTheme.shapes.medium)
         ) {
-            for (index in 0 until NPS_SIZE) {
-                val isHighlight = index <= selectedIndex
+            answers.forEachIndexed { index, answer ->
+                val isHighlight = index <= currentIndex
                 val alpha = if (isHighlight) 1f else 0.5f
                 Button(
                     onClick = {
-                        selectedIndex = index
-                        onIndexChange(index)
+                        val newInput = AnswerInput.Select(answer.id)
+                        input = newInput
+                        onInputChange(newInput)
                     },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.Transparent
@@ -51,6 +66,9 @@ fun NpsAnswer(
                         .alpha(alpha)
                         .width(34.dp)
                         .height(NPS_VIEW_HEIGHT)
+                        .semantics {
+                            contentDescription = NpsAnswerContentDescription.nps(index)
+                        }
                 ) {
                     Text(
                         text = "${index + 1}",
@@ -73,7 +91,7 @@ fun NpsAnswer(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.width(NPS_VIEW_WIDTH)
         ) {
-            val leftRangeAlpha = if (selectedIndex < 5) 1f else 0.5f
+            val leftRangeAlpha = if (currentIndex < answers.size / 2) 1f else 0.5f
             Text(
                 text = stringResource(id = R.string.nps_not_at_all_likely),
                 color = Color.White,
@@ -93,5 +111,21 @@ fun NpsAnswer(
 @Preview
 @Composable
 fun NpsAnswerPreview() {
-    NpsAnswer(onIndexChange = {})
+    NpsAnswer(
+        answers = listOf(
+            Answer(
+                id = "1",
+                text = "email",
+                displayOrder = 0,
+                inputMaskPlaceholder = "Email"
+            ),
+            Answer(
+                id = "2",
+                text = "password",
+                displayOrder = 1,
+                inputMaskPlaceholder = "Password"
+            )
+        ),
+        onInputChange = {}
+    )
 }

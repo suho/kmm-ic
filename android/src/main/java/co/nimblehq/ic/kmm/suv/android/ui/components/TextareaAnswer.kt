@@ -14,39 +14,56 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
+import co.nimblehq.ic.kmm.suv.domain.model.Answer
+import co.nimblehq.ic.kmm.suv.domain.model.AnswerInput
+import co.nimblehq.ic.kmm.suv.domain.model.Answerable
+import co.nimblehq.ic.kmm.suv.domain.model.getContentType
 
+object TextareaAnswerContentDescription {
+    const val TEXTAREA = "TEXTAREA"
+}
+
+@Suppress("NAME_SHADOWING")
 @Composable
 fun TextareaAnswer(
-    onTextChange: (String) -> Unit,
+    answer: Answerable,
+    onInputChange: (AnswerInput) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: String = "",
+    input: AnswerInput? = null
 ) {
-    var value by remember { mutableStateOf("") }
+    var input by remember { mutableStateOf(input) }
     val focusManager = LocalFocusManager.current
 
-    LaunchedEffect(value) {
-        onTextChange(value)
+    LaunchedEffect(input) {
+        input?.let { onInputChange(it) }
     }
 
     Box(modifier = modifier) {
         TextField(
-            value = value,
-            onValueChange = { value = it },
+            value = input?.getContentType()?.content.orEmpty(),
+            onValueChange = { input = AnswerInput.Content(answer.id, it) },
             placeholder = {
-                Text(
-                    text = placeholder,
-                    style = Typography.subtitle1
-                )
+                answer.placeholder.orEmpty().let {
+                    Text(
+                        text = it,
+                        style = Typography.subtitle1
+                    )
+                }
             },
             colors = textareaColors(),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             modifier = Modifier
                 .fillMaxSize()
                 .clip(AppTheme.shapes.large)
+                .semantics {
+                    contentDescription = TextareaAnswerContentDescription.TEXTAREA
+                }
         )
     }
 }
@@ -66,8 +83,13 @@ private fun textareaColors(): TextFieldColors = TextFieldDefaults.textFieldColor
 @Composable
 fun TextareaAnswerPreview() {
     TextareaAnswer(
-        onTextChange = {},
-        placeholder = "Your thought",
+        answer = Answer(
+            id = "1",
+            text = "email",
+            displayOrder = 0,
+            inputMaskPlaceholder = "Email"
+        ),
+        onInputChange = {},
         modifier = Modifier
             .width(327.dp)
             .height(168.dp)

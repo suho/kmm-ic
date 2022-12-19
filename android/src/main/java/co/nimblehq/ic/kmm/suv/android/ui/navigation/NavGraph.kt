@@ -11,6 +11,7 @@ import co.nimblehq.ic.kmm.suv.android.ui.screens.login.LoginScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.surveydetail.SurveyDetailScreen
 import co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions.SurveyQuestionsArgument
 import co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions.SurveyQuestionsScreen
+import co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions.SurveyThanksScreen
 
 @Composable
 fun NavGraph() {
@@ -45,7 +46,6 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                 navController.navigate(AppDestination.Survey)
             })
         }
-
         composable(AppDestination.Survey) {
             val arguments = navController.previousBackStackEntry?.arguments
             val survey = arguments?.getParcelable<SurveyArgument>(Argument.survey)
@@ -67,8 +67,16 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                 arguments?.getParcelable<SurveyQuestionsArgument>(Argument.surveyQuestions)
             SurveyQuestionsScreen(
                 surveyQuestionsArgument,
-                onCloseScreenClick = navController::navigateUp
+                onCloseScreenClick = navController::navigateUp,
+                onSubmitSuccess = {
+                    navController.navigate(AppDestination.SurveyThanks)
+                }
             )
+        }
+        composable(AppDestination.SurveyThanks) {
+            SurveyThanksScreen(onFinishedAnimation = {
+                navController.navigateUp(AppDestination.Home)
+            })
         }
     }
 }

@@ -10,7 +10,6 @@ const val QUESTION_DISPLAY_TYPE_TEXTAREA = "textarea"
 const val QUESTION_DISPLAY_TYPE_TEXTFIELD = "textfield"
 const val QUESTION_DISPLAY_TYPE_DROPDOWN = "dropdown"
 const val QUESTION_DISPLAY_TYPE_OUTRO = "outro"
-const val QUESTION_DISPLAY_TYPE_UNSUPPORTED = "unsupported"
 
 data class Question(
     val id: String,
@@ -21,43 +20,87 @@ data class Question(
     val coverImageUrl: String,
     val answers: List<Answer>
 ) {
-    private val sortedAnswers: List<Answer>
+    val sortedAnswers: List<Answer>
         get() = answers.sortedBy { it.displayOrder }
-
-    val answerTexts: List<String>
-        get() = sortedAnswers.map { it.text.orEmpty() }
-
-    val answerPlaceholders: List<String>
-        get() = sortedAnswers.map { it.inputMaskPlaceholder.orEmpty() }
 }
 
 sealed class QuestionDisplayType {
 
-    object Intro : QuestionDisplayType()
-    object Star : QuestionDisplayType()
-    object Heart : QuestionDisplayType()
-    object Smiley : QuestionDisplayType()
-    data class Choice(val answers: List<String>) : QuestionDisplayType()
-    object Nps : QuestionDisplayType()
-    data class Textarea(val placeholder: String) : QuestionDisplayType()
-    data class Textfield(val placeholders: List<String>) : QuestionDisplayType()
-    data class Dropdown(val answers: List<String>) : QuestionDisplayType()
-    object Outro : QuestionDisplayType()
-    object Unsupported : QuestionDisplayType()
+    abstract var answers: List<Answerable>
+    abstract var input: List<AnswerInput>
+
+    fun update(newInput: List<AnswerInput>) {
+        this.input = newInput
+    }
+
+    data class Intro(
+        override var answers: List<Answerable> = emptyList(),
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Star(
+        override var answers: List<Answerable>,
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Heart(
+        override var answers: List<Answerable>,
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Smiley(
+        override var answers: List<Answerable>,
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Choice(
+        override var answers: List<Answerable>,
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Nps(
+        override var answers: List<Answerable>,
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Textarea(
+        override var answers: List<Answerable>,
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Textfield(
+        override var answers: List<Answerable>,
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Dropdown(
+        override var answers: List<Answerable>,
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Outro(
+        override var answers: List<Answerable> = emptyList(),
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
+
+    data class Unsupported(
+        override var answers: List<Answerable> = emptyList(),
+        override var input: List<AnswerInput> = emptyList()
+    ) : QuestionDisplayType()
 }
 
 fun Question.displayType(): QuestionDisplayType {
     return when (displayType) {
-        QUESTION_DISPLAY_TYPE_INTRO -> QuestionDisplayType.Intro
-        QUESTION_DISPLAY_TYPE_STAR -> QuestionDisplayType.Star
-        QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart
-        QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley
-        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(answerTexts)
-        QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps
-        QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(answerPlaceholders.first())
-        QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield(answerTexts)
-        QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown(answerTexts)
-        QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro
-        else -> QuestionDisplayType.Unsupported
+        QUESTION_DISPLAY_TYPE_INTRO -> QuestionDisplayType.Intro()
+        QUESTION_DISPLAY_TYPE_STAR -> QuestionDisplayType.Star(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro()
+        else -> QuestionDisplayType.Unsupported()
     }
 }

@@ -33,3 +33,10 @@ fun NavGraphBuilder.composable(
 fun NavController.navigate(destination: AppDestination) {
     navigate(route = destination.route)
 }
+
+fun NavController.navigateUp(destination: AppDestination) {
+    popBackStack(
+        route = destination.route,
+        inclusive = true
+    )
+}
