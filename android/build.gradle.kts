@@ -103,6 +103,7 @@ dependencies {
     implementation(Dependency.ACCOMPANIST_PAGER)
     implementation(Dependency.COMPOSE_CONSTRAINT_LAYOUT)
     implementation(Dependency.COMPOSE_UI_UTIL)
+    implementation(Dependency.COMPOSE_LOTTIE)
 
     // Koin
     implementation(Dependency.KOIN_CORE)

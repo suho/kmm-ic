@@ -18,4 +18,5 @@
     <string name="exit_detail_message">Are you sure you want to quit the survey?</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="thanks_message">Thanks for taking the survey</string>
 </resources>
