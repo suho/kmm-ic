@@ -278,8 +278,8 @@ private fun Answer(type: QuestionDisplayType, onAnswersChange: (List<AnswerInput
         )
         is QuestionDisplayType.Textfield -> FormAnswer(
             placeholders = type.placeholders,
-            onTextChange = {
-                onAnswersChange(listOf(AnswerInput.Content(index = it.first, content = it.second)))
+            onTextChange = { (index, content) ->
+                onAnswersChange(listOf(AnswerInput.Content(index = index, content = content)))
             })
         else -> Text(text = type.toString()) // TODO: Remove this later
     }

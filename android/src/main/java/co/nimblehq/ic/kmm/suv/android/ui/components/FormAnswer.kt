@@ -35,7 +35,7 @@ fun FormAnswer(
                 value = value,
                 onValueChange = {
                     value = it
-                    onTextChange(Pair(index, it))
+                    onTextChange(index to it)
                 },
                 singleLine = true,
                 placeholder = {
