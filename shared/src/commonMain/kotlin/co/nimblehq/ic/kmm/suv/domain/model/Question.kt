@@ -46,7 +46,7 @@ fun Question.displayType(): QuestionDisplayType {
         QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart
         QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley
         QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(sortedAnswers().map {
-            it.text ?: ""
+            it.text.orEmpty()
         })
         QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps
         QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea

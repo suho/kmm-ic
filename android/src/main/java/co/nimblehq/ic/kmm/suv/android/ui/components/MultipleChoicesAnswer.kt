@@ -65,7 +65,7 @@ fun MultipleChoicesAnswer(
                         modifier = Modifier.weight(1f)
                     )
                     val imageId =
-                        if (isHighlight) R.drawable.ic_ticked_checkbox else R.drawable.ic_empty_checkbox
+                        if (isHighlight) R.drawable.ic_checkbox_selected else R.drawable.ic_checkbox_unselected
                     Image(
                         painter = painterResource(id = imageId),
                         contentDescription = null,
