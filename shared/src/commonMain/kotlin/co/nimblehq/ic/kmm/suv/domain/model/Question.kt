@@ -56,7 +56,7 @@ fun Question.displayType(): QuestionDisplayType {
         })
         QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps
         QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(
-            sortedAnswers.first().inputMaskPlaceholder ?: ""
+            sortedAnswers.first().inputMaskPlaceholder.orEmpty()
         )
         QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield
         QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown
