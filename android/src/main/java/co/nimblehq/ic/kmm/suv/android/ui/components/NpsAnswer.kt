@@ -33,7 +33,7 @@ fun NpsAnswer(
             modifier = Modifier
                 .border(BorderStroke(0.5.dp, Color.White), RoundedCornerShape(10.dp))
         ) {
-            (0 until npsSize).forEach { index ->
+            for (index in 0 until npsSize) {
                 val isHighlight = index <= selectedIndex
                 val alpha = if (isHighlight) 1f else 0.5f
                 Button(
