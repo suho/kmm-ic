@@ -80,7 +80,7 @@ fun LeftEmojiRatingAnswerPreview(
     @PreviewParameter(EmojiParameterProvider::class) emojiName: String
 ) {
     EmojiRatingAnswer(
-        emojis = MutableList(5) {
+        emojis = List(5) {
             { Emoji(name = emojiName) }
         },
         onIndexChange = {}
@@ -92,12 +92,12 @@ fun LeftEmojiRatingAnswerPreview(
 fun OneEmojiRatingAnswerPreview() {
     EmojiRatingAnswer(
         emojis = listOf(
-            { Emoji(name = EMOJI_POUTING_FACE) },
-            { Emoji(name = EMOJI_CONFUSED_FACE) },
-            { Emoji(name = EMOJI_NEUTRAL_FACE) },
-            { Emoji(name = EMOJI_SLIGHTLY_SMILING_FACE) },
-            { Emoji(name = EMOJI_GRINNING_FACE_WITH_SMILING_EYES) }
-        ),
+            EMOJI_POUTING_FACE,
+            EMOJI_CONFUSED_FACE,
+            EMOJI_NEUTRAL_FACE,
+            EMOJI_SLIGHTLY_SMILING_FACE,
+            EMOJI_GRINNING_FACE_WITH_SMILING_EYES
+        ).map { { Emoji(name = it) } },
         onIndexChange = {},
         highlightStyle = EmojiHighlightStyle.ONE
     )

@@ -177,7 +177,7 @@ private fun SurveyQuestionsContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Answer(type = uiModel.displayType, onAnswerClick = {
-                    onAnswerClick(Pair(index, it))
+                    onAnswerClick(index to it)
                 })
             }
             Spacer(modifier = Modifier.height(80.dp))
@@ -232,25 +232,25 @@ private fun SurveyQuestionsContent(
 private fun Answer(type: QuestionDisplayType, onAnswerClick: (Int) -> Unit) {
     when (type) {
         QuestionDisplayType.STAR -> EmojiRatingAnswer(
-            emojis = MutableList(5) {
+            emojis = List(5) {
                 { Emoji(name = EMOJI_STAR) }
             },
             onIndexChange = onAnswerClick
         )
         QuestionDisplayType.HEART -> EmojiRatingAnswer(
-            emojis = MutableList(5) {
+            emojis = List(5) {
                 { Emoji(name = EMOJI_HEART) }
             },
             onIndexChange = onAnswerClick
         )
         QuestionDisplayType.SMILEY -> EmojiRatingAnswer(
             emojis = listOf(
-                { Emoji(name = EMOJI_POUTING_FACE) },
-                { Emoji(name = EMOJI_CONFUSED_FACE) },
-                { Emoji(name = EMOJI_NEUTRAL_FACE) },
-                { Emoji(name = EMOJI_SLIGHTLY_SMILING_FACE) },
-                { Emoji(name = EMOJI_GRINNING_FACE_WITH_SMILING_EYES) }
-            ),
+                EMOJI_POUTING_FACE,
+                EMOJI_CONFUSED_FACE,
+                EMOJI_NEUTRAL_FACE,
+                EMOJI_SLIGHTLY_SMILING_FACE,
+                EMOJI_GRINNING_FACE_WITH_SMILING_EYES
+            ).map { { Emoji(name = it) } },
             onIndexChange = onAnswerClick,
             highlightStyle = EmojiHighlightStyle.ONE
         )
