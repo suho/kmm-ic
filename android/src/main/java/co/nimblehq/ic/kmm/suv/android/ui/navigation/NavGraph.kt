@@ -28,42 +28,47 @@ fun NavGraphBuilder.authenticationGraph(navController: NavController) {
     ) {
         composable(AppDestination.Login) {
             LoginScreen(onLogInSuccess = {
-                navController.navigate(AppDestination.Home)
+                navController.navigate(AppDestination.Main)
             })
         }
     }
 }
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
-    composable(AppDestination.Home) {
-        HomeScreen(onSurveyDetailClick = {
-            navController.currentBackStackEntry?.arguments?.putParcelable(Argument.survey, it)
-            navController.navigate(AppDestination.Survey)
-        })
-    }
+    navigation(
+        startDestination = AppDestination.Home,
+        destination = AppDestination.Main
+    ) {
+        composable(AppDestination.Home) {
+            HomeScreen(onSurveyDetailClick = {
+                navController.currentBackStackEntry?.arguments?.putParcelable(Argument.survey, it)
+                navController.navigate(AppDestination.Survey)
+            })
+        }
 
-    composable(AppDestination.Survey) {
-        val arguments = navController.previousBackStackEntry?.arguments
-        val survey = arguments?.getParcelable<SurveyArgument>(Argument.survey)
-        SurveyDetailScreen(
-            survey,
-            onBackClick = navController::navigateUp,
-            onStartSurveyClick = {
-                navController.currentBackStackEntry?.arguments?.putParcelable(
-                    Argument.surveyQuestions,
-                    it
-                )
-                navController.navigate(AppDestination.SurveyQuestions)
-            }
-        )
-    }
-    composable(AppDestination.SurveyQuestions) {
-        val arguments = navController.previousBackStackEntry?.arguments
-        val surveyQuestionsArgument =
-            arguments?.getParcelable<SurveyQuestionsArgument>(Argument.surveyQuestions)
-        SurveyQuestionsScreen(
-            surveyQuestionsArgument,
-            onCloseClick = navController::navigateUp
-        )
+        composable(AppDestination.Survey) {
+            val arguments = navController.previousBackStackEntry?.arguments
+            val survey = arguments?.getParcelable<SurveyArgument>(Argument.survey)
+            SurveyDetailScreen(
+                survey,
+                onBackClick = navController::navigateUp,
+                onStartSurveyClick = {
+                    navController.currentBackStackEntry?.arguments?.putParcelable(
+                        Argument.surveyQuestions,
+                        it
+                    )
+                    navController.navigate(AppDestination.SurveyQuestions)
+                }
+            )
+        }
+        composable(AppDestination.SurveyQuestions) {
+            val arguments = navController.previousBackStackEntry?.arguments
+            val surveyQuestionsArgument =
+                arguments?.getParcelable<SurveyQuestionsArgument>(Argument.surveyQuestions)
+            SurveyQuestionsScreen(
+                surveyQuestionsArgument,
+                onCloseClick = navController::navigateUp
+            )
+        }
     }
 }

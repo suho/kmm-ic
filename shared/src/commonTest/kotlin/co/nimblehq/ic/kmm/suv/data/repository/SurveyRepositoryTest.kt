@@ -40,13 +40,13 @@ class SurveyRepositoryTest {
         Url("coverImageUrl"),
         listOf(
             QuestionApiModel(
-                "id",
-                "text",
-                0,
-                "type",
-                "pick",
-                Url("string"),
-                emptyList()
+                id = "id",
+                text = "text",
+                displayOrder = 0,
+                displayType = "intro",
+                pick = "pick",
+                coverImageUrl = Url("string"),
+                answers = emptyList()
             )
         )
     )
