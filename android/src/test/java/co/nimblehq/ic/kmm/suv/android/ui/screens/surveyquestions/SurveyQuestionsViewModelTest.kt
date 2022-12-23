@@ -3,7 +3,6 @@ package co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions
 import co.nimblehq.ic.kmm.suv.android.rule.MainCoroutinesRule
 import co.nimblehq.ic.kmm.suv.domain.model.AppError
 import co.nimblehq.ic.kmm.suv.domain.model.Question
-import co.nimblehq.ic.kmm.suv.domain.model.QuestionDisplayType
 import co.nimblehq.ic.kmm.suv.domain.model.Survey
 import co.nimblehq.ic.kmm.suv.domain.usecase.GetSurveyDetailUseCase
 import io.kotest.matchers.shouldBe
@@ -39,7 +38,7 @@ class SurveyQuestionsViewModelTest {
                 id = "firstId",
                 text = "firstQuestion",
                 displayOrder = 0,
-                displayType = QuestionDisplayType.INTRO,
+                displayType = "intro",
                 pick = "pick",
                 coverImageUrl = "coverImageUrl",
                 answers = emptyList()
@@ -48,7 +47,7 @@ class SurveyQuestionsViewModelTest {
                 id = "secondId",
                 text = "secondQuestion",
                 displayOrder = 1,
-                displayType = QuestionDisplayType.INTRO,
+                displayType = "intro",
                 pick = "pick",
                 coverImageUrl = "coverImageUrl",
                 answers = emptyList()

@@ -2,6 +2,7 @@ package co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions
 
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.ic.kmm.suv.android.ui.base.BaseViewModel
+import co.nimblehq.ic.kmm.suv.domain.model.displayType
 import co.nimblehq.ic.kmm.suv.domain.model.sortedQuestions
 import co.nimblehq.ic.kmm.suv.domain.usecase.GetSurveyDetailUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +43,7 @@ class SurveyQuestionsViewModel(
                                     QuestionContentUiModel(
                                         progress = "${index + 1}/$totalOfQuestions",
                                         title = question.text,
-                                        displayType = question.displayType
+                                        displayType = question.displayType()
                                     )
                                 }
                         }
@@ -52,7 +53,7 @@ class SurveyQuestionsViewModel(
         }
     }
 
-    fun answerQuestion(questionAnswer: Pair<Int, Int>) {
-        Timber.d("question ${questionAnswer.first} - answer ${questionAnswer.second}")
+    fun answerQuestion(questionAnswer: Pair<Int, List<Int>>) {
+        Timber.d("question ${questionAnswer.first} - answers ${questionAnswer.second}")
     }
 }

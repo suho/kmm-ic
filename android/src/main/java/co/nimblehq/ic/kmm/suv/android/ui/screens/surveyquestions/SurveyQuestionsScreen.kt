@@ -69,7 +69,7 @@ fun SurveyQuestionsScreen(
 private fun SurveyQuestionsScreenContent(
     uiModel: SurveyQuestionsContentUiModel,
     onCloseClick: () -> Unit = {},
-    onAnswerClick: (Pair<Int, Int>) -> Unit
+    onAnswerClick: (Pair<Int, List<Int>>) -> Unit
 ) {
     ImageBackground(uiModel.backgroundUrl)
     Row(
@@ -138,7 +138,7 @@ private fun SurveyQuestionsLoadingContent() {
 @Composable
 private fun SurveyQuestionsContent(
     questionUiModels: List<QuestionContentUiModel>,
-    onAnswerClick: (Pair<Int, Int>) -> Unit
+    onAnswerClick: (Pair<Int, List<Int>>) -> Unit
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -176,7 +176,7 @@ private fun SurveyQuestionsContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Answer(type = uiModel.displayType, onAnswerClick = {
+                Answer(type = uiModel.displayType, onAnswersClick = {
                     onAnswerClick(index to it)
                 })
             }
@@ -229,21 +229,25 @@ private fun SurveyQuestionsContent(
 }
 
 @Composable
-private fun Answer(type: QuestionDisplayType, onAnswerClick: (Int) -> Unit) {
+private fun Answer(type: QuestionDisplayType, onAnswersClick: (List<Int>) -> Unit) {
     when (type) {
-        QuestionDisplayType.STAR -> EmojiRatingAnswer(
+        is QuestionDisplayType.Star -> EmojiRatingAnswer(
             emojis = List(5) {
                 { Emoji(name = EMOJI_STAR) }
             },
-            onIndexChange = onAnswerClick
+            onIndexChange = {
+                onAnswersClick(listOf(it))
+            }
         )
-        QuestionDisplayType.HEART -> EmojiRatingAnswer(
+        is QuestionDisplayType.Heart -> EmojiRatingAnswer(
             emojis = List(5) {
                 { Emoji(name = EMOJI_HEART) }
             },
-            onIndexChange = onAnswerClick
+            onIndexChange = {
+                onAnswersClick(listOf(it))
+            }
         )
-        QuestionDisplayType.SMILEY -> EmojiRatingAnswer(
+        is QuestionDisplayType.Smiley -> EmojiRatingAnswer(
             emojis = listOf(
                 EMOJI_POUTING_FACE,
                 EMOJI_CONFUSED_FACE,
@@ -251,11 +255,21 @@ private fun Answer(type: QuestionDisplayType, onAnswerClick: (Int) -> Unit) {
                 EMOJI_SLIGHTLY_SMILING_FACE,
                 EMOJI_GRINNING_FACE_WITH_SMILING_EYES
             ).map { { Emoji(name = it) } },
-            onIndexChange = onAnswerClick,
-            highlightStyle = EmojiHighlightStyle.ONE
+            highlightStyle = EmojiHighlightStyle.ONE,
+            onIndexChange = {
+                onAnswersClick(listOf(it))
+            }
         )
-        QuestionDisplayType.NPS -> NpsAnswer(onIndexChange = onAnswerClick)
-        else -> Text(text = type.value) // TODO: Remove this later
+        is QuestionDisplayType.Nps -> NpsAnswer(onIndexChange = {
+            onAnswersClick(listOf(it))
+        })
+        is QuestionDisplayType.Choice -> MultipleChoicesAnswer(
+            choices = type.answers,
+            onIndexesChange = {
+                onAnswersClick(it.toList())
+            }
+        )
+        else -> Text(text = type.toString()) // TODO: Remove this later
     }
 }
 
@@ -272,12 +286,12 @@ fun SurveyQuestionsScreenPreview(
                 QuestionContentUiModel(
                     "1/2",
                     "What your name?",
-                    displayType = QuestionDisplayType.INTRO
+                    displayType = QuestionDisplayType.Intro
                 ),
                 QuestionContentUiModel(
                     "2/2",
                     "How old are you?",
-                    displayType = QuestionDisplayType.INTRO
+                    displayType = QuestionDisplayType.Intro
                 )
             )
         ),
