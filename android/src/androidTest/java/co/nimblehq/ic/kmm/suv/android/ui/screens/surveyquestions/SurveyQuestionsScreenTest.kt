@@ -155,7 +155,10 @@ class SurveyQuestionsScreenTest {
             }
             nextButtonNode.performClick()
 
-            Assert.assertTrue(viewModel.isSubmitSuccess.value)
+            Assert.assertEquals(
+                SubmittingAnswerState.SUCCESS,
+                viewModel.submittingAnswerState.value
+            )
         }
     }
 

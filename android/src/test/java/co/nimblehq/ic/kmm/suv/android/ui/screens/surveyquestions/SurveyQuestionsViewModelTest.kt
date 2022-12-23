@@ -134,7 +134,7 @@ class SurveyQuestionsViewModelTest {
             advanceUntilIdle()
 
             val input = AnswerInput.Select("1")
-            viewModel.answerQuestion(Pair(0, listOf(input)))
+            viewModel.answerQuestion(QuestionAndAnswers(0, listOf(input)))
             viewModel.questionContentUiModels.value[0].displayType.input.first() shouldBe input
         }
 
@@ -144,12 +144,12 @@ class SurveyQuestionsViewModelTest {
             viewModel.loadSurveyDetail(mockSurveyQuestionsArgument)
             advanceUntilIdle()
             val input = AnswerInput.Select("1")
-            viewModel.answerQuestion(Pair(0, listOf(input)))
+            viewModel.answerQuestion(QuestionAndAnswers(0, listOf(input)))
 
             viewModel.submitSurveyResponse()
             advanceUntilIdle()
 
-            viewModel.isSubmitSuccess.value shouldBe true
+            viewModel.submittingAnswerState.value shouldBe SubmittingAnswerState.SUCCESS
         }
 
     @Test
@@ -161,7 +161,7 @@ class SurveyQuestionsViewModelTest {
             viewModel.loadSurveyDetail(mockSurveyQuestionsArgument)
             advanceUntilIdle()
             val input = AnswerInput.Select("1")
-            viewModel.answerQuestion(Pair(0, listOf(input)))
+            viewModel.answerQuestion(QuestionAndAnswers(0, listOf(input)))
 
             viewModel.submitSurveyResponse()
             advanceUntilIdle()

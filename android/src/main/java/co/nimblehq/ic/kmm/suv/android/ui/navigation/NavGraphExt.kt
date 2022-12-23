@@ -34,9 +34,9 @@ fun NavController.navigate(destination: AppDestination) {
     navigate(route = destination.route)
 }
 
-fun NavController.navigateUp(destination: AppDestination) {
+fun NavController.navigateUp(destination: AppDestination, inclusive: Boolean = true) {
     popBackStack(
         route = destination.route,
-        inclusive = true
+        inclusive = inclusive
     )
 }

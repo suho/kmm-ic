@@ -11,6 +11,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
+enum class SubmittingAnswerState {
+    IDLE, SUBMITTING, SUCCESS
+}
+
 class SurveyQuestionsViewModel(
     private val getSurveyDetailUseCase: GetSurveyDetailUseCase,
     private val submitSurveyResponseUseCase: SubmitSurveyResponseUseCase
@@ -26,11 +30,9 @@ class SurveyQuestionsViewModel(
     val questionContentUiModels: StateFlow<List<QuestionContentUiModel>> =
         _questionContentUiModels.asStateFlow()
 
-    private val _isSubmitSuccess = MutableStateFlow(false)
-    val isSubmitSuccess: StateFlow<Boolean> = _isSubmitSuccess.asStateFlow()
-
-    private val _isSubmitting = MutableStateFlow(false)
-    val isSubmitting: StateFlow<Boolean> = _isSubmitting.asStateFlow()
+    private val _submittingAnswerState = MutableStateFlow(SubmittingAnswerState.IDLE)
+    val submittingAnswerState: StateFlow<SubmittingAnswerState> =
+        _submittingAnswerState.asStateFlow()
 
     private var _survey: Survey? = null
     private var surveySubmission: SurveySubmission? = null
@@ -65,9 +67,10 @@ class SurveyQuestionsViewModel(
 
     fun answerQuestion(questionAndAnswers: QuestionAndAnswers) {
         val uiModels = _questionContentUiModels.value.toMutableList()
-        val changedUiModel = uiModels[questionAndAnswers.questionIndex]
+        val questionIndex = questionAndAnswers.questionIndex
+        val changedUiModel = uiModels[questionIndex]
         changedUiModel.displayType.update(questionAndAnswers.answerInputs)
-        uiModels[questionAndAnswers.questionIndex] = changedUiModel
+        uiModels[questionIndex] = changedUiModel
         _questionContentUiModels.value = uiModels
 
         // Convert answers to SurveySubmission
@@ -98,15 +101,15 @@ class SurveyQuestionsViewModel(
         surveySubmission?.let { surveySubmission ->
             val questionSubmissions = surveySubmission.questions.filter { it.answers.isNotEmpty() }
             viewModelScope.launch {
-                _isSubmitting.value = true
+                _submittingAnswerState.value = SubmittingAnswerState.SUBMITTING
                 submitSurveyResponseUseCase(surveySubmission.copy(questions = questionSubmissions))
                     .catch { e ->
                         showError(e.message)
+                        _submittingAnswerState.value = SubmittingAnswerState.IDLE
                     }
                     .collect {
-                        _isSubmitSuccess.value = true
+                        _submittingAnswerState.value = SubmittingAnswerState.SUCCESS
                     }
-                _isSubmitting.value = false
             }
         }
     }

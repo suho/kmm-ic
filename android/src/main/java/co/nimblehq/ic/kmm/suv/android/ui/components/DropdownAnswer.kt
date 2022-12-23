@@ -48,7 +48,7 @@ fun DropdownAnswer(
     }
     LaunchedEffect(input) {
         if (input != null) {
-            pagerState.animateScrollToPage(answers.map { it.id }.indexOf(input.id))
+            pagerState.animateScrollToPage(answers.indexOfFirst { it.id == input.id })
         }
     }
     Box {

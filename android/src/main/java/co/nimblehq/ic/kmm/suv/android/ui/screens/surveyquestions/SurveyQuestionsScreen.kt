@@ -48,8 +48,7 @@ fun SurveyQuestionsScreen(
     val errorMessage by viewModel.errorMessage.collectAsState()
     val coverImageUrl by viewModel.coverImageUrl.collectAsState()
     val questionUiModels by viewModel.questionContentUiModels.collectAsState()
-    val isSubmitSuccess by viewModel.isSubmitSuccess.collectAsState()
-    val isSubmitting by viewModel.isSubmitting.collectAsState()
+    val submittingAnswerState by viewModel.submittingAnswerState.collectAsState()
 
     var showExitDialog by remember { mutableStateOf(false) }
 
@@ -57,8 +56,8 @@ fun SurveyQuestionsScreen(
         viewModel.loadSurveyDetail(surveyQuestionsArgument)
     }
 
-    LaunchedEffect(isSubmitSuccess) {
-        if (isSubmitSuccess) {
+    LaunchedEffect(submittingAnswerState) {
+        if (submittingAnswerState == SubmittingAnswerState.SUCCESS) {
             onSubmitSuccess()
         }
     }
@@ -93,7 +92,7 @@ fun SurveyQuestionsScreen(
         },
         onAnswerChange = viewModel::answerQuestion,
         onAnswersSubmit = viewModel::submitSurveyResponse,
-        isSubmitting = isSubmitting
+        isSubmitting = submittingAnswerState == SubmittingAnswerState.SUBMITTING
     )
 }
 
