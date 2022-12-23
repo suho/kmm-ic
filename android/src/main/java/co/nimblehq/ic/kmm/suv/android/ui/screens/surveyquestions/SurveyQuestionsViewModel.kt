@@ -53,9 +53,9 @@ class SurveyQuestionsViewModel(
         }
     }
 
-    fun answerQuestion(questionAndAnswer: QuestionAndAnswers) {
+    fun answerQuestion(questionAndAnswers: QuestionAndAnswers) {
         Timber.d(
-            "question ${questionAndAnswer.index} - answers ${questionAndAnswer.answerInputs}"
+            "${questionAndAnswers.questionIndex} - ${questionAndAnswers.answerInputs}"
         )
     }
 }
