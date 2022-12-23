@@ -48,7 +48,7 @@ fun FormAnswer(
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .size(56.dp)
+                    .size(AppTheme.dimensions.defaultComponentHeight)
                     .padding(start = 24.dp, end = 24.dp)
                     .clip(AppTheme.shapes.large)
             )
