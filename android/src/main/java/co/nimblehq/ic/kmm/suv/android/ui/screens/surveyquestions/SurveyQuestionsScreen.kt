@@ -269,7 +269,7 @@ private fun Answer(type: QuestionDisplayType, onAnswersClick: (List<Int>) -> Uni
                 onAnswersClick(it.toList())
             }
         )
-        else -> Text(text = type.value) // TODO: Remove this later
+        else -> Text(text = type.toString()) // TODO: Remove this later
     }
 }
 

@@ -33,10 +33,10 @@ fun MultipleChoicesAnswer(
             val isHighlight = selectedIndexes.contains(index)
             Button(
                 onClick = {
-                    if (selectedIndexes.contains(index)) {
-                        selectedIndexes = selectedIndexes.minus(index)
+                    selectedIndexes = if (selectedIndexes.contains(index)) {
+                        selectedIndexes.minus(index)
                     } else {
-                        selectedIndexes = selectedIndexes.plus(index)
+                        selectedIndexes.plus(index)
                     }
                     onIndexesChange(selectedIndexes)
                 },

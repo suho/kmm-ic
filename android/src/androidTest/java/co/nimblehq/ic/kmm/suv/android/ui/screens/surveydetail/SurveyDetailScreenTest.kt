@@ -28,9 +28,9 @@ class SurveyDetailScreenTest {
 
     @Before
     fun setup() {
-        viewModel = SurveyDetailViewModel(mockSurveyArgument)
+        viewModel = SurveyDetailViewModel()
         composeRule.activity.setContent {
-            SurveyDetailScreen(viewModel = viewModel)
+            SurveyDetailScreen(mockSurveyArgument, viewModel = viewModel)
         }
     }
 

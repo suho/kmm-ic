@@ -20,23 +20,26 @@ data class Question(
     val pick: String,
     val coverImageUrl: String,
     val answers: List<Answer>
-)
+) {
+    val sortedAnswers: List<Answer>
+        get() = answers.sortedBy { it.displayOrder }
+}
 
-sealed class QuestionDisplayType(val value: String) {
+sealed class QuestionDisplayType {
 
-    object Intro : QuestionDisplayType(QUESTION_DISPLAY_TYPE_INTRO)
-    object Star : QuestionDisplayType(QUESTION_DISPLAY_TYPE_STAR)
-    object Heart : QuestionDisplayType(QUESTION_DISPLAY_TYPE_HEART)
-    object Smiley : QuestionDisplayType(QUESTION_DISPLAY_TYPE_SMILEY)
-    data class Choice(val answers: List<String> = emptyList()) :
-        QuestionDisplayType(QUESTION_DISPLAY_TYPE_CHOICE)
+    object Intro : QuestionDisplayType()
+    object Star : QuestionDisplayType()
+    object Heart : QuestionDisplayType()
+    object Smiley : QuestionDisplayType()
+    data class Choice(val answers: List<String>) :
+        QuestionDisplayType()
 
-    object Nps : QuestionDisplayType(QUESTION_DISPLAY_TYPE_NPS)
-    object Textarea : QuestionDisplayType(QUESTION_DISPLAY_TYPE_TEXTAREA)
-    object Textfield : QuestionDisplayType(QUESTION_DISPLAY_TYPE_TEXTFIELD)
-    object Dropdown : QuestionDisplayType(QUESTION_DISPLAY_TYPE_DROPDOWN)
-    object Outro : QuestionDisplayType(QUESTION_DISPLAY_TYPE_OUTRO)
-    object Unsupported : QuestionDisplayType(QUESTION_DISPLAY_TYPE_UNSUPPORTED)
+    object Nps : QuestionDisplayType()
+    object Textarea : QuestionDisplayType()
+    object Textfield : QuestionDisplayType()
+    object Dropdown : QuestionDisplayType()
+    object Outro : QuestionDisplayType()
+    object Unsupported : QuestionDisplayType()
 }
 
 fun Question.displayType(): QuestionDisplayType {
@@ -45,7 +48,7 @@ fun Question.displayType(): QuestionDisplayType {
         QUESTION_DISPLAY_TYPE_STAR -> QuestionDisplayType.Star
         QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart
         QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley
-        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(sortedAnswers().map {
+        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(sortedAnswers.map {
             it.text.orEmpty()
         })
         QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps
@@ -55,9 +58,4 @@ fun Question.displayType(): QuestionDisplayType {
         QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro
         else -> QuestionDisplayType.Unsupported
     }
-}
-
-
-fun Question.sortedAnswers(): List<Answer> {
-    return answers.sortedBy { it.displayOrder }
 }
