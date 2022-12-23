@@ -254,6 +254,7 @@ private fun Answer(type: QuestionDisplayType, onAnswerClick: (Int) -> Unit) {
             onIndexChange = onAnswerClick,
             highlightStyle = EmojiHighlightStyle.ONE
         )
+        QuestionDisplayType.NPS -> NpsAnswer(onIndexChange = onAnswerClick)
         else -> Text(text = type.value) // TODO: Remove this later
     }
 }

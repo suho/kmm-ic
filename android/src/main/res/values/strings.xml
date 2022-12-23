@@ -12,4 +12,6 @@
 
     <string name="start_survey">Start Survey</string>
     <string name="submit_button">Submit</string>
+    <string name="nps_not_at_all_likely">Not at all Likely</string>
+    <string name="nps_extremely_likely">Extremely Likely</string>
 </resources>
