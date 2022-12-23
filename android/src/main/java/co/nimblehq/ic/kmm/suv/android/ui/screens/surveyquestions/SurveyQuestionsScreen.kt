@@ -69,7 +69,7 @@ fun SurveyQuestionsScreen(
 private fun SurveyQuestionsScreenContent(
     uiModel: SurveyQuestionsContentUiModel,
     onCloseClick: () -> Unit = {},
-    onAnswerChange: (Pair<Int, List<AnswerInput>>) -> Unit
+    onAnswerChange: (QuestionAndAnswers) -> Unit
 ) {
     ImageBackground(uiModel.backgroundUrl)
     Row(
@@ -138,7 +138,7 @@ private fun SurveyQuestionsLoadingContent() {
 @Composable
 private fun SurveyQuestionsContent(
     questionUiModels: List<QuestionContentUiModel>,
-    onAnswerChange: (Pair<Int, List<AnswerInput>>) -> Unit
+    onAnswerChange: (QuestionAndAnswers) -> Unit
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -177,7 +177,7 @@ private fun SurveyQuestionsContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Answer(type = uiModel.displayType, onAnswersChange = {
-                    onAnswerChange(index to it)
+                    onAnswerChange(QuestionAndAnswers(questionIndex = index, answerInputs = it))
                 })
             }
             Spacer(modifier = Modifier.height(80.dp))
