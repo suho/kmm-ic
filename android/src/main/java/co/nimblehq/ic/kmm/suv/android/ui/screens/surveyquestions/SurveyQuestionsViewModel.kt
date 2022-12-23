@@ -53,7 +53,9 @@ class SurveyQuestionsViewModel(
         }
     }
 
-    fun answerQuestion(questionAnswer: Pair<Int, List<Int>>) {
-        Timber.d("question ${questionAnswer.first} - answers ${questionAnswer.second}")
+    fun answerQuestion(questionAndAnswers: QuestionAndAnswers) {
+        Timber.d(
+            "${questionAndAnswers.questionIndex} - ${questionAndAnswers.answerInputs}"
+        )
     }
 }

@@ -35,12 +35,15 @@ sealed class QuestionDisplayType {
         QuestionDisplayType()
 
     object Nps : QuestionDisplayType()
-    object Textarea : QuestionDisplayType()
+    data class Textarea(val placeholder: String) :
+        QuestionDisplayType()
+
     object Textfield : QuestionDisplayType()
     object Dropdown : QuestionDisplayType()
     object Outro : QuestionDisplayType()
     object Unsupported : QuestionDisplayType()
 }
+
 
 fun Question.displayType(): QuestionDisplayType {
     return when (displayType) {
@@ -52,7 +55,9 @@ fun Question.displayType(): QuestionDisplayType {
             it.text.orEmpty()
         })
         QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps
-        QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea
+        QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(
+            sortedAnswers.first().inputMaskPlaceholder.orEmpty()
+        )
         QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield
         QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown
         QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro
