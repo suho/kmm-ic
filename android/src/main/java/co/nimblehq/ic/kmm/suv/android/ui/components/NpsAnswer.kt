@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -17,7 +16,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
+import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
+
+private const val NPS_SIZE = 10
+private val NPS_VIEW_HEIGHT = 56.dp
+private val NPS_VIEW_WIDTH = 345.5.dp
 
 @Composable
 fun NpsAnswer(
@@ -25,15 +29,12 @@ fun NpsAnswer(
     onIndexChange: (Int) -> Unit,
 ) {
     var selectedIndex by remember { mutableStateOf(currentIndex) }
-    val npsSize = 10
-    val npsHeight = 56.dp
-    val npsWidth = 345.5.dp
     Column {
         Row(
             modifier = Modifier
-                .border(BorderStroke(0.5.dp, Color.White), RoundedCornerShape(10.dp))
+                .border(BorderStroke(0.5.dp, Color.White), AppTheme.shapes.medium)
         ) {
-            for (index in 0 until npsSize) {
+            for (index in 0 until NPS_SIZE) {
                 val isHighlight = index <= selectedIndex
                 val alpha = if (isHighlight) 1f else 0.5f
                 Button(
@@ -49,7 +50,7 @@ fun NpsAnswer(
                     modifier = Modifier
                         .alpha(alpha)
                         .width(34.dp)
-                        .height(npsHeight)
+                        .height(NPS_VIEW_HEIGHT)
                 ) {
                     Text(
                         text = "${index + 1}",
@@ -57,11 +58,11 @@ fun NpsAnswer(
                         style = if (isHighlight) Typography.h6 else Typography.h6.copy(fontWeight = FontWeight.Normal)
                     )
                 }
-                if (index != npsSize - 1) {
+                if (index != NPS_SIZE - 1) {
                     Spacer(
                         modifier = Modifier
                             .width(0.5.dp)
-                            .height(npsHeight)
+                            .height(NPS_VIEW_HEIGHT)
                             .background(Color.White)
                     )
                 }
@@ -70,7 +71,7 @@ fun NpsAnswer(
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.width(npsWidth)
+            modifier = Modifier.width(NPS_VIEW_WIDTH)
         ) {
             val leftRangeAlpha = if (selectedIndex < 5) 1f else 0.5f
             Text(
