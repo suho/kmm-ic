@@ -276,6 +276,11 @@ private fun Answer(type: QuestionDisplayType, onAnswersChange: (List<AnswerInput
             placeholder = type.placeholder,
             modifier = Modifier.height(170.dp)
         )
+        is QuestionDisplayType.Textfield -> FormAnswer(
+            placeholders = type.placeholders,
+            onTextChange = { (index, content) ->
+                onAnswersChange(listOf(AnswerInput.Content(index = index, content = content)))
+            })
         else -> Text(text = type.toString()) // TODO: Remove this later
     }
 }
