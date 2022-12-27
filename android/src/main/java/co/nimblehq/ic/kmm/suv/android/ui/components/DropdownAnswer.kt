@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import androidx.compose.ui.util.lerp
+import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
@@ -47,7 +48,7 @@ fun DropdownAnswer(
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .height(56.dp)
+                    .height(AppTheme.dimensions.defaultComponentHeight)
                     .fillMaxWidth()
             ) {
                 Text(

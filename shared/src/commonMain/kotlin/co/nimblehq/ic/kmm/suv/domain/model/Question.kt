@@ -21,14 +21,14 @@ data class Question(
     val coverImageUrl: String,
     val answers: List<Answer>
 ) {
-    val sortedAnswers: List<Answer>
+    private val sortedAnswers: List<Answer>
         get() = answers.sortedBy { it.displayOrder }
 
     val answerTexts: List<String>
-        get() = sortedAnswers.map { it.text ?: "" }
+        get() = sortedAnswers.map { it.text.orEmpty() }
 
     val answerPlaceholders: List<String>
-        get() = sortedAnswers.map { it.inputMaskPlaceholder ?: "" }
+        get() = sortedAnswers.map { it.inputMaskPlaceholder.orEmpty() }
 }
 
 sealed class QuestionDisplayType {
