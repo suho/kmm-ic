@@ -33,14 +33,14 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun SurveyQuestionsScreen(
     surveyQuestionsArgument: SurveyQuestionsArgument?,
-    onCloseClick: () -> Unit,
+    onCloseScreenClick: () -> Unit,
     viewModel: SurveyQuestionsViewModel = getViewModel(),
 ) {
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val coverImageUrl by viewModel.coverImageUrl.collectAsState()
     val questionUiModels by viewModel.questionContentUiModels.collectAsState()
-    val showExitDialog by viewModel.showExitDialog.collectAsState()
+    var showExitDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.loadSurveyDetail(surveyQuestionsArgument)
@@ -53,16 +53,16 @@ fun SurveyQuestionsScreen(
         )
     }
 
-    showExitDialog.let {
-        if (showExitDialog) {
-            ExitAlertDialog(
-                onConfirmClick = {
-                    viewModel.onExitDialogConfirm()
-                    onCloseClick()
-                },
-                onDismissClick = viewModel::onExitDialogDismiss
-            )
-        }
+    if (showExitDialog) {
+        ExitAlertDialog(
+            onConfirmClick = {
+                showExitDialog = false
+                onCloseScreenClick()
+            },
+            onDismissClick = {
+                showExitDialog = false
+            }
+        )
     }
 
     SurveyQuestionsScreenContent(
@@ -71,15 +71,17 @@ fun SurveyQuestionsScreen(
             backgroundUrl = coverImageUrl,
             questions = questionUiModels
         ),
-        onAnswerChange = viewModel::answerQuestion
-        onCloseClick = viewModel::onOpenExitDialogClicked
+        onAnswerChange = viewModel::answerQuestion,
+        onCloseButtonClick = {
+            showExitDialog = true
+        }
     )
 }
 
 @Composable
 private fun SurveyQuestionsScreenContent(
     uiModel: SurveyQuestionsContentUiModel,
-    onCloseClick: () -> Unit = {},
+    onCloseButtonClick: () -> Unit = {},
     onAnswerChange: (QuestionAndAnswers) -> Unit
 ) {
     ImageBackground(uiModel.backgroundUrl)
@@ -90,7 +92,7 @@ private fun SurveyQuestionsScreenContent(
             .fillMaxWidth()
     ) {
         Button(
-            onClick = onCloseClick,
+            onClick = onCloseButtonClick,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Transparent
             ),

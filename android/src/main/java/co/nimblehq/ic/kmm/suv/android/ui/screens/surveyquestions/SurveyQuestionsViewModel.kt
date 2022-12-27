@@ -16,9 +16,6 @@ class SurveyQuestionsViewModel(
     private val getSurveyDetailUseCase: GetSurveyDetailUseCase
 ) : BaseViewModel() {
 
-    private val _showExitDialog = MutableStateFlow(false)
-    val showExitDialog: StateFlow<Boolean> = _showExitDialog.asStateFlow()
-
     private val _coverImageUrl = MutableStateFlow("")
     val coverImageUrl: StateFlow<String> = _coverImageUrl.asStateFlow()
 
@@ -60,17 +57,5 @@ class SurveyQuestionsViewModel(
         Timber.d(
             "${questionAndAnswers.questionIndex} - ${questionAndAnswers.answerInputs}"
         )
-    }
-
-    fun onOpenExitDialogClicked() {
-        _showExitDialog.value = true
-    }
-
-    fun onExitDialogConfirm() {
-        _showExitDialog.value = false
-    }
-
-    fun onExitDialogDismiss() {
-        _showExitDialog.value = false
     }
 }
