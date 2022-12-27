@@ -281,6 +281,11 @@ private fun Answer(type: QuestionDisplayType, onAnswersChange: (List<AnswerInput
             onTextChange = { (index, content) ->
                 onAnswersChange(listOf(AnswerInput.Content(index = index, content = content)))
             })
+        is QuestionDisplayType.Dropdown -> DropdownAnswer(
+            choices = type.answers,
+            onIndexChange = {
+                onAnswersChange(listOf(AnswerInput.Index(it)))
+            })
         else -> Text(text = type.toString()) // TODO: Remove this later
     }
 }

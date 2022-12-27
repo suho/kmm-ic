@@ -12,6 +12,7 @@ object Dependency {
         "androidx.constraintlayout:constraintlayout:${Version.CONSTRAINT_LAYOUT}"
     const val CORE_KTX = "androidx.core:core-ktx:${Version.CORE_KTX}"
     const val COMPOSE_UI = "androidx.compose.ui:ui:${Version.COMPOSE_STABLE_VERSION}"
+    const val COMPOSE_UI_UTIL = "androidx.compose.ui:ui-util:${Version.COMPOSE_STABLE_VERSION}"
     const val COMPOSE_MATERIAL =
         "androidx.compose.material:material:${Version.COMPOSE_STABLE_VERSION}"
     const val COMPOSE_UI_PREVIEW =
