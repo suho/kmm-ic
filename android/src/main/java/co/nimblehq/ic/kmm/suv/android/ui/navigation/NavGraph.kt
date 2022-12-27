@@ -67,7 +67,7 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                 arguments?.getParcelable<SurveyQuestionsArgument>(Argument.surveyQuestions)
             SurveyQuestionsScreen(
                 surveyQuestionsArgument,
-                onCloseClick = navController::navigateUp
+                onCloseScreenClick = navController::navigateUp
             )
         }
     }
