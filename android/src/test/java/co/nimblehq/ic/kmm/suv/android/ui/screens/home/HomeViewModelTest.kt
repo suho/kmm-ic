@@ -60,7 +60,7 @@ class HomeViewModelTest {
     fun setup() {
         every { mockDateTime.today() } returns LocalDate(2022, 11, 8)
         every { mockGetProfileUseCase() } returns flowOf(mockUser)
-        every { mockGetSurveysUseCase(any(), any()) } returns flowOf(
+        every { mockGetSurveysUseCase(any(), any(), any()) } returns flowOf(
             listOf(
                 mockFirstSurvey,
                 mockSecondSurvey
@@ -104,7 +104,7 @@ class HomeViewModelTest {
     @Test
     fun `When load surveys failed, error message should not be null`() = runTest {
         val expectedError = AppError("Load surveys failed!")
-        every { mockGetSurveysUseCase(any(), any()) } returns flow { throw expectedError }
+        every { mockGetSurveysUseCase(any(), any(), any()) } returns flow { throw expectedError }
         viewModel.loadProfileAndSurveys()
         advanceUntilIdle()
 

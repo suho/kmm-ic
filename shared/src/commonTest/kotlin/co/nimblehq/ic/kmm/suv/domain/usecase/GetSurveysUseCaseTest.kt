@@ -41,7 +41,7 @@ class GetSurveysUseCaseTest {
             .whenInvokedWith(any(), any(), any())
             .thenReturn(flow { emit(listOf(mockSurvey)) })
 
-        useCase(1, 1).test {
+        useCase(1, 1, false).test {
             this.awaitItem() shouldBe listOf(mockSurvey)
             this.awaitComplete()
         }
@@ -54,7 +54,7 @@ class GetSurveysUseCaseTest {
             .whenInvokedWith(any(), any(), any())
             .thenReturn(flow { throw mockThrowable })
 
-        useCase(1, 1).test {
+        useCase(1, 1, false).test {
             this.awaitError().message shouldBe mockThrowable.message
         }
     }

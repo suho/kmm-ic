@@ -42,9 +42,9 @@ class HomeViewModel(
         ).uppercase()
     }
 
-    fun loadProfileAndSurveys() {
+    fun loadProfileAndSurveys(isRefresh: Boolean = false) {
         loadProfile()
-        loadSurveys()
+        loadSurveys(isRefresh)
     }
 
     fun showPreviousSurvey() {
@@ -86,17 +86,20 @@ class HomeViewModel(
         }
     }
 
-    private fun loadSurveys() {
+    private fun loadSurveys(isRefresh: Boolean = false) {
         showLoading()
         viewModelScope.launch {
             // TODO: Improve this when we have paging implementation
-            getSurveysUseCase(1, 5)
+            getSurveysUseCase(1, 5, isRefresh)
                 .catch { e ->
                     showError(e.message)
                 }
                 .collect {
                     surveys = it
-                    if (surveys.isNotEmpty()) updateCurrentSurvey()
+                    if (surveys.isNotEmpty()) {
+                        if (isRefresh) currentSurveyIndex = 0
+                        updateCurrentSurvey()
+                    }
                 }
             hideLoading()
         }

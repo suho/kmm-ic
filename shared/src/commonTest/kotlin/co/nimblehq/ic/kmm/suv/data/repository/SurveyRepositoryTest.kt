@@ -105,6 +105,32 @@ class SurveyRepositoryTest {
         }
 
     @Test
+    fun `when force latest data with cached data and get surveys is succeeded - it returns only surveys from API`() =
+        runTest {
+            given(mockSurveyLocalDataSource)
+                .function(mockSurveyLocalDataSource::getSurveys)
+                .whenInvoked()
+                .thenReturn(listOf(mockSurveyRealmObject))
+
+            given(mockSurveyRemoteDataSource)
+                .function(mockSurveyRemoteDataSource::getSurveys)
+                .whenInvokedWith(any())
+                .thenReturn(
+                    flow {
+                        emit(listOf(mockSurveyApiModel))
+                    }
+                )
+
+            repository.getSurveys(pageNumber = 1, pageSize = 1, isForceLatestData = true).test {
+                this.awaitItem() shouldBe listOf(mockSurveyApiModel.toSurvey())
+                this.awaitComplete()
+            }
+
+            verify(mockSurveyLocalDataSource).invocation { deleteAllSurveys() }
+                .wasInvoked(exactly = 1.times)
+        }
+
+    @Test
     fun `when there is no cached data and get surveys is failed - it returns error`() =
         runTest {
             given(mockSurveyLocalDataSource)

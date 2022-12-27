@@ -27,7 +27,6 @@ class SurveyRepositoryImpl(
         pageSize: Int,
         isForceLatestData: Boolean
     ): Flow<List<Survey>> {
-        // TODO: Check this logic again when we have pull to refresh
         return flow {
             if (isForceLatestData) {
                 surveyLocalDataSource.deleteAllSurveys()
