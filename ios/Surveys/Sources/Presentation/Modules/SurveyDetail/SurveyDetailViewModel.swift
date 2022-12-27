@@ -24,9 +24,16 @@ final class SurveyDetailViewModel: ObservableObject {
     @Published private(set) var description: String = ""
     @Published private(set) var imageURLString: String = ""
 
+    private let survey: SurveyArgument
+
+    var surveyQuestionsViewModel: SurveyQuestionsViewModel {
+        .init(survey: .init(id: survey.id, imageURLString: survey.imageURLString))
+    }
+
     init(survey: SurveyArgument) {
         title = survey.title
         description = survey.description
         imageURLString = survey.imageURLString
+        self.survey = survey
     }
 }

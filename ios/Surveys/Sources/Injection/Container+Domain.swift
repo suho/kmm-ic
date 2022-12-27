@@ -31,4 +31,9 @@ extension Container {
     static let sharedGetSurveysUseCase = Factory {
         KoinApplication.inject(\.getSurveysUseCase) as Shared.GetSurveysUseCase
     }
+
+    static let getSurveyDetailUseCase = Factory { Surveys.GetSurveyDetailUseCase() as GetSurveyDetailUseCaseProtocol }
+    static let sharedGetSurveyDetailUseCase = Factory {
+        KoinApplication.inject(\.getSurveyDetailUseCase) as Shared.GetSurveyDetailUseCase
+    }
 }

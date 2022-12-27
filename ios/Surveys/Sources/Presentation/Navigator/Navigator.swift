@@ -22,7 +22,7 @@ final class Navigator: ObservableObject {
         case .presentSheet:
             routes.presentSheet(screen)
         case .presentCover:
-            routes.presentCover(screen)
+            routes.presentCover(screen, embedInNavigationView: true)
         }
     }
 

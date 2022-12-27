@@ -8,7 +8,6 @@
 
 import Nimble
 import Quick
-
 @testable import Surveys
 
 final class HomeUISpec: QuickSpec {
@@ -24,8 +23,7 @@ final class HomeUISpec: QuickSpec {
                 beforeEach {
                     app = XCUIApplication()
                     app.launch()
-
-                    self.login(with: app)
+                    app.login()
                 }
 
                 afterEach {
@@ -33,34 +31,18 @@ final class HomeUISpec: QuickSpec {
                 }
 
                 it("it shows its ui components") {
-                    let todayText = app.staticTexts[AccessibilityIdentifier.Home.today]
-                    expect(todayText.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let currentDateText = app.staticTexts[AccessibilityIdentifier.Home.currentDate]
-                    expect(currentDateText.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let avatarImage = app.images[AccessibilityIdentifier.Home.avatar]
-                    expect(avatarImage.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let surveyImage = app.images[AccessibilityIdentifier.Home.surveyImage]
-                    expect(surveyImage.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let pageControl = app.pageIndicators[AccessibilityIdentifier.Home.pageControl]
-                    expect(pageControl.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let surveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
-                    expect(surveyTitleText.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let surveyDescriptionText = app.staticTexts[AccessibilityIdentifier.Home.surveyDescription]
-                    expect(surveyDescriptionText.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let detailSurveyButton = app.buttons[AccessibilityIdentifier.Home.detailSurvey]
-                    expect(detailSurveyButton.exists).toEventually(equal(true), timeout: .seconds(5))
+                    app.staticTexts[AccessibilityIdentifier.Home.today].shouldExists()
+                    app.staticTexts[AccessibilityIdentifier.Home.currentDate].shouldExists()
+                    app.images[AccessibilityIdentifier.Home.avatar].shouldExists()
+                    app.images[AccessibilityIdentifier.Home.surveyImage].shouldExists()
+                    app.pageIndicators[AccessibilityIdentifier.Home.pageControl].shouldExists()
+                    app.staticTexts[AccessibilityIdentifier.Home.surveyTitle].shouldExists()
+                    app.staticTexts[AccessibilityIdentifier.Home.surveyDescription].shouldExists()
+                    app.buttons[AccessibilityIdentifier.Home.detailSurvey].shouldExists()
                 }
 
                 it("it shows list of surveys") {
-                    let pageControl = app.pageIndicators[AccessibilityIdentifier.Home.pageControl]
-                    expect(pageControl.exists).toEventually(equal(true), timeout: .seconds(5))
+                    app.pageIndicators[AccessibilityIdentifier.Home.pageControl].shouldExists()
 
                     let firstSurveyTitleText = app.staticTexts[AccessibilityIdentifier.Home.surveyTitle]
                     let firstSurveyTitle = firstSurveyTitleText.label
@@ -78,11 +60,5 @@ final class HomeUISpec: QuickSpec {
                 }
             }
         }
-    }
-
-    private func login(with app: XCUIApplication) {
-        app.fillInField("Email", with: "dev@nimblehq.co")
-        app.fillInSecureField("Password", with: "12345678")
-        app.tapButton("Log in")
     }
 }

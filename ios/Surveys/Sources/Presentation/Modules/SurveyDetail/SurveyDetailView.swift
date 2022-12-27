@@ -49,7 +49,7 @@ struct SurveyDetailView: View {
                 HStack {
                     Spacer()
                     Button {
-                        // TODO: - Implement this later
+                        navigator.show(screen: .surveyQuestions(viewModel.surveyQuestionsViewModel), by: .presentCover)
                     } label: {
                         Text(Localize.surveyDetailButtonTitle())
                             .frame(alignment: .center)
