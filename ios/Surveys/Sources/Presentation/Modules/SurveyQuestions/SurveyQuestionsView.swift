@@ -6,8 +6,11 @@
 //  Copyright © 2022 Nimble. All rights reserved.
 //
 
+import Shared
 import SwiftUI
 import SwiftUIPager
+
+// MARK: - SurveyQuestionsView
 
 struct SurveyQuestionsView: View {
 
@@ -81,6 +84,8 @@ struct SurveyQuestionsView: View {
                                     .accessibilityIdentifier(AccessibilityIdentifier.SurveyQuestions.questionTitle)
 
                                 Spacer()
+
+                                answerView(displayType: question.displayType)
                             }
                             .padding(.top, 26.0)
                             .padding(.horizontal, 20.0)
@@ -122,6 +127,21 @@ struct SurveyQuestionsView: View {
         }
         .navigationBarBackButtonHidden(true)
     }
+
+    @ViewBuilder
+    private func answerView(displayType: Shared.QuestionDisplayType) -> some View {
+        switch displayType {
+        case let dropdown as Shared.QuestionDisplayType.Dropdown:
+            DropdownAnswerView(
+                answers: dropdown.answers(),
+                input: dropdown.input().first
+            ) { _ in
+                // TODO: Implement this later
+            }
+        default:
+            Text(String(describing: displayType))
+        }
+    }
 }
 
 extension SurveyQuestionsView {
@@ -135,6 +155,7 @@ extension SurveyQuestionsView {
 
         let progress: String
         let title: String
+        let displayType: Shared.QuestionDisplayType
 
         var id: String { title }
     }
