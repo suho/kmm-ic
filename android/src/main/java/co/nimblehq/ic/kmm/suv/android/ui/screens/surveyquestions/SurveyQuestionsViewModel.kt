@@ -69,7 +69,7 @@ class SurveyQuestionsViewModel(
         val uiModels = _questionContentUiModels.value.toMutableList()
         val questionIndex = questionAndAnswers.questionIndex
         val changedUiModel = uiModels[questionIndex]
-        changedUiModel.displayType.update(questionAndAnswers.answerInputs)
+        changedUiModel.displayType.input = questionAndAnswers.answerInputs
         uiModels[questionIndex] = changedUiModel
         _questionContentUiModels.value = uiModels
 

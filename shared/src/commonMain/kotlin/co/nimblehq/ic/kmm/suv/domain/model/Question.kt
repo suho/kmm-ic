@@ -29,62 +29,58 @@ sealed class QuestionDisplayType {
     abstract val answers: List<Answerable>
     abstract var input: List<AnswerInput>
 
-    fun update(newInput: List<AnswerInput>) {
-        this.input = newInput
-    }
-
     data class Intro(
-        override var answers: List<Answerable> = emptyList(),
+        override val answers: List<Answerable> = emptyList(),
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Star(
-        override var answers: List<Answerable>,
+        override val answers: List<Answerable>,
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Heart(
-        override var answers: List<Answerable>,
+        override val answers: List<Answerable>,
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Smiley(
-        override var answers: List<Answerable>,
+        override val answers: List<Answerable>,
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Choice(
-        override var answers: List<Answerable>,
+        override val answers: List<Answerable>,
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Nps(
-        override var answers: List<Answerable>,
+        override val answers: List<Answerable>,
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Textarea(
-        override var answers: List<Answerable>,
+        override val answers: List<Answerable>,
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Textfield(
-        override var answers: List<Answerable>,
+        override val answers: List<Answerable>,
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Dropdown(
-        override var answers: List<Answerable>,
+        override val answers: List<Answerable>,
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Outro(
-        override var answers: List<Answerable> = emptyList(),
+        override val answers: List<Answerable> = emptyList(),
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 
     data class Unsupported(
-        override var answers: List<Answerable> = emptyList(),
+        override val answers: List<Answerable> = emptyList(),
         override var input: List<AnswerInput> = emptyList()
     ) : QuestionDisplayType()
 }
