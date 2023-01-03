@@ -26,7 +26,7 @@ data class Question(
 
 sealed class QuestionDisplayType {
 
-    abstract var answers: List<Answerable>
+    abstract val answers: List<Answerable>
     abstract var input: List<AnswerInput>
 
     fun update(newInput: List<AnswerInput>) {
