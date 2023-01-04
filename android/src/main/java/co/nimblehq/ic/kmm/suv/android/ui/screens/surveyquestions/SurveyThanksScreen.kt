@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
+import co.nimblehq.ic.kmm.suv.android.ui.theme.GrayBlack
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -37,12 +38,11 @@ fun SurveyThanksScreen(onFinishedAnimation: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(GrayBlack)
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
-                .statusBarsPadding()
                 .align(Alignment.Center)
                 .padding(horizontal = AppTheme.dimensions.mediumPadding)
         ) {
