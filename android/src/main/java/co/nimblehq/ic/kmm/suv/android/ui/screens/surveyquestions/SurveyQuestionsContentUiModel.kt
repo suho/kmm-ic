@@ -10,6 +10,7 @@ data class SurveyQuestionsContentUiModel(
 
 data class QuestionContentUiModel(
     val progress: String,
+    val id: String,
     val title: String,
     val displayType: QuestionDisplayType
 )

@@ -24,70 +24,52 @@ data class Question(
         get() = answers.sortedBy { it.displayOrder }
 }
 
-sealed class QuestionDisplayType {
+sealed class QuestionDisplayType(
+    open val answers: List<Answerable> = emptyList(),
+    open var input: List<AnswerInput> = emptyList()
+) {
 
-    abstract val answers: List<Answerable>
-    abstract var input: List<AnswerInput>
-
-    data class Intro(
-        override val answers: List<Answerable> = emptyList(),
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+    object Intro : QuestionDisplayType()
 
     data class Star(
-        override val answers: List<Answerable>,
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
 
     data class Heart(
-        override val answers: List<Answerable>,
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
 
     data class Smiley(
-        override val answers: List<Answerable>,
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
 
     data class Choice(
-        override val answers: List<Answerable>,
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
 
     data class Nps(
-        override val answers: List<Answerable>,
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
 
     data class Textarea(
-        override val answers: List<Answerable>,
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
 
     data class Textfield(
-        override val answers: List<Answerable>,
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
 
     data class Dropdown(
-        override val answers: List<Answerable>,
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
 
-    data class Outro(
-        override val answers: List<Answerable> = emptyList(),
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
-
-    data class Unsupported(
-        override val answers: List<Answerable> = emptyList(),
-        override var input: List<AnswerInput> = emptyList()
-    ) : QuestionDisplayType()
+    object Outro : QuestionDisplayType()
+    object Unsupported : QuestionDisplayType()
 }
 
 fun Question.displayType(): QuestionDisplayType {
     return when (displayType) {
-        QUESTION_DISPLAY_TYPE_INTRO -> QuestionDisplayType.Intro()
+        QUESTION_DISPLAY_TYPE_INTRO -> QuestionDisplayType.Intro
         QUESTION_DISPLAY_TYPE_STAR -> QuestionDisplayType.Star(answers = sortedAnswers)
         QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart(answers = sortedAnswers)
         QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley(answers = sortedAnswers)
@@ -96,7 +78,7 @@ fun Question.displayType(): QuestionDisplayType {
         QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(answers = sortedAnswers)
         QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield(answers = sortedAnswers)
         QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown(answers = sortedAnswers)
-        QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro()
-        else -> QuestionDisplayType.Unsupported()
+        QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro
+        else -> QuestionDisplayType.Unsupported
     }
 }

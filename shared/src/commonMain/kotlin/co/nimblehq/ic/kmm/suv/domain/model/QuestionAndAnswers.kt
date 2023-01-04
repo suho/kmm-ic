@@ -1,7 +1,7 @@
 package co.nimblehq.ic.kmm.suv.domain.model
 
 data class QuestionAndAnswers(
-    val questionIndex: Int,
+    val questionId: String,
     val answerInputs: List<AnswerInput>
 )
 

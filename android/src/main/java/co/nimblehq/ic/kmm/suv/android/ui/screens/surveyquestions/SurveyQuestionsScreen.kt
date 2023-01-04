@@ -278,7 +278,12 @@ private fun SurveyQuestionsContent(
                 Answer(
                     type = uiModel.displayType,
                     onAnswersChange = {
-                        onAnswerChange(QuestionAndAnswers(questionIndex = index, answerInputs = it))
+                        onAnswerChange(
+                            QuestionAndAnswers(
+                                questionId = uiModel.id,
+                                answerInputs = it
+                            )
+                        )
                     },
                     questionIndex = index
                 )
@@ -431,9 +436,7 @@ private fun Answer(
             },
             input = type.input.elementAtOrNull(0)
         )
-        is QuestionDisplayType.Intro -> Unit
-        is QuestionDisplayType.Outro -> Unit
-        is QuestionDisplayType.Unsupported -> Unit
+        else -> Unit
     }
 }
 
@@ -448,13 +451,15 @@ fun SurveyQuestionsScreenPreview(
             backgroundUrl = "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_l",
             questions = listOf(
                 QuestionContentUiModel(
-                    "1/2",
-                    "What your name?",
+                    progress = "1/2",
+                    id = "1",
+                    title = "What your name?",
                     displayType = QuestionDisplayType.Intro()
                 ),
                 QuestionContentUiModel(
-                    "2/2",
-                    "How old are you?",
+                    progress = "2/2",
+                    id = "2",
+                    title = "How old are you?",
                     displayType = QuestionDisplayType.Intro()
                 )
             )

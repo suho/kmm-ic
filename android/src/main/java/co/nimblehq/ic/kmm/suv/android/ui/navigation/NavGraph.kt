@@ -75,7 +75,7 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         }
         composable(AppDestination.SurveyThanks) {
             SurveyThanksScreen(onFinishedAnimation = {
-                navController.navigateUp(AppDestination.Home)
+                navController.popBackStack(AppDestination.Home)
             })
         }
     }

@@ -34,7 +34,7 @@ class SurveyQuestionsViewModel(
     val submittingAnswerState: StateFlow<SubmittingAnswerState> =
         _submittingAnswerState.asStateFlow()
 
-    private var _survey: Survey? = null
+    private var survey: Survey? = null
     private var surveySubmission: SurveySubmission? = null
 
     fun loadSurveyDetail(surveyQuestionsArgument: SurveyQuestionsArgument?) {
@@ -47,13 +47,14 @@ class SurveyQuestionsViewModel(
                         showError(e.message)
                     }
                     .collect { survey ->
-                        _survey = survey
+                        this@SurveyQuestionsViewModel.survey = survey
                         survey.sortedQuestions()?.let { questions ->
                             val totalOfQuestions = questions.size
                             _questionContentUiModels.value =
                                 questions.mapIndexed { index, question ->
                                     QuestionContentUiModel(
                                         progress = "${index + 1}/$totalOfQuestions",
+                                        id = question.id,
                                         title = question.text,
                                         displayType = question.displayType()
                                     )
@@ -67,17 +68,16 @@ class SurveyQuestionsViewModel(
 
     fun answerQuestion(questionAndAnswers: QuestionAndAnswers) {
         val uiModels = _questionContentUiModels.value.toMutableList()
-        val questionIndex = questionAndAnswers.questionIndex
+        val questionIndex = uiModels.indexOfFirst { it.id == questionAndAnswers.questionId }
         val changedUiModel = uiModels[questionIndex]
         changedUiModel.displayType.input = questionAndAnswers.answerInputs
         uiModels[questionIndex] = changedUiModel
         _questionContentUiModels.value = uiModels
 
         // Convert answers to SurveySubmission
-        _survey?.let {
+        survey?.let { survey ->
             val questionSubmissions = questionContentUiModels.value
-                .mapIndexed { questionIndex, uiModel ->
-                    val questionId = questionId(questionIndex)
+                .map { uiModel ->
                     val answerSubmissions: List<AnswerSubmission> =
                         uiModel.displayType.input.map { input ->
                             when (input) {
@@ -89,11 +89,11 @@ class SurveyQuestionsViewModel(
                             }
                         }
                     QuestionSubmission(
-                        questionId,
+                        uiModel.id,
                         answerSubmissions
                     )
                 }
-            surveySubmission = SurveySubmission(it.id, questionSubmissions)
+            surveySubmission = SurveySubmission(survey.id, questionSubmissions)
         }
     }
 
@@ -112,12 +112,5 @@ class SurveyQuestionsViewModel(
                     }
             }
         }
-    }
-
-    private fun questionId(index: Int): String {
-        return _survey?.sortedQuestions()
-            ?.elementAtOrNull(index)
-            ?.id
-            .orEmpty()
     }
 }
