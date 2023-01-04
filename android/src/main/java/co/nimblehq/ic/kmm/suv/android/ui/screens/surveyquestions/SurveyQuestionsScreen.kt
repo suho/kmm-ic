@@ -454,13 +454,13 @@ fun SurveyQuestionsScreenPreview(
                     progress = "1/2",
                     id = "1",
                     title = "What your name?",
-                    displayType = QuestionDisplayType.Intro()
+                    displayType = QuestionDisplayType.Intro
                 ),
                 QuestionContentUiModel(
                     progress = "2/2",
                     id = "2",
                     title = "How old are you?",
-                    displayType = QuestionDisplayType.Intro()
+                    displayType = QuestionDisplayType.Intro
                 )
             )
         ),
