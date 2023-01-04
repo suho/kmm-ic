@@ -89,7 +89,6 @@ private fun HomeScreenContent(
     SwipeRefresh(
         state = rememberSwipeRefreshState(uiModel.isRefreshing),
         onRefresh = onRefresh,
-        indicator = { _, _ -> Unit },
         modifier = Modifier.fillMaxSize()
     ) {
         LazyColumn(Modifier.fillMaxHeight()) {
