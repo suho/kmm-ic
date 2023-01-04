@@ -13,14 +13,18 @@ struct SurveyDetailView: View {
     @ObservedObject var viewModel: SurveyDetailViewModel
     @EnvironmentObject private var navigator: Navigator
 
+    @State private var backgroundScale = 1.0
+
     var body: some View {
         ZStack {
             GeometryReader { proxy in
                 URLImage.urlString(viewModel.imageURLString)
                     .resizable()
                     .scaledToFill()
+                    .scaleEffect(backgroundScale, anchor: .topTrailing)
                     .frame(width: proxy.size.width, height: proxy.size.height)
                     .clipped()
+                    .animation(.linear(duration: 1), value: backgroundScale)
                     .accessibilityIdentifier(AccessibilityIdentifier.SurveyDetail.image)
             }
             .ignoresSafeArea()
@@ -76,9 +80,8 @@ struct SurveyDetailView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-    }
-
-    init(viewModel: SurveyDetailViewModel) {
-        self.viewModel = viewModel
+        .onAppear {
+            backgroundScale = 1.2
+        }
     }
 }
