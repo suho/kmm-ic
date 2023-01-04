@@ -34,15 +34,14 @@ object NpsAnswerContentDescription {
     fun nps(index: Int) = "$NPS-$index"
 }
 
-@Suppress("NAME_SHADOWING")
 @Composable
 fun NpsAnswer(
     answers: List<Answerable>,
     onInputChange: (AnswerInput) -> Unit,
     input: AnswerInput? = null
 ) {
-    var input by remember { mutableStateOf(input) }
-    val currentIndex = answers.map { it.id }.indexOf(input?.id.orEmpty())
+    var currentInput by remember { mutableStateOf(input) }
+    val currentIndex = answers.map { it.id }.indexOf(currentInput?.id.orEmpty())
     Column {
         Row(
             modifier = Modifier
@@ -54,7 +53,7 @@ fun NpsAnswer(
                 Button(
                     onClick = {
                         val newInput = AnswerInput.Select(answer.id)
-                        input = newInput
+                        currentInput = newInput
                         onInputChange(newInput)
                     },
                     colors = ButtonDefaults.buttonColors(

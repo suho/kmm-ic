@@ -31,7 +31,6 @@ object MultipleChoicesAnswerContentDescription {
     fun choice(index: Int) = "$CHOICE-$index"
 }
 
-@Suppress("NAME_SHADOWING")
 @SuppressLint("MutableCollectionMutableState")
 @Composable
 fun MultipleChoicesAnswer(
@@ -39,18 +38,18 @@ fun MultipleChoicesAnswer(
     onInputChange: (Set<AnswerInput>) -> Unit,
     input: Set<AnswerInput> = mutableSetOf()
 ) {
-    var input by remember { mutableStateOf(input) }
+    var currentInput by remember { mutableStateOf(input) }
     Column(modifier = Modifier.padding(horizontal = 80.dp)) {
         answers.forEachIndexed { index, choice ->
-            val isHighlight = input.contains(AnswerInput.Select(choice.id))
+            val isHighlight = currentInput.contains(AnswerInput.Select(choice.id))
             Button(
                 onClick = {
-                    input = if (input.contains(AnswerInput.Select(choice.id))) {
-                        input.minus(AnswerInput.Select(choice.id))
+                    currentInput = if (currentInput.contains(AnswerInput.Select(choice.id))) {
+                        currentInput.minus(AnswerInput.Select(choice.id))
                     } else {
-                        input.plus(AnswerInput.Select(choice.id))
+                        currentInput.plus(AnswerInput.Select(choice.id))
                     }
-                    onInputChange(input)
+                    onInputChange(currentInput)
                 },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color.Transparent

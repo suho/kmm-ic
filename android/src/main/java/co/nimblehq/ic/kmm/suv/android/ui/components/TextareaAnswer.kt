@@ -29,7 +29,6 @@ object TextareaAnswerContentDescription {
     const val TEXTAREA = "TEXTAREA"
 }
 
-@Suppress("NAME_SHADOWING")
 @Composable
 fun TextareaAnswer(
     answer: Answerable,
@@ -37,17 +36,17 @@ fun TextareaAnswer(
     modifier: Modifier = Modifier,
     input: AnswerInput? = null
 ) {
-    var input by remember { mutableStateOf(input) }
+    var currentInput by remember { mutableStateOf(input) }
     val focusManager = LocalFocusManager.current
 
-    LaunchedEffect(input) {
-        input?.let { onInputChange(it) }
+    LaunchedEffect(currentInput) {
+        currentInput?.let { onInputChange(it) }
     }
 
     Box(modifier = modifier) {
         TextField(
-            value = input?.getContentType()?.content.orEmpty(),
-            onValueChange = { input = AnswerInput.Content(answer.id, it) },
+            value = currentInput?.getContentType()?.content.orEmpty(),
+            onValueChange = { currentInput = AnswerInput.Content(answer.id, it) },
             placeholder = {
                 answer.placeholder.orEmpty().let {
                     Text(

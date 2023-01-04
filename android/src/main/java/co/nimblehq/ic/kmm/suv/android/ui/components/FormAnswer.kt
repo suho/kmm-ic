@@ -36,13 +36,7 @@ fun FormAnswer(
     input: List<AnswerInput> = emptyList()
 ) {
     val defaultInputs: List<AnswerInput> = answers.map { AnswerInput.Content(it.id, "") }
-    var changes by remember {
-        if (input.isEmpty()) {
-            mutableStateOf(defaultInputs)
-        } else {
-            mutableStateOf(input)
-        }
-    }
+    var changes by remember { mutableStateOf(input.ifEmpty { defaultInputs }) }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),

@@ -42,7 +42,6 @@ enum class EmojiHighlightStyle {
     LEFT_ITEMS, ONE
 }
 
-@Suppress("NAME_SHADOWING")
 @Composable
 fun EmojiRatingAnswer(
     emojis: List<@Composable () -> Unit>,
@@ -63,9 +62,11 @@ fun EmojiRatingAnswer(
             val alpha = if (isHighlighted) 1f else 0.5f
             Button(
                 onClick = {
-                    val input = AnswerInput.Select(answers.elementAtOrNull(index)?.id.orEmpty())
-                    currentInput = input
-                    onInputChange(input)
+                    val selectedInput = AnswerInput.Select(
+                        answers.elementAtOrNull(index)?.id.orEmpty()
+                    )
+                    currentInput = selectedInput
+                    onInputChange(selectedInput)
                 },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color.Transparent
@@ -103,38 +104,14 @@ fun LeftEmojiRatingAnswerPreview(
         emojis = List(5) {
             { Emoji(name = emojiName) }
         },
-        answers = listOf(
+        answers = (0 until 5).map {
             Answer(
-                id = "1",
-                text = "choice 1",
-                displayOrder = 0,
-                inputMaskPlaceholder = null
-            ),
-            Answer(
-                id = "2",
-                text = "Choice 2",
-                displayOrder = 1,
-                inputMaskPlaceholder = null
-            ),
-            Answer(
-                id = "3",
-                text = "choice 3",
-                displayOrder = 0,
-                inputMaskPlaceholder = null
-            ),
-            Answer(
-                id = "4",
-                text = "Choice 4",
-                displayOrder = 1,
-                inputMaskPlaceholder = null
-            ),
-            Answer(
-                id = "5",
-                text = "choice 5",
-                displayOrder = 0,
+                id = "${it + 1}",
+                text = "choice ${it + 1}",
+                displayOrder = it,
                 inputMaskPlaceholder = null
             )
-        ),
+        },
         onInputChange = {},
     )
 }
