@@ -11,7 +11,6 @@ import Factory
 import Nimble
 import Quick
 import Shared
-
 @testable import Surveys
 
 final class SurveyQuestionsViewModelSpec: QuickSpec {
@@ -62,7 +61,8 @@ final class SurveyQuestionsViewModelSpec: QuickSpec {
                         let questionUIModels = expectedQuestions.enumerated().map { index, question in
                             SurveyQuestionsView.QuestionUIModel(
                                 progress: "\(index + 1)/\(expectedQuestions.count)",
-                                title: question.text
+                                title: question.text,
+                                displayType: question.displayType()
                             )
                         }
                         let expectedUIModel: SurveyQuestionsView.UIModel = .init(questions: questionUIModels)
