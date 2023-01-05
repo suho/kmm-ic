@@ -1,10 +1,9 @@
 package co.nimblehq.ic.kmm.suv.android.ui.screens.surveyquestions
 
 import co.nimblehq.ic.kmm.suv.android.rule.MainCoroutinesRule
-import co.nimblehq.ic.kmm.suv.domain.model.AppError
-import co.nimblehq.ic.kmm.suv.domain.model.Question
-import co.nimblehq.ic.kmm.suv.domain.model.Survey
+import co.nimblehq.ic.kmm.suv.domain.model.*
 import co.nimblehq.ic.kmm.suv.domain.usecase.GetSurveyDetailUseCase
+import co.nimblehq.ic.kmm.suv.domain.usecase.SubmitSurveyResponseUseCase
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
@@ -23,6 +22,7 @@ class SurveyQuestionsViewModelTest {
     private lateinit var viewModel: SurveyQuestionsViewModel
 
     private val mockGetSurveyDetailUseCase: GetSurveyDetailUseCase = mockk()
+    private val mockSubmitSurveyResponseUseCase: SubmitSurveyResponseUseCase = mockk()
     private val mockSurveyQuestionsArgument = SurveyQuestionsArgument(
         id = "id",
         coverImageUrl = "coverImageUrl"
@@ -38,10 +38,23 @@ class SurveyQuestionsViewModelTest {
                 id = "firstId",
                 text = "firstQuestion",
                 displayOrder = 0,
-                displayType = "intro",
+                displayType = "star",
                 pick = "pick",
                 coverImageUrl = "coverImageUrl",
-                answers = emptyList()
+                answers = listOf(
+                    Answer(
+                        id = "1",
+                        text = "choice 1",
+                        displayOrder = 0,
+                        inputMaskPlaceholder = null
+                    ),
+                    Answer(
+                        id = "2",
+                        text = "choice 2",
+                        displayOrder = 1,
+                        inputMaskPlaceholder = null
+                    ),
+                )
             ),
             Question(
                 id = "secondId",
@@ -50,7 +63,20 @@ class SurveyQuestionsViewModelTest {
                 displayType = "intro",
                 pick = "pick",
                 coverImageUrl = "coverImageUrl",
-                answers = emptyList()
+                answers = listOf(
+                    Answer(
+                        id = "1",
+                        text = "choice 1",
+                        displayOrder = 0,
+                        inputMaskPlaceholder = null
+                    ),
+                    Answer(
+                        id = "2",
+                        text = "choice 2",
+                        displayOrder = 1,
+                        inputMaskPlaceholder = null
+                    ),
+                )
             )
         )
     )
@@ -62,7 +88,9 @@ class SurveyQuestionsViewModelTest {
     @Before
     fun setup() {
         every { mockGetSurveyDetailUseCase(any()) } returns flowOf(mockSurvey)
-        viewModel = SurveyQuestionsViewModel(mockGetSurveyDetailUseCase)
+        every { mockSubmitSurveyResponseUseCase(any()) } returns flowOf(Unit)
+        viewModel =
+            SurveyQuestionsViewModel(mockGetSurveyDetailUseCase, mockSubmitSurveyResponseUseCase)
     }
 
     @Test
@@ -94,6 +122,48 @@ class SurveyQuestionsViewModelTest {
             val expectedError = AppError("Load profile failed!")
             every { mockGetSurveyDetailUseCase(any()) } returns flow { throw expectedError }
             viewModel.loadSurveyDetail(mockSurveyQuestionsArgument)
+            advanceUntilIdle()
+
+            viewModel.errorMessage.value shouldBe expectedError.message
+        }
+
+    @Test
+    fun `When answer a question, the ui model's display type updated to reflect the input`() =
+        runTest {
+            viewModel.loadSurveyDetail(mockSurveyQuestionsArgument)
+            advanceUntilIdle()
+
+            val input = AnswerInput.Select("1")
+            viewModel.answerQuestion(QuestionAndAnswers("firstId", listOf(input)))
+            viewModel.questionContentUiModels.value[0].displayType.input.first() shouldBe input
+        }
+
+    @Test
+    fun `When submit answers successfully, the isSubmitSuccess is true as expected`() =
+        runTest {
+            viewModel.loadSurveyDetail(mockSurveyQuestionsArgument)
+            advanceUntilIdle()
+            val input = AnswerInput.Select("1")
+            viewModel.answerQuestion(QuestionAndAnswers("firstId", listOf(input)))
+
+            viewModel.submitSurveyResponse()
+            advanceUntilIdle()
+
+            viewModel.submittingAnswerState.value shouldBe SubmittingAnswerState.SUCCESS
+        }
+
+    @Test
+    fun `When submit answers failed, error message should not be null`() =
+        runTest {
+            val expectedError = AppError("Load profile failed!")
+            every { mockSubmitSurveyResponseUseCase(any()) } returns flow { throw expectedError }
+
+            viewModel.loadSurveyDetail(mockSurveyQuestionsArgument)
+            advanceUntilIdle()
+            val input = AnswerInput.Select("1")
+            viewModel.answerQuestion(QuestionAndAnswers("firstId", listOf(input)))
+
+            viewModel.submitSurveyResponse()
             advanceUntilIdle()
 
             viewModel.errorMessage.value shouldBe expectedError.message

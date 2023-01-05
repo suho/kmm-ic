@@ -35,7 +35,7 @@ class SurveyDetailScreenTest {
     }
 
     @Test
-    fun when_enter_the_home_screen__it_shows_its_ui_components() {
+    fun when_enter_the_survey_detail_screen__it_shows_its_ui_components() {
         composeRule.apply {
             onNodeWithContentDescription(BACK_BUTTON_CONTENT_DESCRIPTION).assertIsDisplayed()
             onNodeWithContentDescription(SurveyDetailContentDescription.TITLE).assertIsDisplayed()

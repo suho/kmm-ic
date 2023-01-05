@@ -12,11 +12,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import co.nimblehq.ic.kmm.suv.android.util.EmojiParameterProvider
+import co.nimblehq.ic.kmm.suv.domain.model.Answer
+import co.nimblehq.ic.kmm.suv.domain.model.AnswerInput
+import co.nimblehq.ic.kmm.suv.domain.model.Answerable
 
 const val EMOJI_THUMPS_UP = "\uD83D\uDC4D\uD83C\uDFFB" // 👍🏻
 const val EMOJI_HEART = "❤️"
@@ -27,6 +32,12 @@ const val EMOJI_NEUTRAL_FACE = "\uD83D\uDE10" // 😐
 const val EMOJI_SLIGHTLY_SMILING_FACE = "\uD83D\uDE42" // 🙂
 const val EMOJI_GRINNING_FACE_WITH_SMILING_EYES = "\uD83D\uDE04" // 😄
 
+object EmojiRatingAnswerContentDescription {
+    private const val BUTTON_EMOJI = "BUTTON_EMOJI"
+
+    fun emoji(questionIndex: Int, answerIndex: Int) = "$BUTTON_EMOJI-$questionIndex-$answerIndex"
+}
+
 enum class EmojiHighlightStyle {
     LEFT_ITEMS, ONE
 }
@@ -34,22 +45,28 @@ enum class EmojiHighlightStyle {
 @Composable
 fun EmojiRatingAnswer(
     emojis: List<@Composable () -> Unit>,
-    onIndexChange: (Int) -> Unit,
-    currentIndex: Int = -1,
-    highlightStyle: EmojiHighlightStyle = EmojiHighlightStyle.LEFT_ITEMS
+    answers: List<Answerable>,
+    onInputChange: (AnswerInput) -> Unit,
+    input: AnswerInput? = null,
+    highlightStyle: EmojiHighlightStyle = EmojiHighlightStyle.LEFT_ITEMS,
+    questionIndex: Int = 0 // TODO: For UITest, improve later
 ) {
-    var selectedIndex by remember { mutableStateOf(currentIndex) }
+    var currentInput by remember { mutableStateOf(input) }
+    val currentIndex = answers.map { it.id }.indexOf(currentInput?.id.orEmpty())
     LazyRow {
         items(emojis.size) { index ->
             val isHighlighted = when (highlightStyle) {
-                EmojiHighlightStyle.ONE -> index == selectedIndex
-                EmojiHighlightStyle.LEFT_ITEMS -> index <= selectedIndex
+                EmojiHighlightStyle.ONE -> index == currentIndex
+                EmojiHighlightStyle.LEFT_ITEMS -> index <= currentIndex
             }
             val alpha = if (isHighlighted) 1f else 0.5f
             Button(
                 onClick = {
-                    selectedIndex = index
-                    onIndexChange(index)
+                    val selectedInput = AnswerInput.Select(
+                        answers.elementAtOrNull(index)?.id.orEmpty()
+                    )
+                    currentInput = selectedInput
+                    onInputChange(selectedInput)
                 },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color.Transparent
@@ -59,6 +76,10 @@ fun EmojiRatingAnswer(
                 modifier = Modifier
                     .alpha(alpha)
                     .size(34.dp)
+                    .semantics {
+                        contentDescription =
+                            EmojiRatingAnswerContentDescription.emoji(questionIndex, index)
+                    }
             ) {
                 emojis[index]()
             }
@@ -83,7 +104,15 @@ fun LeftEmojiRatingAnswerPreview(
         emojis = List(5) {
             { Emoji(name = emojiName) }
         },
-        onIndexChange = {}
+        answers = (0 until 5).map {
+            Answer(
+                id = "${it + 1}",
+                text = "choice ${it + 1}",
+                displayOrder = it,
+                inputMaskPlaceholder = null
+            )
+        },
+        onInputChange = {},
     )
 }
 
@@ -98,7 +127,39 @@ fun OneEmojiRatingAnswerPreview() {
             EMOJI_SLIGHTLY_SMILING_FACE,
             EMOJI_GRINNING_FACE_WITH_SMILING_EYES
         ).map { { Emoji(name = it) } },
-        onIndexChange = {},
+        answers = listOf(
+            Answer(
+                id = "1",
+                text = "choice 1",
+                displayOrder = 0,
+                inputMaskPlaceholder = null
+            ),
+            Answer(
+                id = "2",
+                text = "Choice 2",
+                displayOrder = 1,
+                inputMaskPlaceholder = null
+            ),
+            Answer(
+                id = "3",
+                text = "choice 3",
+                displayOrder = 0,
+                inputMaskPlaceholder = null
+            ),
+            Answer(
+                id = "4",
+                text = "Choice 4",
+                displayOrder = 1,
+                inputMaskPlaceholder = null
+            ),
+            Answer(
+                id = "5",
+                text = "choice 5",
+                displayOrder = 0,
+                inputMaskPlaceholder = null
+            )
+        ),
+        onInputChange = {},
         highlightStyle = EmojiHighlightStyle.ONE
     )
 }

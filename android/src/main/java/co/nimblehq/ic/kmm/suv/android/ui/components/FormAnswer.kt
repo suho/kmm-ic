@@ -11,36 +11,56 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
+import co.nimblehq.ic.kmm.suv.domain.model.Answer
+import co.nimblehq.ic.kmm.suv.domain.model.AnswerInput
+import co.nimblehq.ic.kmm.suv.domain.model.Answerable
+import co.nimblehq.ic.kmm.suv.domain.model.getContentType
 
-typealias Placeholder = String
+object FormAnswerContentDescription {
+    private const val TEXT_FIELD = "TEXT_FIELD"
+
+    fun field(index: Int) = "$TEXT_FIELD-$index"
+}
 
 @Composable
 fun FormAnswer(
-    placeholders: List<Placeholder>,
-    onTextChange: (Pair<Int, String>) -> Unit,
-    modifier: Modifier = Modifier
+    answers: List<Answerable>,
+    onInputChange: (List<AnswerInput>) -> Unit,
+    modifier: Modifier = Modifier,
+    input: List<AnswerInput> = emptyList()
 ) {
+    val defaultInputs: List<AnswerInput> = answers.map { AnswerInput.Content(it.id, "") }
+    var changes by remember { mutableStateOf(input.ifEmpty { defaultInputs }) }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier
     ) {
-        placeholders.forEachIndexed { index, placeholder ->
-            var value by remember { mutableStateOf("") }
+        answers.forEachIndexed { index, answer ->
+            var value by remember {
+                mutableStateOf(changes.elementAtOrNull(index)?.getContentType()?.content.orEmpty())
+            }
             val focusManager = LocalFocusManager.current
             TextField(
                 value = value,
                 onValueChange = {
                     value = it
-                    onTextChange(index to it)
+                    val newInput = AnswerInput.Content(answer.id, it)
+                    val newChanges = changes.toMutableList()
+                    newChanges[index] = newInput
+                    changes = newChanges
+                    onInputChange(newChanges)
                 },
                 singleLine = true,
                 placeholder = {
                     Text(
-                        text = placeholder,
+                        text = answer.placeholder.orEmpty(),
                         style = Typography.subtitle1
                     )
                 },
@@ -51,6 +71,9 @@ fun FormAnswer(
                     .size(AppTheme.dimensions.defaultComponentHeight)
                     .padding(start = 24.dp, end = 24.dp)
                     .clip(AppTheme.shapes.large)
+                    .semantics {
+                        contentDescription = FormAnswerContentDescription.field(index)
+                    }
             )
         }
     }
@@ -72,7 +95,20 @@ private fun formTextFieldColors(isEmpty: Boolean): TextFieldColors =
 @Composable
 fun FormAnswerPreview() {
     FormAnswer(
-        placeholders = listOf("Email", "Password"),
-        onTextChange = {}
+        answers = listOf(
+            Answer(
+                id = "1",
+                text = "email",
+                displayOrder = 0,
+                inputMaskPlaceholder = "Email"
+            ),
+            Answer(
+                id = "2",
+                text = "password",
+                displayOrder = 1,
+                inputMaskPlaceholder = "Password"
+            )
+        ),
+        onInputChange = {}
     )
 }

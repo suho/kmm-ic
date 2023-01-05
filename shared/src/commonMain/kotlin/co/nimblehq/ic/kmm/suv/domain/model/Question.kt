@@ -10,7 +10,6 @@ const val QUESTION_DISPLAY_TYPE_TEXTAREA = "textarea"
 const val QUESTION_DISPLAY_TYPE_TEXTFIELD = "textfield"
 const val QUESTION_DISPLAY_TYPE_DROPDOWN = "dropdown"
 const val QUESTION_DISPLAY_TYPE_OUTRO = "outro"
-const val QUESTION_DISPLAY_TYPE_UNSUPPORTED = "unsupported"
 
 data class Question(
     val id: String,
@@ -21,27 +20,49 @@ data class Question(
     val coverImageUrl: String,
     val answers: List<Answer>
 ) {
-    private val sortedAnswers: List<Answer>
+    val sortedAnswers: List<Answer>
         get() = answers.sortedBy { it.displayOrder }
-
-    val answerTexts: List<String>
-        get() = sortedAnswers.map { it.text.orEmpty() }
-
-    val answerPlaceholders: List<String>
-        get() = sortedAnswers.map { it.inputMaskPlaceholder.orEmpty() }
 }
 
-sealed class QuestionDisplayType {
+sealed class QuestionDisplayType(
+    open val answers: List<Answerable> = emptyList(),
+    open var input: List<AnswerInput> = emptyList()
+) {
 
     object Intro : QuestionDisplayType()
-    object Star : QuestionDisplayType()
-    object Heart : QuestionDisplayType()
-    object Smiley : QuestionDisplayType()
-    data class Choice(val answers: List<String>) : QuestionDisplayType()
-    object Nps : QuestionDisplayType()
-    data class Textarea(val placeholder: String) : QuestionDisplayType()
-    data class Textfield(val placeholders: List<String>) : QuestionDisplayType()
-    data class Dropdown(val answers: List<String>) : QuestionDisplayType()
+
+    data class Star(
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
+
+    data class Heart(
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
+
+    data class Smiley(
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
+
+    data class Choice(
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
+
+    data class Nps(
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
+
+    data class Textarea(
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
+
+    data class Textfield(
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
+
+    data class Dropdown(
+        override val answers: List<Answerable>
+    ) : QuestionDisplayType(answers = answers)
+
     object Outro : QuestionDisplayType()
     object Unsupported : QuestionDisplayType()
 }
@@ -49,14 +70,14 @@ sealed class QuestionDisplayType {
 fun Question.displayType(): QuestionDisplayType {
     return when (displayType) {
         QUESTION_DISPLAY_TYPE_INTRO -> QuestionDisplayType.Intro
-        QUESTION_DISPLAY_TYPE_STAR -> QuestionDisplayType.Star
-        QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart
-        QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley
-        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(answerTexts)
-        QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps
-        QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(answerPlaceholders.first())
-        QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield(answerTexts)
-        QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown(answerTexts)
+        QUESTION_DISPLAY_TYPE_STAR -> QuestionDisplayType.Star(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_HEART -> QuestionDisplayType.Heart(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_SMILEY -> QuestionDisplayType.Smiley(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_CHOICE -> QuestionDisplayType.Choice(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_NPS -> QuestionDisplayType.Nps(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_TEXTAREA -> QuestionDisplayType.Textarea(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_TEXTFIELD -> QuestionDisplayType.Textfield(answers = sortedAnswers)
+        QUESTION_DISPLAY_TYPE_DROPDOWN -> QuestionDisplayType.Dropdown(answers = sortedAnswers)
         QUESTION_DISPLAY_TYPE_OUTRO -> QuestionDisplayType.Outro
         else -> QuestionDisplayType.Unsupported
     }
