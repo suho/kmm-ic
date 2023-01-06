@@ -32,6 +32,9 @@ class HomeViewModel(
     private val _surveysUiModel: MutableStateFlow<HomeSurveysUiModel?> = MutableStateFlow(null)
     val surveysUiModel: StateFlow<HomeSurveysUiModel?> = _surveysUiModel.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
     private lateinit var surveys: List<Survey>
     private var currentSurveyIndex: Int = 0
 
@@ -87,7 +90,7 @@ class HomeViewModel(
     }
 
     private fun loadSurveys(isRefresh: Boolean = false) {
-        showLoading()
+        if (isRefresh) _isRefreshing.value = true else showLoading()
         viewModelScope.launch {
             // TODO: Improve this when we have paging implementation
             getSurveysUseCase(1, 5, isRefresh)
@@ -101,7 +104,7 @@ class HomeViewModel(
                         updateCurrentSurvey()
                     }
                 }
-            hideLoading()
+            if (isRefresh) _isRefreshing.value = false else hideLoading()
         }
     }
 

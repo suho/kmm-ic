@@ -23,6 +23,7 @@ fun HomeScreen(
     val currentDate by viewModel.currentDate.collectAsState()
     val avatarUrl by viewModel.avatarUrlString.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val surveysUiModel by viewModel.surveysUiModel.collectAsState()
 
@@ -39,7 +40,7 @@ fun HomeScreen(
     }
 
     val uiModel = HomeUiModel(
-        isRefreshing = isLoading,
+        isRefreshing = isRefreshing,
         HomeHeaderUiModel(
             currentDate,
             avatarUrl,
