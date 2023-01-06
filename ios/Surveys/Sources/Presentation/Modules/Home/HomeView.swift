@@ -11,6 +11,7 @@ import SwiftUI
 struct HomeView: View {
 
     @StateObject var viewModel = HomeViewModel()
+    @EnvironmentObject private var navigator: Navigator
 
     var body: some View {
         switch viewModel.state {
@@ -43,7 +44,13 @@ struct HomeView: View {
                     configuration: .init(
                         bottomPadding: proxy.safeAreaInsets.bottom
                     ),
-                    isLoading: isLoading
+                    isLoading: isLoading,
+                    detailButtonDidPress: {
+                        navigator.show(screen: .surveyDetail(viewModel: viewModel.surveyDetailViewModel), by: .push)
+                    },
+                    currentPageDidChange: {
+                        viewModel.currentPageDidChange($0)
+                    }
                 )
                 VStack {
                     HomeHeaderView(

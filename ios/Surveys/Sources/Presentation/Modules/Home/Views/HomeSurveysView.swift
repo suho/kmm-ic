@@ -9,6 +9,8 @@
 import ShimmerView
 import SwiftUI
 
+// MARK: - HomeSurveysView
+
 struct HomeSurveysView: View {
 
     @State private var currentPage: Int = 0
@@ -16,9 +18,13 @@ struct HomeSurveysView: View {
     private let configuration: UIConfiguration
     private let model: UIModel
     private let isLoading: Bool
+    private let detailButtonDidPress: () -> Void
+    private let currentPageDidChange: (Int) -> Void
 
     private var currentItem: SurveyUIModel? {
-        guard model.surveys.indices.contains(currentPage) else { return nil }
+        guard model.surveys.indices.contains(currentPage) else {
+            return nil
+        }
         return model.surveys[currentPage]
     }
 
@@ -35,13 +41,7 @@ struct HomeSurveysView: View {
             }
             .ignoresSafeArea()
 
-            Rectangle()
-                .foregroundColor(.clear)
-                .background(
-                    LinearGradient(colors: [.clear, .black], startPoint: .top, endPoint: .bottom)
-                )
-                .opacity(0.6)
-                .ignoresSafeArea()
+            LinearGradientView()
 
             VStack(alignment: .leading) {
                 Spacer()
@@ -72,7 +72,7 @@ struct HomeSurveysView: View {
                         Spacer()
                         if item.isActive {
                             Button {
-                                // TODO: Handling action later
+                                detailButtonDidPress()
                             } label: {
                                 Asset.detailButton.image
                                     .resizable()
@@ -98,10 +98,12 @@ struct HomeSurveysView: View {
             case .left where currentPage > 0:
                 withAnimation(.linear(duration: 0.25)) {
                     self.currentPage -= 1
+                    self.currentPageDidChange(currentPage)
                 }
             case .right where currentPage < model.surveys.count - 1:
                 withAnimation(.linear(duration: 0.25)) {
                     self.currentPage += 1
+                    self.currentPageDidChange(currentPage)
                 }
             default: break
             }
@@ -143,10 +145,18 @@ struct HomeSurveysView: View {
         }
     }
 
-    init(model: UIModel, configuration: UIConfiguration, isLoading: Bool) {
+    init(
+        model: UIModel,
+        configuration: UIConfiguration,
+        isLoading: Bool,
+        detailButtonDidPress: @escaping () -> Void,
+        currentPageDidChange: @escaping (Int) -> Void
+    ) {
         self.model = model
         self.configuration = configuration
         self.isLoading = isLoading
+        self.detailButtonDidPress = detailButtonDidPress
+        self.currentPageDidChange = currentPageDidChange
     }
 }
 
@@ -171,9 +181,15 @@ extension HomeSurveysView {
     }
 }
 
+// MARK: - HomeSurveysView.UIModel + Equatable
+
 extension HomeSurveysView.UIModel: Equatable {}
 
+// MARK: - HomeSurveysView.SurveyUIModel + Equatable
+
 extension HomeSurveysView.SurveyUIModel: Equatable {}
+
+// MARK: - HomeSurveysView_Previews
 
 struct HomeSurveysView_Previews: PreviewProvider {
 
@@ -196,13 +212,15 @@ struct HomeSurveysView_Previews: PreviewProvider {
                     title: "21 on Rajah",
                     description: "We'd love to hear from you!",
                     isActive: true,
-                    imageURLString: "https://dhdbhh0jsld0o.cloudfront.net/m/0221e768b99dc3576210_l"
+                    imageURLString: "https://dhdbhh0jsld0o.cloudfront.net/m/287db81c5e4242412cc0_l"
                 )
             ]),
             configuration: .init(
                 bottomPadding: 54.0
             ),
-            isLoading: false
+            isLoading: false,
+            detailButtonDidPress: {},
+            currentPageDidChange: { _ in }
         )
         .frame(width: UIScreen.main.bounds.width)
         .edgesIgnoringSafeArea(.all)
