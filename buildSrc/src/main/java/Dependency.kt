@@ -30,6 +30,7 @@ object Dependency {
     const val ACCOMPANIST_PLACEHOLDER =
         "com.google.accompanist:accompanist-placeholder:${Version.ACCOMPANIST}"
     const val ACCOMPANIST_PAGER = "com.google.accompanist:accompanist-pager:${Version.ACCOMPANIST}"
+    const val COMPOSE_LOTTIE = "com.airbnb.android:lottie-compose:${Version.LOTTIE}"
 
     // Kotlinx
     const val COROUTINES_CORE =

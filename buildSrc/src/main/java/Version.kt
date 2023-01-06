@@ -27,6 +27,7 @@ object Version {
     const val CONSTRAINT_LAYOUT_COMPOSE = "1.0.1"
     const val COIL_COMPOSE = "2.2.2"
     const val ACCOMPANIST = "0.25.1"
+    const val LOTTIE = "5.2.0"
 
     const val KOIN = "3.2.0"
     const val KOIN_ANDROID = "3.3.0"
