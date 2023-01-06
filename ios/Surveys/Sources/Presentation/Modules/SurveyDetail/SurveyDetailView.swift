@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+// MARK: - SurveyDetailView
+
 struct SurveyDetailView: View {
 
     @ObservedObject var viewModel: SurveyDetailViewModel
@@ -29,13 +31,7 @@ struct SurveyDetailView: View {
             }
             .ignoresSafeArea()
 
-            Rectangle()
-                .foregroundColor(.clear)
-                .background(
-                    LinearGradient(colors: [.clear, .black], startPoint: .top, endPoint: .bottom)
-                )
-                .opacity(0.6)
-                .ignoresSafeArea()
+            LinearGradientView()
 
             VStack(alignment: .leading) {
                 Text(viewModel.title)

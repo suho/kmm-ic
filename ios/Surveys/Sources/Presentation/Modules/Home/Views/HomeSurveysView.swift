@@ -9,6 +9,8 @@
 import ShimmerView
 import SwiftUI
 
+// MARK: - HomeSurveysView
+
 struct HomeSurveysView: View {
 
     @State private var currentPage: Int = 0
@@ -20,7 +22,9 @@ struct HomeSurveysView: View {
     private let currentPageDidChange: (Int) -> Void
 
     private var currentItem: SurveyUIModel? {
-        guard model.surveys.indices.contains(currentPage) else { return nil }
+        guard model.surveys.indices.contains(currentPage) else {
+            return nil
+        }
         return model.surveys[currentPage]
     }
 
@@ -37,13 +41,7 @@ struct HomeSurveysView: View {
             }
             .ignoresSafeArea()
 
-            Rectangle()
-                .foregroundColor(.clear)
-                .background(
-                    LinearGradient(colors: [.clear, .black], startPoint: .top, endPoint: .bottom)
-                )
-                .opacity(0.6)
-                .ignoresSafeArea()
+            LinearGradientView()
 
             VStack(alignment: .leading) {
                 Spacer()
@@ -183,9 +181,15 @@ extension HomeSurveysView {
     }
 }
 
+// MARK: - HomeSurveysView.UIModel + Equatable
+
 extension HomeSurveysView.UIModel: Equatable {}
 
+// MARK: - HomeSurveysView.SurveyUIModel + Equatable
+
 extension HomeSurveysView.SurveyUIModel: Equatable {}
+
+// MARK: - HomeSurveysView_Previews
 
 struct HomeSurveysView_Previews: PreviewProvider {
 
