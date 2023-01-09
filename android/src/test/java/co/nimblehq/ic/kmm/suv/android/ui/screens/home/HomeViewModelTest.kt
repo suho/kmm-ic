@@ -92,6 +92,29 @@ class HomeViewModelTest {
         }
 
     @Test
+    fun `When load profile and refresh survey refresh successfully, the avatar url should not be null and the survey ui model should not be null`() =
+        runTest {
+            viewModel.loadProfileAndSurveys(isRefresh = true)
+            advanceUntilIdle()
+
+            viewModel.avatarUrlString.value shouldBe mockUser.avatarUrl
+
+            verifyCurrentSurveyPage(mockFirstSurvey)
+            verifyTotalPagesAndIndex(2, 0)
+        }
+
+    @Test
+    fun `When load profile and refresh survey refresh successfully, isRefreshing should change from false to true`() =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher())
+            viewModel.loadProfileAndSurveys(isRefresh = true)
+
+            viewModel.isRefreshing.value shouldBe true
+            advanceUntilIdle()
+            viewModel.isRefreshing.value shouldBe false
+        }
+
+    @Test
     fun `When load profile failed, error message should not be null`() = runTest {
         val expectedError = AppError("Load profile failed!")
         every { mockGetProfileUseCase() } returns flow { throw expectedError }
