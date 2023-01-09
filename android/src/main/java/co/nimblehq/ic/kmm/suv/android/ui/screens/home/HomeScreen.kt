@@ -1,14 +1,9 @@
 package co.nimblehq.ic.kmm.suv.android.ui.screens.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,17 +11,24 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import co.nimblehq.ic.kmm.suv.android.ui.components.ErrorAlertDialog
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.views.*
 import co.nimblehq.ic.kmm.suv.android.util.LoadingParameterProvider
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
+fun HomeScreen(
+    viewModel: HomeViewModel = getViewModel(),
+    onSurveyDetailClick: (SurveyArgument) -> Unit = {}
+) {
     val currentDate by viewModel.currentDate.collectAsState()
     val avatarUrl by viewModel.avatarUrlString.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val surveysUiModel by viewModel.surveysUiModel.collectAsState()
 
     LaunchedEffect(Unit) {
+        // TODO: Improve re-call API logic later
         viewModel.loadProfileAndSurveys()
     }
 
@@ -38,6 +40,7 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
     }
 
     val uiModel = HomeUiModel(
+        isRefreshing = isRefreshing,
         HomeHeaderUiModel(
             currentDate,
             avatarUrl,
@@ -61,31 +64,54 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
                 }
                 else -> {}
             }
+        },
+        onSurveyDetailClick = {
+            onSurveyDetailClick(viewModel.getCurrentSurveyArgument())
+        },
+        onRefresh = {
+            viewModel.loadProfileAndSurveys(isRefresh = true)
         }
     )
 }
 
 private data class HomeUiModel(
+    val isRefreshing: Boolean,
     val headerUiModel: HomeHeaderUiModel,
     val contentUiModel: HomeContentUiModel
 )
 
 @Composable
-private fun HomeScreenContent(uiModel: HomeUiModel, onSwipe: (SwipeDirection) -> Unit = {}) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
+private fun HomeScreenContent(
+    uiModel: HomeUiModel,
+    onSwipe: (SwipeDirection) -> Unit = {},
+    onSurveyDetailClick: () -> Unit = {},
+    onRefresh: () -> Unit = {}
+) {
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(uiModel.isRefreshing),
+        onRefresh = onRefresh,
+        modifier = Modifier.fillMaxSize()
     ) {
-        HomeSurveysView(
-            uiModel.contentUiModel,
-            onSwipe
-        )
-        Column(
-            modifier = Modifier
-                .statusBarsPadding()
-        ) {
-            HomeHeaderView(uiModel.headerUiModel)
+        LazyColumn(Modifier.fillMaxHeight()) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillParentMaxHeight()
+                        .background(Color.Black)
+                ) {
+                    HomeSurveysView(
+                        uiModel.contentUiModel,
+                        onSwipe,
+                        onSurveyDetailClick
+                    )
+                    Column(
+                        modifier = Modifier
+                            .statusBarsPadding()
+                    ) {
+                        HomeHeaderView(uiModel.headerUiModel)
+                    }
+                }
+            }
         }
     }
 }
@@ -97,6 +123,7 @@ fun HomeScreenContentPreview(
 ) {
     HomeScreenContent(
         HomeUiModel(
+            isRefreshing = false,
             headerUiModel = HomeHeaderUiModel(
                 "TUESDAY, NOVEMBER 8",
                 "image_url",

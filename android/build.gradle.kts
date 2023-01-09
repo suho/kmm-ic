@@ -2,6 +2,7 @@ plugins {
     id(Plugin.ANDROID_APPLICATION)
     id(Plugin.GOOGLE_SERVICE)
     kotlin(Plugin.ANDROID)
+    id(Plugin.PARCELIZE)
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -99,6 +100,11 @@ dependencies {
     implementation(Dependency.VIEW_MODEL_COMPOSE)
     implementation(Dependency.COIL_COMPOSE)
     implementation(Dependency.ACCOMPANIST_PLACEHOLDER)
+    implementation(Dependency.ACCOMPANIST_PAGER)
+    implementation(Dependency.ACCOMPANIST_SWIPE_REFRESH)
+    implementation(Dependency.COMPOSE_CONSTRAINT_LAYOUT)
+    implementation(Dependency.COMPOSE_UI_UTIL)
+    implementation(Dependency.COMPOSE_LOTTIE)
 
     // Koin
     implementation(Dependency.KOIN_CORE)

@@ -35,8 +35,22 @@ class HomeViewModelTest {
     private val mockGetSurveysUseCase: GetSurveysUseCase = mockk()
     private val mockDateTime: DateTime = mockk()
     private val mockUser = User("email", "name", "avatarUrl")
-    private val mockFirstSurvey = Survey("firstTitle", "firstDescription", true, "coverImageUrl")
-    private val mockSecondSurvey = Survey("secondTitle", "secondTitle", true, "coverImageUrl")
+    private val mockFirstSurvey = Survey(
+        "id",
+        "firstTitle",
+        "firstDescription",
+        true,
+        "coverImageUrl",
+        emptyList()
+    )
+    private val mockSecondSurvey = Survey(
+        "id",
+        "secondTitle",
+        "secondTitle",
+        true,
+        "coverImageUrl",
+        emptyList()
+    )
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -46,7 +60,7 @@ class HomeViewModelTest {
     fun setup() {
         every { mockDateTime.today() } returns LocalDate(2022, 11, 8)
         every { mockGetProfileUseCase() } returns flowOf(mockUser)
-        every { mockGetSurveysUseCase(any(), any()) } returns flowOf(
+        every { mockGetSurveysUseCase(any(), any(), any()) } returns flowOf(
             listOf(
                 mockFirstSurvey,
                 mockSecondSurvey
@@ -73,8 +87,31 @@ class HomeViewModelTest {
 
             viewModel.avatarUrlString.value shouldBe mockUser.avatarUrl
 
-            testCurrentSurveyPage(mockFirstSurvey)
-            testTotalPagesAndIndex(2, 0)
+            verifyCurrentSurveyPage(mockFirstSurvey)
+            verifyTotalPagesAndIndex(2, 0)
+        }
+
+    @Test
+    fun `When load profile and refresh survey refresh successfully, the avatar url should not be null and the survey ui model should not be null`() =
+        runTest {
+            viewModel.loadProfileAndSurveys(isRefresh = true)
+            advanceUntilIdle()
+
+            viewModel.avatarUrlString.value shouldBe mockUser.avatarUrl
+
+            verifyCurrentSurveyPage(mockFirstSurvey)
+            verifyTotalPagesAndIndex(2, 0)
+        }
+
+    @Test
+    fun `When load profile and refresh survey refresh successfully, isRefreshing should change from false to true`() =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher())
+            viewModel.loadProfileAndSurveys(isRefresh = true)
+
+            viewModel.isRefreshing.value shouldBe true
+            advanceUntilIdle()
+            viewModel.isRefreshing.value shouldBe false
         }
 
     @Test
@@ -90,7 +127,7 @@ class HomeViewModelTest {
     @Test
     fun `When load surveys failed, error message should not be null`() = runTest {
         val expectedError = AppError("Load surveys failed!")
-        every { mockGetSurveysUseCase(any(), any()) } returns flow { throw expectedError }
+        every { mockGetSurveysUseCase(any(), any(), any()) } returns flow { throw expectedError }
         viewModel.loadProfileAndSurveys()
         advanceUntilIdle()
 
@@ -113,8 +150,8 @@ class HomeViewModelTest {
         advanceUntilIdle()
         viewModel.showNextSurvey()
 
-        testCurrentSurveyPage(mockSecondSurvey)
-        testTotalPagesAndIndex(2, 1)
+        verifyCurrentSurveyPage(mockSecondSurvey)
+        verifyTotalPagesAndIndex(2, 1)
     }
 
     @Test
@@ -123,14 +160,28 @@ class HomeViewModelTest {
         advanceUntilIdle()
 
         viewModel.showNextSurvey()
-        testTotalPagesAndIndex(2, 1)
+        verifyTotalPagesAndIndex(2, 1)
 
         viewModel.showPreviousSurvey()
-        testCurrentSurveyPage(mockFirstSurvey)
-        testTotalPagesAndIndex(2, 0)
+        verifyCurrentSurveyPage(mockFirstSurvey)
+        verifyTotalPagesAndIndex(2, 0)
     }
 
-    private fun testCurrentSurveyPage(survey: Survey) {
+    @Test
+    fun `When get current survey argument, it should return the right survey argument`() =
+        runTest {
+            viewModel.loadProfileAndSurveys()
+            advanceUntilIdle()
+
+            val firstCurrentSurveyArgument = viewModel.getCurrentSurveyArgument()
+            verifyCurrentSurveyArgument(firstCurrentSurveyArgument, mockFirstSurvey)
+
+            viewModel.showNextSurvey()
+            val secondCurrentSurveyArgument = viewModel.getCurrentSurveyArgument()
+            verifyCurrentSurveyArgument(secondCurrentSurveyArgument, mockSecondSurvey)
+        }
+
+    private fun verifyCurrentSurveyPage(survey: Survey) {
         viewModel.surveysUiModel.value.apply {
             this shouldNot beNull()
             this?.currentSurveyUiModel?.title shouldBe survey.title
@@ -138,11 +189,15 @@ class HomeViewModelTest {
         }
     }
 
-    private fun testTotalPagesAndIndex(totalPages: Int, currentIndex: Int) {
+    private fun verifyTotalPagesAndIndex(totalPages: Int, currentIndex: Int) {
         viewModel.surveysUiModel.value.apply {
             this shouldNot beNull()
             this?.totalPages shouldBe totalPages
             this?.currentPageIndex shouldBe currentIndex
         }
+    }
+
+    private fun verifyCurrentSurveyArgument(surveyArgument: SurveyArgument, survey: Survey) {
+        surveyArgument shouldBe survey.run { SurveyArgument(id, title, description, coverImageUrl) }
     }
 }

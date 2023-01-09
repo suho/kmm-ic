@@ -22,7 +22,21 @@ final class HomeViewModel: ObservableObject {
     @Injected(Container.dateTime) private var dateTime: DateTimeProtocol
     @Injected(Container.dateTimeFormatter) private var dateTimeFormatter: DateTimeFormatterProtocol
 
+    private var currentPage: Int = 0
+    private var surveys: [Survey] = []
+
     private var bag = Set<AnyCancellable>()
+
+    var surveyDetailViewModel: SurveyDetailViewModel {
+        let survey = surveys[currentPage]
+        let surveyArgument = SurveyArgument(
+            id: survey.id,
+            title: survey.title,
+            description: survey.description_,
+            imageURLString: survey.coverImageUrl
+        )
+        return SurveyDetailViewModel(survey: surveyArgument)
+    }
 
     init() {
         today = dateTimeFormatter
@@ -46,6 +60,7 @@ final class HomeViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] user, surveys in
                 self.let {
+                    $0.surveys = surveys
                     $0.avatarURLString = user.avatarUrl
                     $0.surveysUIModel = .init(
                         surveys: surveys.map {
@@ -61,6 +76,10 @@ final class HomeViewModel: ObservableObject {
                 }
             }
             .store(in: &bag)
+    }
+
+    func currentPageDidChange(_ currentPage: Int) {
+        self.currentPage = currentPage
     }
 }
 

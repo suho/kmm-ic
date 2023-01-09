@@ -11,10 +11,10 @@ interface UserRemoteDataSource {
     fun getProfile(): Flow<UserApiModel>
 }
 
-class UserRemoteDataSourceImpl(private val apiClient: ApiClient): UserRemoteDataSource {
+class UserRemoteDataSourceImpl(private val apiClient: ApiClient) : UserRemoteDataSource {
 
     override fun getProfile(): Flow<UserApiModel> {
-        return apiClient.body(
+        return apiClient.responseBody(
             HttpRequestBuilder().apply {
                 path("/v1/me")
                 method = HttpMethod.Get

@@ -2,7 +2,6 @@ package co.nimblehq.ic.kmm.suv.android.ui.screens.home.views
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -10,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -25,11 +23,11 @@ import androidx.compose.ui.unit.dp
 import co.nimblehq.ic.kmm.suv.android.R
 import co.nimblehq.ic.kmm.suv.android.extension.placeholder
 import co.nimblehq.ic.kmm.suv.android.ui.components.DotsIndicator
+import co.nimblehq.ic.kmm.suv.android.ui.components.ImageBackground
 import co.nimblehq.ic.kmm.suv.android.ui.screens.home.HomeContentDescription
 import co.nimblehq.ic.kmm.suv.android.ui.theme.AppTheme
 import co.nimblehq.ic.kmm.suv.android.ui.theme.Typography
 import co.nimblehq.ic.kmm.suv.android.util.LoadingParameterProvider
-import coil.compose.AsyncImage
 
 data class HomeSurveyUiModel(
     val title: String,
@@ -51,12 +49,13 @@ data class HomeContentUiModel(
 @Composable
 fun HomeSurveysView(
     uiModel: HomeContentUiModel,
-    onSwipe: (SwipeDirection) -> Unit = {}
+    onSwipe: (SwipeDirection) -> Unit = {},
+    onSurveyDetailClick: () -> Unit = {}
 ) {
     if (uiModel.isLoading) {
         HomeSurveysLoadingContent()
     } else uiModel.surveysUiModel?.let {
-        HomeSurveysContent(it, onSwipe)
+        HomeSurveysContent(it, onSwipe, onSurveyDetailClick)
     }
 }
 
@@ -68,7 +67,8 @@ enum class SwipeDirection {
 @Composable
 private fun HomeSurveysContent(
     uiModel: HomeSurveysUiModel,
-    onSwipe: (SwipeDirection) -> Unit = {}
+    onSwipe: (SwipeDirection) -> Unit = {},
+    onSurveyDetailClick: () -> Unit = {}
 ) {
     val swipeableState = rememberSwipeableState(initialValue = SwipeDirection.IDLE)
     val endAnchor = LocalDensity
@@ -96,26 +96,8 @@ private fun HomeSurveysContent(
                 orientation = Orientation.Horizontal
             )
     ) {
+        ImageBackground(uiModel.currentSurveyUiModel.imageUrl)
         Box(modifier = Modifier.fillMaxSize()) {
-            AsyncImage(
-                model = uiModel.currentSurveyUiModel.imageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.FillHeight,
-                modifier = Modifier.matchParentSize()
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Transparent,
-                            Color.Black.copy(alpha = 0.6f)
-                        )
-                    )
-                )
-        ) {
             Column(
                 verticalArrangement = Arrangement.Bottom,
                 modifier = Modifier
@@ -167,7 +149,7 @@ private fun HomeSurveysContent(
                     Spacer(modifier = Modifier.width(AppTheme.dimensions.mediumPadding))
                     Button(
                         onClick = {
-                            /*TODO: Open survey detail screen - will handle this action in another story*/
+                            onSurveyDetailClick()
                         },
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = Color.Transparent
@@ -183,7 +165,7 @@ private fun HomeSurveysContent(
                             painter = painterResource(id = R.drawable.ic_survey_detail_arrow),
                             contentDescription = null,
                             contentScale = ContentScale.FillWidth,
-                            modifier = Modifier.size(56.dp),
+                            modifier = Modifier.size(AppTheme.dimensions.defaultComponentHeight),
                         )
                     }
                 }

@@ -2,15 +2,18 @@ package co.nimblehq.ic.kmm.suv.data.repository
 
 import co.nimblehq.ic.kmm.suv.data.local.datasource.SurveyLocalDataSource
 import co.nimblehq.ic.kmm.suv.data.local.model.toSurvey
+import co.nimblehq.ic.kmm.suv.data.remote.body.SurveySubmissionApiBody
 import co.nimblehq.ic.kmm.suv.data.remote.datasource.SurveyRemoteDataSource
 import co.nimblehq.ic.kmm.suv.data.remote.model.toSurvey
 import co.nimblehq.ic.kmm.suv.data.remote.model.toSurveyRealmObject
 import co.nimblehq.ic.kmm.suv.data.remote.parameter.GetSurveysApiQueryParams
 import co.nimblehq.ic.kmm.suv.domain.model.Survey
+import co.nimblehq.ic.kmm.suv.domain.model.SurveySubmission
 import co.nimblehq.ic.kmm.suv.domain.repository.SurveyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.map
 
 private const val FIRST_PAGE_NUMBER = 1
 
@@ -24,7 +27,6 @@ class SurveyRepositoryImpl(
         pageSize: Int,
         isForceLatestData: Boolean
     ): Flow<List<Survey>> {
-        // TODO: Check this logic again when we have pull to refresh
         return flow {
             if (isForceLatestData) {
                 surveyLocalDataSource.deleteAllSurveys()
@@ -45,5 +47,13 @@ class SurveyRepositoryImpl(
 
             surveyLocalDataSource.saveSurveys(apiSurveys.map { it.toSurveyRealmObject() })
         }
+    }
+
+    override fun getSurvey(id: String): Flow<Survey> {
+        return surveyRemoteDataSource.getSurvey(id).map { it.toSurvey() }
+    }
+
+    override fun submitSurvey(submission: SurveySubmission): Flow<Unit> {
+        return surveyRemoteDataSource.submitSurvey(SurveySubmissionApiBody(submission))
     }
 }

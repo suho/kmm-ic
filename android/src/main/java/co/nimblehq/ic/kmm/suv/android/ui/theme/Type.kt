@@ -24,6 +24,10 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 28.sp
     ),
+    h6 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
+    ),
     subtitle1 = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 17.sp
@@ -32,8 +36,16 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 17.sp
     ),
+    body2 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 15.sp
+    ),
     caption = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 13.sp
-    )
+    ),
+    overline = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp
+    ),
 )
