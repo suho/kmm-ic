@@ -61,6 +61,7 @@
 		8B98711F2913CAA100BA6B99 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B98711E2913CAA100BA6B99 /* HomeHeaderView.swift */; };
 		8B98712229150DE800BA6B99 /* GetProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B98712129150DE800BA6B99 /* GetProfileUseCase.swift */; };
 		8B9871242915168900BA6B99 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9871232915168900BA6B99 /* HomeViewModel.swift */; };
+		8BA24761296BFE84005C73E0 /* EmojiAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA24760296BFE84005C73E0 /* EmojiAnswerView.swift */; };
 		8BA566B42905B1DA00440858 /* NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B45FAD92905A286009091AC /* NSError.swift */; };
 		8BA566B52905B1F900440858 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B45FAD62905A0A8009091AC /* TestError.swift */; };
 		8BA566B62905B20400440858 /* Combine+Collect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B45FAD229059D87009091AC /* Combine+Collect.swift */; };
@@ -80,6 +81,7 @@
 		8BF3A6BC28C46B970068A143 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF3A6BB28C46B970068A143 /* PrimaryButton.swift */; };
 		8BF3A6C828C473880068A143 /* LoginUISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF3A6C728C473880068A143 /* LoginUISpec.swift */; };
 		8BF3A6CD28C47D2D0068A143 /* XCUIApplication+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF3A6CB28C47CFE0068A143 /* XCUIApplication+Actions.swift */; };
+		8BFAF380296C20E6003CCB23 /* Constants+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF37F296C20E6003CCB23 /* Constants+Emoji.swift */; };
 		8BFB53CF28D08CCC00F77CD0 /* Rswift+Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB53CE28D08CCC00F77CD0 /* Rswift+Typealias.swift */; };
 		9034CDC8640BB10EC23F3D2C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA2A4D7F6EBA03C8C781818 /* Constants.swift */; };
 		A0562C2F673B4C4DCABFBDB8 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446379DEC5760FE3C00F3AA3 /* R.generated.swift */; };
@@ -206,6 +208,7 @@
 		8B98711E2913CAA100BA6B99 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		8B98712129150DE800BA6B99 /* GetProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileUseCase.swift; sourceTree = "<group>"; };
 		8B9871232915168900BA6B99 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		8BA24760296BFE84005C73E0 /* EmojiAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiAnswerView.swift; sourceTree = "<group>"; };
 		8BBC7AC6295D96E000A0B9FA /* DropdownAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownAnswerView.swift; sourceTree = "<group>"; };
 		8BC16FEC28B88C870046474C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8BC16FEE28B88C870046474C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -223,6 +226,7 @@
 		8BF3A6BB28C46B970068A143 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		8BF3A6C728C473880068A143 /* LoginUISpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUISpec.swift; sourceTree = "<group>"; };
 		8BF3A6CB28C47CFE0068A143 /* XCUIApplication+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Actions.swift"; sourceTree = "<group>"; };
+		8BFAF37F296C20E6003CCB23 /* Constants+Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Emoji.swift"; sourceTree = "<group>"; };
 		8BFB53CE28D08CCC00F77CD0 /* Rswift+Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rswift+Typealias.swift"; sourceTree = "<group>"; };
 		8EB8672A8DB533C8A50A0DEC /* Pods_SurveysTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurveysTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B8DCB5A6DDC646B216C9D9 /* DebugStaging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugStaging.xcconfig; sourceTree = "<group>"; };
@@ -372,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				8AA2A4D7F6EBA03C8C781818 /* Constants.swift */,
+				8BFAF37F296C20E6003CCB23 /* Constants+Emoji.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -696,6 +701,7 @@
 			isa = PBXGroup;
 			children = (
 				8BBC7AC6295D96E000A0B9FA /* DropdownAnswerView.swift */,
+				8BA24760296BFE84005C73E0 /* EmojiAnswerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1513,6 +1519,7 @@
 				8B45FACC2904DD8F009091AC /* LogInUseCase.swift in Sources */,
 				8B6B03D62927801000296983 /* DragGesture+Direction.swift in Sources */,
 				8B2C46D52918B5A600994FC4 /* DateTimeFormatter.swift in Sources */,
+				8BFAF380296C20E6003CCB23 /* Constants+Emoji.swift in Sources */,
 				8BDFB60E2967D0B300451281 /* LinearGradientView.swift in Sources */,
 				8B6B03DD29278F1400296983 /* GeometryProxy+Size.swift in Sources */,
 				8B79A3BA295D50E500F714C9 /* View+Alert.swift in Sources */,
@@ -1521,6 +1528,7 @@
 				8BF3A6BC28C46B970068A143 /* PrimaryButton.swift in Sources */,
 				8B4A701028B62A14000888BA /* AppDelegate.swift in Sources */,
 				8BF3A6AC28BF58F60068A143 /* LoginView.swift in Sources */,
+				8BA24761296BFE84005C73E0 /* EmojiAnswerView.swift in Sources */,
 				8B3E48D22964248C00008781 /* AnswerInput.swift in Sources */,
 				8B79A3C0295D552D00F714C9 /* AccessibilityIdentifier+SurveyQuestions.swift in Sources */,
 				8BFB53CF28D08CCC00F77CD0 /* Rswift+Typealias.swift in Sources */,

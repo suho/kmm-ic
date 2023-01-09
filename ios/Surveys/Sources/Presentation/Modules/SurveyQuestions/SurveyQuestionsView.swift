@@ -138,6 +138,46 @@ struct SurveyQuestionsView: View {
             ) { _ in
                 // TODO: Implement this later
             }
+        case let star as Shared.QuestionDisplayType.Star:
+            VStack {
+                Spacer(minLength: 150.0)
+                EmojiAnswerView(
+                    emojis: Array(repeating: Constants.Emoji.star, count: 5),
+                    answers: star.answers(),
+                    inputDidChange: { _ in },
+                    highlightStyle: .leftItems,
+                    input: star.input().first
+                )
+            }
+        case let heart as Shared.QuestionDisplayType.Heart:
+            VStack {
+                Spacer(minLength: 150.0)
+                EmojiAnswerView(
+                    emojis: Array(repeating: Constants.Emoji.heart, count: 5),
+                    answers: heart.answers(),
+                    inputDidChange: { _ in },
+                    highlightStyle: .leftItems,
+                    input: heart.input().first
+                )
+            }
+
+        case let smiley as Shared.QuestionDisplayType.Smiley:
+            VStack {
+                Spacer(minLength: 150.0)
+                EmojiAnswerView(
+                    emojis: [
+                        Constants.Emoji.poutingFace,
+                        Constants.Emoji.confusedFace,
+                        Constants.Emoji.neutralFace,
+                        Constants.Emoji.slightlySmilingFace,
+                        Constants.Emoji.grinningFaceWithSmilingEyes
+                    ],
+                    answers: smiley.answers(),
+                    inputDidChange: { _ in },
+                    highlightStyle: .one,
+                    input: smiley.input().first
+                )
+            }
         default:
             Text(String(describing: displayType))
         }
