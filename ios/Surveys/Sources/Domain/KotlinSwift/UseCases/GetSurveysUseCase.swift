@@ -22,6 +22,7 @@ final class GetSurveysUseCase: GetSurveysUseCaseProtocol {
     @Injected(Container.sharedGetSurveysUseCase) private var useCase: Shared.GetSurveysUseCase
 
     func callAsFunction(pageNumber: Int, pageSize: Int) -> AnyPublisher<[Survey], Error> {
-        createPublisher(for: useCase.invokeNative(pageNumber: Int32(pageNumber), pageSize: Int32(pageSize)))
+        // TODO: Improve isRefresh later with pull to refresh feature
+        createPublisher(for: useCase.invokeNative(pageNumber: Int32(pageNumber), pageSize: Int32(pageSize), isRefresh: false))
     }
 }

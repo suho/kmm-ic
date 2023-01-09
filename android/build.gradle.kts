@@ -101,6 +101,7 @@ dependencies {
     implementation(Dependency.COIL_COMPOSE)
     implementation(Dependency.ACCOMPANIST_PLACEHOLDER)
     implementation(Dependency.ACCOMPANIST_PAGER)
+    implementation(Dependency.ACCOMPANIST_SWIPE_REFRESH)
     implementation(Dependency.COMPOSE_CONSTRAINT_LAYOUT)
     implementation(Dependency.COMPOSE_UI_UTIL)
     implementation(Dependency.COMPOSE_LOTTIE)
