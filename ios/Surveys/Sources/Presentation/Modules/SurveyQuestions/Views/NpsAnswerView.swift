@@ -43,7 +43,7 @@ struct NpsAnswerView: View {
                     if index != numberOfAnswers - 1 {
                         Divider()
                             .frame(minWidth: 0.5)
-                            .foregroundColor(Color.white)
+                            .background(Color.white)
                     }
                 }
             }
