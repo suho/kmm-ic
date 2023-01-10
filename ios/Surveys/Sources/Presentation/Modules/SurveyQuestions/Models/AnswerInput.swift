@@ -17,10 +17,8 @@ enum AnswerInput: Hashable, Equatable {
 
     var id: String {
         switch self {
-        case let .select(id):
-            return id
-        case let .content(id, _):
-            return id
+        case let .select(id): return id
+        case let .content(id, _): return id
         }
     }
 
