@@ -10,11 +10,15 @@ import Combine
 import Factory
 import Shared
 
+// MARK: - SurveyQuestionsArgument
+
 struct SurveyQuestionsArgument {
 
     let id: String
     let imageURLString: String
 }
+
+// MARK: - SurveyQuestionsViewModel
 
 final class SurveyQuestionsViewModel: ObservableObject {
 
@@ -26,17 +30,17 @@ final class SurveyQuestionsViewModel: ObservableObject {
 
     private var bag = Set<AnyCancellable>()
 
-    private let surveyId: String
+    private let surveyID: String
     private var survey: Shared.Survey?
 
     init(survey: SurveyQuestionsArgument) {
-        surveyId = survey.id
+        surveyID = survey.id
         imageURLString = survey.imageURLString
     }
 
     func loadData() {
         state = .loading
-        getSurveyDetailUseCase(id: surveyId)
+        getSurveyDetailUseCase(id: surveyID)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [weak self] completion in
                 self.let {
@@ -54,7 +58,8 @@ final class SurveyQuestionsViewModel: ObservableObject {
                         let questionUIModels = questions.enumerated().map { index, question in
                             SurveyQuestionsView.QuestionUIModel(
                                 progress: "\(index + 1)/\(totalOfQuestions)",
-                                title: question.text
+                                title: question.text,
+                                displayType: question.displayType()
                             )
                         }
                         self.uiModel = .init(questions: questionUIModels)
@@ -65,6 +70,8 @@ final class SurveyQuestionsViewModel: ObservableObject {
             .store(in: &bag)
     }
 }
+
+// MARK: SurveyQuestionsViewModel.State
 
 extension SurveyQuestionsViewModel {
 
