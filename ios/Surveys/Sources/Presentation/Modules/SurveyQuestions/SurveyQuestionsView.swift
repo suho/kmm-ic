@@ -138,6 +138,45 @@ struct SurveyQuestionsView: View {
             ) { _ in
                 // TODO: Implement this later
             }
+        case let star as Shared.QuestionDisplayType.Star:
+            VStack {
+                Spacer(minLength: Constant.answerTopPadding)
+                EmojiAnswerView(
+                    emojis: Array(repeating: Constants.Emoji.star, count: 5),
+                    answers: star.answers(),
+                    inputDidChange: { _ in },
+                    highlightStyle: .leftItems,
+                    input: star.input().first
+                )
+            }
+        case let heart as Shared.QuestionDisplayType.Heart:
+            VStack {
+                Spacer(minLength: Constant.answerTopPadding)
+                EmojiAnswerView(
+                    emojis: Array(repeating: Constants.Emoji.heart, count: 5),
+                    answers: heart.answers(),
+                    inputDidChange: { _ in },
+                    highlightStyle: .leftItems,
+                    input: heart.input().first
+                )
+            }
+        case let smiley as Shared.QuestionDisplayType.Smiley:
+            VStack {
+                Spacer(minLength: Constant.answerTopPadding)
+                EmojiAnswerView(
+                    emojis: [
+                        Constants.Emoji.poutingFace,
+                        Constants.Emoji.confusedFace,
+                        Constants.Emoji.neutralFace,
+                        Constants.Emoji.slightlySmilingFace,
+                        Constants.Emoji.grinningFaceWithSmilingEyes
+                    ],
+                    answers: smiley.answers(),
+                    inputDidChange: { _ in },
+                    highlightStyle: .one,
+                    input: smiley.input().first
+                )
+            }
         default:
             Text(String(describing: displayType))
         }
@@ -158,5 +197,10 @@ extension SurveyQuestionsView {
         let displayType: Shared.QuestionDisplayType
 
         var id: String { title }
+    }
+
+    enum Constant {
+
+        static let answerTopPadding: CGFloat = 150.0
     }
 }
