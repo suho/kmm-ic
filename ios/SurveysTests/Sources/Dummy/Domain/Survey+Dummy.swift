@@ -16,6 +16,16 @@ extension Survey {
         description: "description",
         isActive: true,
         coverImageUrl: "coverImageUrl",
-        questions: nil
+        questions: [
+            Question(
+                id: "id",
+                text: "text",
+                displayOrder: 0,
+                displayType: "star",
+                pick: "one",
+                coverImageUrl: "coverImageUrl",
+                answers: []
+            )
+        ]
     )
 }

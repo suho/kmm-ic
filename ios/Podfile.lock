@@ -65,6 +65,7 @@ PODS:
   - Sourcery/CLI-Only (1.8.2)
   - SwiftFormat/CLI (0.49.17)
   - SwiftLint (0.48.0)
+  - SwiftUIPager (2.5.0)
 
 DEPENDENCIES:
   - Factory
@@ -82,6 +83,7 @@ DEPENDENCIES:
   - Sourcery
   - SwiftFormat/CLI
   - SwiftLint
+  - SwiftUIPager
 
 SPEC REPOS:
   trunk:
@@ -110,6 +112,7 @@ SPEC REPOS:
     - Sourcery
     - SwiftFormat
     - SwiftLint
+    - SwiftUIPager
 
 EXTERNAL SOURCES:
   Shared:
@@ -142,7 +145,8 @@ SPEC CHECKSUMS:
   Sourcery: ad4aba88367fbaf0c1ae6ec4ba3282db1b571624
   SwiftFormat: 64ac3f15bbfc3c830103a17340bcc5b60d9a3acd
   SwiftLint: 284cea64b6187c5d6bd83e9a548a64104d546447
+  SwiftUIPager: b314d8923bef0bde743c904bb74fcc7a05fd3422
 
-PODFILE CHECKSUM: 46debf4f7af5b64b681ac5458811a5accfcc8edc
+PODFILE CHECKSUM: b8427156bbf57c472aaf389a8b97f5e4604b5364
 
 COCOAPODS: 1.11.3

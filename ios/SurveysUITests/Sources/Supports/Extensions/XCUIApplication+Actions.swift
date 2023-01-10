@@ -26,4 +26,19 @@ extension XCUIApplication {
         let button = buttons[title]
         button.tap()
     }
+
+    func login() {
+        fillInField("Email", with: "dev@nimblehq.co")
+        fillInSecureField("Password", with: "12345678")
+        tapButton("Log in")
+    }
+
+    func selectFirstSurvey() {
+        sleep(3)
+        buttons[AccessibilityIdentifier.Home.detailSurvey].tap()
+    }
+
+    func selectStartSurvey() {
+        buttons[AccessibilityIdentifier.SurveyDetail.startSurvey].tap()
+    }
 }

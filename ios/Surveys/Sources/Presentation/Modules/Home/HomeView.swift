@@ -46,7 +46,7 @@ struct HomeView: View {
                     ),
                     isLoading: isLoading,
                     detailButtonDidPress: {
-                        navigator.show(screen: .surveyDetail(viewModel: viewModel.surveyDetailViewModel), by: .push)
+                        navigator.show(screen: .surveyDetail(viewModel.surveyDetailViewModel), by: .push)
                     },
                     currentPageDidChange: {
                         viewModel.currentPageDidChange($0)
