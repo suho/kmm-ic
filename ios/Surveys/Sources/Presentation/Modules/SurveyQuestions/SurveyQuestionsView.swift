@@ -140,7 +140,7 @@ struct SurveyQuestionsView: View {
             }
         case let star as Shared.QuestionDisplayType.Star:
             VStack {
-                Spacer(minLength: 150.0)
+                Spacer(minLength: Constant.answerTopPadding)
                 EmojiAnswerView(
                     emojis: Array(repeating: Constants.Emoji.star, count: 5),
                     answers: star.answers(),
@@ -151,7 +151,7 @@ struct SurveyQuestionsView: View {
             }
         case let heart as Shared.QuestionDisplayType.Heart:
             VStack {
-                Spacer(minLength: 150.0)
+                Spacer(minLength: Constant.answerTopPadding)
                 EmojiAnswerView(
                     emojis: Array(repeating: Constants.Emoji.heart, count: 5),
                     answers: heart.answers(),
@@ -162,7 +162,7 @@ struct SurveyQuestionsView: View {
             }
         case let smiley as Shared.QuestionDisplayType.Smiley:
             VStack {
-                Spacer(minLength: 150.0)
+                Spacer(minLength: Constant.answerTopPadding)
                 EmojiAnswerView(
                     emojis: [
                         Constants.Emoji.poutingFace,
@@ -197,5 +197,10 @@ extension SurveyQuestionsView {
         let displayType: Shared.QuestionDisplayType
 
         var id: String { title }
+    }
+
+    enum Constant {
+
+        static let answerTopPadding: CGFloat = 150.0
     }
 }

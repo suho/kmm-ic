@@ -43,10 +43,8 @@ struct EmojiAnswerView: View {
 
     func isHighlighted(for index: Int) -> Bool {
         switch highlightStyle {
-        case .leftItems:
-            return index <= currentIndex
-        case .one:
-            return index == currentIndex
+        case .leftItems: return index <= currentIndex
+        case .one: return index == currentIndex
         }
     }
 }
