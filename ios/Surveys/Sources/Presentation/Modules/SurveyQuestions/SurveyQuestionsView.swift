@@ -177,6 +177,11 @@ struct SurveyQuestionsView: View {
                     input: smiley.input().first
                 )
             }
+        case let nps as Shared.QuestionDisplayType.Nps:
+            VStack {
+                Spacer(minLength: 150.0)
+                NpsAnswerView(answers: nps.answers(), inputDidChange: { _ in }, input: nps.input().first)
+            }
         default:
             Text(String(describing: displayType))
         }
