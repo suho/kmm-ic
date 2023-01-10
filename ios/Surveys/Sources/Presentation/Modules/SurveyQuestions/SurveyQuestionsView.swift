@@ -9,6 +9,8 @@
 import SwiftUI
 import SwiftUIPager
 
+// MARK: - SurveyQuestionsView
+
 struct SurveyQuestionsView: View {
 
     @ObservedObject private var viewModel: SurveyQuestionsViewModel
@@ -69,7 +71,7 @@ struct SurveyQuestionsView: View {
                         ScrollView {
                             VStack(alignment: .leading) {
                                 Text(question.progress)
-                                    .font(Typography.neuzeitSLTStdBookHeavy.font(size: 15))
+                                    .font(Typography.neuzeitSLTStdBookHeavy.font(size: 15.0))
                                     .foregroundColor(Color.white.opacity(0.5))
                                     .padding(.bottom, 8.0)
                                     .accessibilityIdentifier(AccessibilityIdentifier.SurveyQuestions.progressLabel)
