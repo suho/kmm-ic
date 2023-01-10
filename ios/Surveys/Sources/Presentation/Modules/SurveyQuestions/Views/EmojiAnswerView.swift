@@ -65,6 +65,7 @@ extension EmojiAnswerView {
 // MARK: - ThumpsUpEmojiAnswerView_Previews
 
 struct ThumpsUpEmojiAnswerView_Previews: PreviewProvider {
+
     static var previews: some View {
         EmojiAnswerView(
             emojis: Array(repeating: Constants.Emoji.thumpsUp, count: 5),
@@ -79,6 +80,7 @@ struct ThumpsUpEmojiAnswerView_Previews: PreviewProvider {
 // MARK: - StarEmojiAnswerView_Previews
 
 struct StarEmojiAnswerView_Previews: PreviewProvider {
+
     static var previews: some View {
         EmojiAnswerView(
             emojis: Array(repeating: Constants.Emoji.star, count: 5),
@@ -93,6 +95,7 @@ struct StarEmojiAnswerView_Previews: PreviewProvider {
 // MARK: - EmojiAnswerView_Previews
 
 struct EmojiAnswerView_Previews: PreviewProvider {
+
     static var previews: some View {
         EmojiAnswerView(
             emojis: [

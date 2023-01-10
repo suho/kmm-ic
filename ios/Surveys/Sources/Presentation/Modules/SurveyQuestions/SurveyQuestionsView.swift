@@ -160,7 +160,6 @@ struct SurveyQuestionsView: View {
                     input: heart.input().first
                 )
             }
-
         case let smiley as Shared.QuestionDisplayType.Smiley:
             VStack {
                 Spacer(minLength: 150.0)
