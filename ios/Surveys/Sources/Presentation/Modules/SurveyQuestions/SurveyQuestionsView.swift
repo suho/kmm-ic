@@ -184,7 +184,7 @@ struct SurveyQuestionsView: View {
             }
         case let choices as Shared.QuestionDisplayType.Choice:
             VStack {
-                Spacer(minLength: Constant.answerTopPadding)
+                Spacer(minLength: 50.0)
                 MultipleChoicesAnswerView(answers: choices.answers(), input: Set(choices.input()))
             }
         default:
