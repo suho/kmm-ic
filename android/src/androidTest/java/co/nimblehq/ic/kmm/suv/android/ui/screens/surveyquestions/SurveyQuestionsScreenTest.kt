@@ -58,7 +58,7 @@ class SurveyQuestionsScreenTest {
         composeRule.activity.setContent {
             SurveyQuestionsScreen(
                 surveyQuestionsArgument = mockSurveyQuestionsArgument,
-                onCloseClick = {},
+                onCloseScreenClick = {},
                 onSubmitSuccess = {},
                 viewModel = viewModel
             )

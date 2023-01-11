@@ -12,23 +12,19 @@ import SwiftUI
 
 struct NpsAnswerView: View {
 
-    let answers: [Answer]
-    let inputDidChange: (AnswerInput) -> Void
-    @State var input: AnswerInput?
+    @ObservedObject var viewModel: AnswerViewModel
 
     var currentIndex: Int {
-        answers.firstIndex(where: { $0.id == input?.id }) ?? -1
+        viewModel.answers.firstIndex(where: { $0.id == viewModel.input?.id }) ?? -1
     }
 
     var body: some View {
-        let numberOfAnswers = answers.prefix(10).count
+        let numberOfAnswers = viewModel.answers.prefix(10).count
         VStack(spacing: 16.0) {
             HStack(spacing: 0.0) {
                 ForEach(0 ..< numberOfAnswers, id: \.self) { index in
                     Button {
-                        let currentInput = AnswerInput.select(id: answers[index].id)
-                        input = currentInput
-                        inputDidChange(currentInput)
+                        viewModel.input = AnswerInput.select(id: viewModel.answers[index].id)
                     } label: {
                         Text("\(index + 1)")
                             .font(
@@ -55,12 +51,12 @@ struct NpsAnswerView: View {
                 let leftRangeAlpha = (currentIndex < numberOfAnswers / 2) ? 1.0 : 0.5
                 let isInvalidIndex = currentIndex < 0
 
-                Text("Not at all Likely")
+                Text(Localize.surveyQuestionsNpsUnlike())
                     .foregroundColor(Color.white)
                     .opacity(isInvalidIndex ? 0.5 : leftRangeAlpha)
                     .font(Typography.neuzeitSLTStdBookHeavy.font(size: 17.0))
                 Spacer()
-                Text("Extremely Likely")
+                Text(Localize.surveyQuestionsNpsLike())
                     .foregroundColor(Color.white)
                     .opacity(isInvalidIndex ? 0.5 : 1.5 - leftRangeAlpha)
                     .font(Typography.neuzeitSLTStdBookHeavy.font(size: 17.0))
@@ -79,10 +75,7 @@ struct NpsAnswerView: View {
 struct NpsAnswerView_Previews: PreviewProvider {
 
     static var previews: some View {
-        NpsAnswerView(
-            answers: (1...10).map { Answer(id: "\($0)") },
-            inputDidChange: { _ in }
-        )
-        .background(Color.black)
+        NpsAnswerView(viewModel: .init(answers: (1 ... 10).map { Answer(id: "\($0)") }))
+            .background(Color.black)
     }
 }

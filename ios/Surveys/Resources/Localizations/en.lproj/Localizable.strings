@@ -7,3 +7,6 @@
 
 "home.header.today" = "Today";
 "surveyDetail.button.title" = "Start Survey";
+"surveyQuestions.button.submit" = "Submit";
+"surveyQuestions.nps.unlike" = "Not at all Likely";
+"surveyQuestions.nps.like" = "Extremely Likely";

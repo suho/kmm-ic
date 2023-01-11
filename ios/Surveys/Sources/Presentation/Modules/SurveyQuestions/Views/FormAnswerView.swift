@@ -12,14 +12,12 @@ import SwiftUI
 
 struct FormAnswerView: View {
 
-    let answers: [Answer]
-
-    @State var input: [AnswerInput]
+    @ObservedObject var viewModel: AnswerViewModel
 
     var body: some View {
         VStack(spacing: 16.0) {
-            ForEach(0 ..< answers.count, id: \.self) { index in
-                TextField(answers[index].placeholder.string, text: content(of: index))
+            ForEach(0 ..< viewModel.answers.count, id: \.self) { index in
+                TextField(viewModel.answers[index].placeholder.string, text: content(of: index))
                     .primaryFieldStyle()
                     .padding(.horizontal, 12.0)
             }
@@ -27,10 +25,16 @@ struct FormAnswerView: View {
     }
 
     func content(of index: Int) -> Binding<String> {
-        let currentInput = input[index]
+        let answer = viewModel.answers[index]
+        let currentInput = viewModel.inputs.first(where: { $0.id == answer.id })
         return Binding<String>(
-            get: { currentInput.content.string },
-            set: { input[index] = AnswerInput.content(id: currentInput.id, value: $0) }
+            get: { (currentInput?.content).string },
+            set: {
+                if let currentInput {
+                    viewModel.inputs.remove(currentInput)
+                    viewModel.inputs.insert(AnswerInput.content(id: currentInput.id, value: $0))
+                }
+            }
         )
     }
 }
@@ -45,6 +49,6 @@ struct FormAnswerView_Previews: PreviewProvider {
             Answer(id: "3"),
             Answer(id: "4")
         ]
-        FormAnswerView(answers: answers, input: answers.map { AnswerInput.content(id: $0.id, value: "") })
+        FormAnswerView(viewModel: .init(answers: answers))
     }
 }

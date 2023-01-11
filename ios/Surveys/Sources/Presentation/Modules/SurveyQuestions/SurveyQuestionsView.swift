@@ -13,7 +13,6 @@ import SwiftUIPager
 // MARK: - SurveyQuestionsView
 
 struct SurveyQuestionsView: View {
-
     @ObservedObject private var viewModel: SurveyQuestionsViewModel
     @EnvironmentObject private var navigator: Navigator
     @StateObject private var page: Page = .first()
@@ -24,10 +23,12 @@ struct SurveyQuestionsView: View {
             content().onAppear { viewModel.loadData() }
         case .loading:
             content(isLoading: true)
-        case .loaded:
-            content()
+        case let .loaded(isSubmitting):
+            content(isSubmitting: isSubmitting)
         case let .failure(message):
             content().defaultAlert(message: message)
+        case .submitted:
+            content().onAppear { navigator.show(screen: .thankYou, by: .push) }
         }
     }
 
@@ -57,16 +58,17 @@ struct SurveyQuestionsView: View {
         self.viewModel = viewModel
     }
 
-    private func content(isLoading: Bool = false) -> some View {
+    private func content(isLoading: Bool = false, isSubmitting: Bool = false) -> some View {
         ZStack {
             background
             if isLoading {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white))
             } else {
                 Spacer(minLength: 16.0)
+                let questions = viewModel.uiModel?.questions ?? []
                 Pager(
                     page: page,
-                    data: viewModel.uiModel?.questions ?? [],
+                    data: questions,
                     id: \.id,
                     content: { question in
                         ScrollView {
@@ -85,7 +87,11 @@ struct SurveyQuestionsView: View {
 
                                 Spacer()
 
-                                answerView(displayType: question.displayType)
+                                if let questionAnswerViewModel = viewModel
+                                    .questionAnswerViewModels
+                                    .first(where: { $0.0 == question.id }) {
+                                    answerView(displayType: question.displayType, viewModel: questionAnswerViewModel.1)
+                                }
                             }
                             .padding(.top, 26.0)
                             .padding(.horizontal, 20.0)
@@ -98,17 +104,35 @@ struct SurveyQuestionsView: View {
                     Spacer()
                     HStack {
                         Spacer()
+                        let isLastPage = self.page.index == questions.count - 1
                         Button {
-                            withAnimation {
-                                self.page.update(.next)
+                            if isLastPage {
+                                viewModel.submitAnswers()
+                            } else {
+                                withAnimation {
+                                    self.page.update(.next)
+                                }
                             }
-
                         } label: {
-                            Asset.nextIcon.image.frame(alignment: .center)
+                            if isLastPage {
+                                if isSubmitting {
+                                    ProgressView()
+                                        .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                                        .frame(alignment: .center)
+                                } else {
+                                    Text(Localize.surveyQuestionsButtonSubmit())
+                                        .foregroundColor(Color.black)
+                                        .font(Typography.neuzeitSLTStdBookHeavy.font(size: 17.0))
+                                        .frame(alignment: .center)
+                                        .padding()
+                                }
+                            } else {
+                                Asset.nextIcon.image.frame(alignment: .center)
+                            }
                         }
-                        .frame(width: 56.0, height: 56.0)
+                        .frame(width: isLastPage && !isSubmitting ? nil : 56.0, height: 56.0)
                         .background(Color.white)
-                        .cornerRadius(28.0)
+                        .cornerRadius(isLastPage ? 10.0 : 28.0)
                         .accessibilityIdentifier(AccessibilityIdentifier.SurveyQuestions.nextOrSubmitButton)
                     }
                 }
@@ -129,38 +153,29 @@ struct SurveyQuestionsView: View {
     }
 
     @ViewBuilder
-    private func answerView(displayType: Shared.QuestionDisplayType) -> some View {
+    private func answerView(displayType: Shared.QuestionDisplayType, viewModel: AnswerViewModel) -> some View {
         switch displayType {
-        case let dropdown as Shared.QuestionDisplayType.Dropdown:
-            DropdownAnswerView(
-                answers: dropdown.answers(),
-                input: dropdown.input().first
-            ) { _ in
-                // TODO: Implement this later
-            }
-        case let star as Shared.QuestionDisplayType.Star:
+        case is Shared.QuestionDisplayType.Dropdown:
+            DropdownAnswerView(viewModel: viewModel)
+        case is Shared.QuestionDisplayType.Star:
             VStack {
                 Spacer(minLength: Constant.answerTopPadding)
                 EmojiAnswerView(
                     emojis: Array(repeating: Constants.Emoji.star, count: 5),
-                    answers: star.answers(),
-                    inputDidChange: { _ in },
                     highlightStyle: .leftItems,
-                    input: star.input().first
+                    viewModel: viewModel
                 )
             }
-        case let heart as Shared.QuestionDisplayType.Heart:
+        case is Shared.QuestionDisplayType.Heart:
             VStack {
                 Spacer(minLength: Constant.answerTopPadding)
                 EmojiAnswerView(
                     emojis: Array(repeating: Constants.Emoji.heart, count: 5),
-                    answers: heart.answers(),
-                    inputDidChange: { _ in },
                     highlightStyle: .leftItems,
-                    input: heart.input().first
+                    viewModel: viewModel
                 )
             }
-        case let smiley as Shared.QuestionDisplayType.Smiley:
+        case is Shared.QuestionDisplayType.Smiley:
             VStack {
                 Spacer(minLength: Constant.answerTopPadding)
                 EmojiAnswerView(
@@ -171,60 +186,49 @@ struct SurveyQuestionsView: View {
                         Constants.Emoji.slightlySmilingFace,
                         Constants.Emoji.grinningFaceWithSmilingEyes
                     ],
-                    answers: smiley.answers(),
-                    inputDidChange: { _ in },
                     highlightStyle: .one,
-                    input: smiley.input().first
+                    viewModel: viewModel
                 )
             }
-        case let nps as Shared.QuestionDisplayType.Nps:
+        case is Shared.QuestionDisplayType.Nps:
             VStack {
                 Spacer(minLength: Constant.answerTopPadding)
-                NpsAnswerView(answers: nps.answers(), inputDidChange: { _ in }, input: nps.input().first)
+                NpsAnswerView(viewModel: viewModel)
             }
-        case let choices as Shared.QuestionDisplayType.Choice:
+        case is Shared.QuestionDisplayType.Choice:
             VStack {
                 Spacer(minLength: 50.0)
-                MultipleChoicesAnswerView(answers: choices.answers(), input: Set(choices.input()))
+                MultipleChoicesAnswerView(viewModel: viewModel)
             }
-        case let textarea as Shared.QuestionDisplayType.Textarea:
+        case is Shared.QuestionDisplayType.Textarea:
             VStack {
                 Spacer(minLength: 85.0)
-                TextareaAnswerView(answer: textarea.answers().first ?? .init(id: "-"), input: textarea.input().first)
+                TextareaAnswerView(viewModel: viewModel)
                     .frame(height: 170.0)
             }
-        case let form as Shared.QuestionDisplayType.Textfield:
+        case is Shared.QuestionDisplayType.Textfield:
             VStack {
                 Spacer(minLength: 110.0)
-                FormAnswerView(
-                    answers: form.answers(),
-                    input: form.answers().map { AnswerInput.content(id: $0.id, value: "") }
-                )
+                FormAnswerView(viewModel: viewModel)
             }
-        default:
-            Text(String(describing: displayType))
+        default: EmptyView()
         }
     }
 }
 
 extension SurveyQuestionsView {
-
     struct UIModel: Equatable {
-
         let questions: [QuestionUIModel]
     }
 
     struct QuestionUIModel: Identifiable, Equatable {
-
+        let id: String
         let progress: String
         let title: String
         let displayType: Shared.QuestionDisplayType
-
-        var id: String { title }
     }
 
     enum Constant {
-
         static let answerTopPadding: CGFloat = 150.0
     }
 }

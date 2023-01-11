@@ -87,6 +87,9 @@
 		8BFAF387296D6DB5003CCB23 /* TextareaAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF386296D6DB5003CCB23 /* TextareaAnswerView.swift */; };
 		8BFAF38A296E59DF003CCB23 /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF389296E59DF003CCB23 /* TextEditor.swift */; };
 		8BFAF38C296E5B26003CCB23 /* FormAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF38B296E5B26003CCB23 /* FormAnswerView.swift */; };
+		8BFAF38E296E660A003CCB23 /* AnswerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF38D296E660A003CCB23 /* AnswerViewModel.swift */; };
+		8BFAF390296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF38F296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift */; };
+		8BFAF393296FBC47003CCB23 /* ThankYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF392296FBC47003CCB23 /* ThankYouView.swift */; };
 		8BFB53CF28D08CCC00F77CD0 /* Rswift+Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB53CE28D08CCC00F77CD0 /* Rswift+Typealias.swift */; };
 		9034CDC8640BB10EC23F3D2C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA2A4D7F6EBA03C8C781818 /* Constants.swift */; };
 		A0562C2F673B4C4DCABFBDB8 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446379DEC5760FE3C00F3AA3 /* R.generated.swift */; };
@@ -237,6 +240,9 @@
 		8BFAF386296D6DB5003CCB23 /* TextareaAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextareaAnswerView.swift; sourceTree = "<group>"; };
 		8BFAF389296E59DF003CCB23 /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
 		8BFAF38B296E5B26003CCB23 /* FormAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAnswerView.swift; sourceTree = "<group>"; };
+		8BFAF38D296E660A003CCB23 /* AnswerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewModel.swift; sourceTree = "<group>"; };
+		8BFAF38F296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitSurveyResponseUseCase.swift; sourceTree = "<group>"; };
+		8BFAF392296FBC47003CCB23 /* ThankYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThankYouView.swift; sourceTree = "<group>"; };
 		8BFB53CE28D08CCC00F77CD0 /* Rswift+Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rswift+Typealias.swift"; sourceTree = "<group>"; };
 		8EB8672A8DB533C8A50A0DEC /* Pods_SurveysTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurveysTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B8DCB5A6DDC646B216C9D9 /* DebugStaging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugStaging.xcconfig; sourceTree = "<group>"; };
@@ -523,6 +529,7 @@
 				8B98712129150DE800BA6B99 /* GetProfileUseCase.swift */,
 				8BD791A4292B481200EF4AF9 /* GetSurveysUseCase.swift */,
 				8B79A3B4295B5E8100F714C9 /* GetSurveyDetailUseCase.swift */,
+				8BFAF38F296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -710,6 +717,7 @@
 		8BBC7AC5295D96CA00A0B9FA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8BFAF38D296E660A003CCB23 /* AnswerViewModel.swift */,
 				8BBC7AC6295D96E000A0B9FA /* DropdownAnswerView.swift */,
 				8BA24760296BFE84005C73E0 /* EmojiAnswerView.swift */,
 				8BFAF381296D204E003CCB23 /* NpsAnswerView.swift */,
@@ -850,6 +858,14 @@
 				8BFAF389296E59DF003CCB23 /* TextEditor.swift */,
 			);
 			path = TextEditor;
+			sourceTree = "<group>";
+		};
+		8BFAF391296FBC33003CCB23 /* ThankYou */ = {
+			isa = PBXGroup;
+			children = (
+				8BFAF392296FBC47003CCB23 /* ThankYouView.swift */,
+			);
+			path = ThankYou;
 			sourceTree = "<group>";
 		};
 		9B41B5500391874798F1405B /* LaunchScreen */ = {
@@ -1044,6 +1060,7 @@
 				8BF3A6AA28BF58D40068A143 /* Login */,
 				8B0F7B3B295417AB00A08CAF /* SurveyDetail */,
 				8B79A3AD295AC71C00F714C9 /* SurveyQuestions */,
+				8BFAF391296FBC33003CCB23 /* ThankYou */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1551,6 +1568,7 @@
 				8B9871242915168900BA6B99 /* HomeViewModel.swift in Sources */,
 				8B79A3A2295AA23400F714C9 /* SurveyDetailViewModel.swift in Sources */,
 				8BF3A6BC28C46B970068A143 /* PrimaryButton.swift in Sources */,
+				8BFAF390296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift in Sources */,
 				8B4A701028B62A14000888BA /* AppDelegate.swift in Sources */,
 				8BF3A6AC28BF58F60068A143 /* LoginView.swift in Sources */,
 				8BA24761296BFE84005C73E0 /* EmojiAnswerView.swift in Sources */,
@@ -1560,6 +1578,8 @@
 				5AD21252E58F1F30EE57EB5E /* Application.swift in Sources */,
 				8B79A3B5295B5E8100F714C9 /* GetSurveyDetailUseCase.swift in Sources */,
 				8B483C6428DDC15900FEA6E6 /* LoginViewModel.swift in Sources */,
+				8BFAF38E296E660A003CCB23 /* AnswerViewModel.swift in Sources */,
+				8BFAF393296FBC47003CCB23 /* ThankYouView.swift in Sources */,
 				8B2C46DE291911FB00994FC4 /* AccessibilityIdentifier.swift in Sources */,
 				8BFAF38A296E59DF003CCB23 /* TextEditor.swift in Sources */,
 				8BCC662A28FF9237003D87AD /* Navigator+Screen.swift in Sources */,

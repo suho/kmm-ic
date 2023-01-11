@@ -12,37 +12,34 @@ import SwiftUI
 
 struct DropdownAnswerView: View {
 
-    @State private var selectedInput: String
+    @ObservedObject var viewModel: AnswerViewModel
 
-    private let ids: [String]
-    private let answers: [Answer]
-    private var input: AnswerInput
-    private let inputDidChange: (AnswerInput) -> Void
+    private var selection: Binding<String> {
+        Binding<String>(
+            get: { viewModel.input?.id ?? "-" },
+            set: { viewModel.input = AnswerInput.select(id: $0) }
+        )
+    }
+
+    private lazy var ids: [String] = viewModel.answers.map { $0.id }
 
     var body: some View {
-        Picker(String(describing: Self.self), selection: $selectedInput) {
-            ForEach(ids, id: \.self) { id in
-                let font = selectedInput == id
+        Picker(String(describing: Self.self), selection: selection) {
+            ForEach(0 ..< viewModel.answers.count, id: \.self) { index in
+                let font = selection.wrappedValue == viewModel.answers[index].id
                     ? Typography.neuzeitSLTStdBookHeavy.font(size: 20.0)
                     : Typography.neuzeitSLTStdBook.font(size: 20.0)
-                Text(answers.first(where: { $0.id == id })?.content ?? "")
+                Text(viewModel.answers[index].content.string)
                     .font(font)
                     .foregroundColor(Color.white)
             }
         }
         .pickerStyle(.wheel)
         .padding(20.0)
-        .onChange(of: selectedInput) {
-            print($0)
-        }
     }
 
-    init(answers: [Answer], input: AnswerInput?, inputDidChange: @escaping (AnswerInput) -> Void) {
-        self.answers = answers
-        self.input = input ?? .select(id: answers.first?.id ?? "")
-        self.inputDidChange = inputDidChange
-        ids = answers.map(\.id)
-        selectedInput = self.input.id
+    init(viewModel: AnswerViewModel) {
+        self.viewModel = viewModel
     }
 }
 
@@ -52,13 +49,14 @@ struct DropdownAnswerView_Previews: PreviewProvider {
 
     static var previews: some View {
         DropdownAnswerView(
-            answers: [
-                .init(id: "1", content: "Choice 1", placeholder: nil),
-                .init(id: "2", content: "Choice 2", placeholder: nil),
-                .init(id: "3", content: "Choice 3", placeholder: nil)
-            ],
-            input: nil,
-            inputDidChange: { _ in }
+            viewModel: .init(
+                answers: [
+                    .init(id: "1", content: "Choice 1", placeholder: nil),
+                    .init(id: "2", content: "Choice 2", placeholder: nil),
+                    .init(id: "3", content: "Choice 3", placeholder: nil)
+                ],
+                input: AnswerInput.select(id: "1")
+            )
         )
         .background(Color.black)
     }

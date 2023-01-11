@@ -49,7 +49,7 @@ class HomeScreenTest {
     @Before
     fun setup() {
         every { mockGetProfileUseCase() } returns flowOf(user)
-        every { mockGetSurveysUseCase(any(), any()) } returns flowOf(
+        every { mockGetSurveysUseCase(any(), any(), any()) } returns flowOf(
             listOf(
                 mockFirstSurvey,
                 mockSecondSurvey
