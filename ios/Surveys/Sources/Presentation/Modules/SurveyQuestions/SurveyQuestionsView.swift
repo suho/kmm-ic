@@ -189,7 +189,7 @@ struct SurveyQuestionsView: View {
             }
         case let textarea as Shared.QuestionDisplayType.Textarea:
             VStack {
-                Spacer(minLength: 50.0)
+                Spacer(minLength: 85.0)
                 TextareaAnswerView(answer: textarea.answers().first ?? .init(id: "-"), input: textarea.input().first)
                     .frame(height: 170.0)
             }
