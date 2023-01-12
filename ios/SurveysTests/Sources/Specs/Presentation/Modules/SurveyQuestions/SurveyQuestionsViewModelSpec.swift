@@ -52,7 +52,7 @@ final class SurveyQuestionsViewModelSpec: QuickSpec {
 
                     it("state changes to loaded") {
                         let state = try self.awaitPublisher(viewModel.$state.collectNext(1)).last
-                        expect(state) == .loaded
+                        expect(state) == .loaded(isSubmitting: false)
                     }
 
                     it("get the right surveys list") {
@@ -60,6 +60,7 @@ final class SurveyQuestionsViewModelSpec: QuickSpec {
                         let expectedQuestions = expectedSurvey.sortedQuestions() ?? []
                         let questionUIModels = expectedQuestions.enumerated().map { index, question in
                             SurveyQuestionsView.QuestionUIModel(
+                                id: question.id,
                                 progress: "\(index + 1)/\(expectedQuestions.count)",
                                 title: question.text,
                                 displayType: question.displayType()
