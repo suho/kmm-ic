@@ -187,6 +187,12 @@ struct SurveyQuestionsView: View {
                 Spacer(minLength: 50.0)
                 MultipleChoicesAnswerView(answers: choices.answers(), input: Set(choices.input()))
             }
+        case let textarea as Shared.QuestionDisplayType.Textarea:
+            VStack {
+                Spacer(minLength: 85.0)
+                TextareaAnswerView(answer: textarea.answers().first ?? .init(id: "-"), input: textarea.input().first)
+                    .frame(height: 170.0)
+            }
         default:
             Text(String(describing: displayType))
         }

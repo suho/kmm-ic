@@ -22,6 +22,13 @@ enum AnswerInput: Hashable, Equatable {
         }
     }
 
+    var content: String? {
+        switch self {
+        case .select: return nil
+        case let .content(_, content): return content
+        }
+    }
+
     init?(_ answerInput: Shared.AnswerInput) {
         switch answerInput {
         case let select as Shared.AnswerInput.Select:
