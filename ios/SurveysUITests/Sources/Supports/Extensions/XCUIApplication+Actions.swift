@@ -34,7 +34,7 @@ extension XCUIApplication {
     }
 
     func selectFirstSurvey() {
-        sleep(3)
+        sleep(4)
         buttons[AccessibilityIdentifier.Home.detailSurvey].tap()
     }
 

@@ -32,7 +32,7 @@ struct TextareaAnswerView_Previews: PreviewProvider {
 
     static var previews: some View {
         TextareaAnswerView(
-            viewModel: .init(answers: [Answer(id: "1", content: "Email", placeholder: "Email")])
+            viewModel: .init(questionId: "-", answers: [Answer(id: "1", content: "Email", placeholder: "Email")])
         )
         .frame(width: 327.0, height: 168.0)
     }

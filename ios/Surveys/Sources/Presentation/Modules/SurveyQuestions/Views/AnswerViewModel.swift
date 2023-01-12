@@ -13,22 +13,15 @@ import Shared
 
 final class AnswerViewModel: ObservableObject {
 
+    let questionId: String
     let answers: [Answer]
     @Published var inputs: Set<AnswerInput>
     @Published var input: AnswerInput?
 
-    init(answers: [Answer], inputs: Set<AnswerInput> = [], input: AnswerInput? = nil) {
+    init(questionId: String, answers: [Answer], inputs: Set<AnswerInput> = [], input: AnswerInput? = nil) {
+        self.questionId = questionId
         self.answers = answers
         self.inputs = inputs
         self.input = input
-    }
-}
-
-// MARK: Equatable
-
-extension AnswerViewModel: Equatable {
-
-    static func == (lhs: AnswerViewModel, rhs: AnswerViewModel) -> Bool {
-        return lhs.answers == rhs.answers && lhs.input == rhs.input
     }
 }

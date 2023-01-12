@@ -36,6 +36,12 @@ struct NpsAnswerView: View {
                     }
                     .frame(width: 34.0)
                     .opacity(isHighlight(for: index) ? 1.0 : 0.5)
+                    .accessibilityIdentifier(
+                        AccessibilityIdentifier.AnswerView.nps(
+                            questionId: viewModel.questionId,
+                            index: index
+                        )
+                    )
                     if index != numberOfAnswers - 1 {
                         Divider()
                             .frame(minWidth: 0.5)
@@ -75,7 +81,7 @@ struct NpsAnswerView: View {
 struct NpsAnswerView_Previews: PreviewProvider {
 
     static var previews: some View {
-        NpsAnswerView(viewModel: .init(answers: (1 ... 10).map { Answer(id: "\($0)") }))
+        NpsAnswerView(viewModel: .init(questionId: "-", answers: (1 ... 10).map { Answer(id: "\($0)") }))
             .background(Color.black)
     }
 }
