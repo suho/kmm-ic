@@ -179,8 +179,13 @@ struct SurveyQuestionsView: View {
             }
         case let nps as Shared.QuestionDisplayType.Nps:
             VStack {
-                Spacer(minLength: 150.0)
+                Spacer(minLength: Constant.answerTopPadding)
                 NpsAnswerView(answers: nps.answers(), inputDidChange: { _ in }, input: nps.input().first)
+            }
+        case let choices as Shared.QuestionDisplayType.Choice:
+            VStack {
+                Spacer(minLength: 50.0)
+                MultipleChoicesAnswerView(answers: choices.answers(), input: Set(choices.input()))
             }
         default:
             Text(String(describing: displayType))
