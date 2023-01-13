@@ -105,7 +105,6 @@ final class SurveyQuestionsViewModel: ObservableObject {
 
     private func generateAnswerViewModels(questions: [Question]) {
         for question in questions {
-            print(question.id)
             let answers = question.displayType().answers()
             let viewModel: AnswerViewModel
             switch question.displayType() {

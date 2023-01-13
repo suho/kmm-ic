@@ -20,6 +20,7 @@ target 'Surveys' do
   pod 'FlowStacks'
   pod 'ShimmerView'
   pod 'SwiftUIPager'
+  pod 'lottie-ios'
 
   # Storage
   pod 'KeychainAccess'

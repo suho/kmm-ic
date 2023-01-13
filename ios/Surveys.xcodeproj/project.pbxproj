@@ -36,6 +36,8 @@
 		8B4A701028B62A14000888BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A700F28B62A14000888BA /* AppDelegate.swift */; };
 		8B54FF5428FFD4770074BE34 /* Container+Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B54FF5328FFD4770074BE34 /* Container+Domain.swift */; };
 		8B54FF5B28FFE23B0074BE34 /* LoginViewModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B54FF5928FFE0840074BE34 /* LoginViewModelSpec.swift */; };
+		8B5A8CC129710A920044A3AD /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5A8CC029710A920044A3AD /* LottieView.swift */; };
+		8B5A8CC429710B730044A3AD /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = 8B5A8CC329710B730044A3AD /* confetti.json */; };
 		8B5C5C0028C9C7AF002834B1 /* NeuzeitSLTStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B5C5BFE28C9C7AF002834B1 /* NeuzeitSLTStd-Book.otf */; };
 		8B5C5C0128C9C7AF002834B1 /* NeuzeitSLTStd-BookHeavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B5C5BFF28C9C7AF002834B1 /* NeuzeitSLTStd-BookHeavy.otf */; };
 		8B6B03D22925F23600296983 /* HomeSurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6B03D12925F23600296983 /* HomeSurveysView.swift */; };
@@ -195,6 +197,8 @@
 		8B4A700F28B62A14000888BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B54FF5328FFD4770074BE34 /* Container+Domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Domain.swift"; sourceTree = "<group>"; };
 		8B54FF5928FFE0840074BE34 /* LoginViewModelSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelSpec.swift; sourceTree = "<group>"; };
+		8B5A8CC029710A920044A3AD /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		8B5A8CC329710B730044A3AD /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		8B5C5BFE28C9C7AF002834B1 /* NeuzeitSLTStd-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NeuzeitSLTStd-Book.otf"; sourceTree = "<group>"; };
 		8B5C5BFF28C9C7AF002834B1 /* NeuzeitSLTStd-BookHeavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NeuzeitSLTStd-BookHeavy.otf"; sourceTree = "<group>"; };
 		8B6B03D12925F23600296983 /* HomeSurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSurveysView.swift; sourceTree = "<group>"; };
@@ -614,6 +618,22 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		8B5A8CBF29710A5E0044A3AD /* LottieView */ = {
+			isa = PBXGroup;
+			children = (
+				8B5A8CC029710A920044A3AD /* LottieView.swift */,
+			);
+			path = LottieView;
+			sourceTree = "<group>";
+		};
+		8B5A8CC229710B5B0044A3AD /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				8B5A8CC329710B730044A3AD /* confetti.json */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
 		8B5C5BFD28C9C798002834B1 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,6 +834,7 @@
 		8BF3A6B528C46B470068A143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8B5A8CBF29710A5E0044A3AD /* LottieView */,
 				8BFAF388296E59D7003CCB23 /* TextEditor */,
 				8BDFB60C2967D0A800451281 /* LinearGradientView */,
 				8B6B03D82927804C00296983 /* PageControl */,
@@ -968,6 +989,7 @@
 		BD202663F0596F34E28DEBCF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8B5A8CC229710B5B0044A3AD /* Files */,
 				8B5C5BFD28C9C798002834B1 /* Fonts */,
 				8BF3A6AD28C468230068A143 /* Localizations */,
 				F6D1DE903215C27CB05BD896 /* Assets */,
@@ -1242,6 +1264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B5C5C0128C9C7AF002834B1 /* NeuzeitSLTStd-BookHeavy.otf in Resources */,
+				8B5A8CC429710B730044A3AD /* confetti.json in Resources */,
 				0342B6AF8EE6556DBF2D48A9 /* Assets.xcassets in Resources */,
 				8BF3A6B028C468530068A143 /* Localizable.strings in Resources */,
 				A423C84CEEF0C0C0B0316E58 /* LaunchScreen.storyboard in Resources */,
@@ -1575,6 +1598,7 @@
 				8BF3A6BC28C46B970068A143 /* PrimaryButton.swift in Sources */,
 				8BFAF390296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift in Sources */,
 				8B4A701028B62A14000888BA /* AppDelegate.swift in Sources */,
+				8B5A8CC129710A920044A3AD /* LottieView.swift in Sources */,
 				8BF3A6AC28BF58F60068A143 /* LoginView.swift in Sources */,
 				8BA24761296BFE84005C73E0 /* EmojiAnswerView.swift in Sources */,
 				8B3E48D22964248C00008781 /* AnswerInput.swift in Sources */,
