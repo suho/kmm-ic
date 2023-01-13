@@ -42,6 +42,28 @@ final class SurveyQuestionsViewModelSpec: QuickSpec {
                 }
             }
 
+            describe("its exit button did press") {
+
+                beforeEach {
+                    viewModel.exitButtonDidPress()
+                }
+
+                it("state changes to will exit") {
+                    expect(viewModel.state) == .willExit
+                }
+            }
+
+            describe("its cancel exit") {
+
+                beforeEach {
+                    viewModel.cancelExit()
+                }
+
+                it("state changes to loaded") {
+                    expect(viewModel.state) == .loaded(isSubmitting: false)
+                }
+            }
+
             describe("its load data") {
 
                 context("when get survey detail use case emits success") {

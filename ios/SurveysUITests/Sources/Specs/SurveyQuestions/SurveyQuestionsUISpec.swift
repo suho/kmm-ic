@@ -40,6 +40,43 @@ final class SurveyQuestionsUISpec: QuickSpec {
                     app.buttons[AccessibilityIdentifier.SurveyQuestions.nextOrSubmitButton].shouldExists()
                 }
 
+                context("when press close button") {
+
+                    beforeEach {
+                        app.tapButton(AccessibilityIdentifier.SurveyQuestions.closeButton)
+                        sleep(1)
+                    }
+
+                    it("it shows a warning alert") {
+                        app.alerts["Warning!"].shouldExists()
+                    }
+
+                    context("when press cancel") {
+
+                        beforeEach {
+                            let alert = app.alerts["Warning!"]
+                            alert.buttons["Cancel"].tap()
+                        }
+
+                        it("it dismiss the alert") {
+                            let alert = app.alerts["Warning!"]
+                            expect(alert.exists).toEventually(equal(false), timeout: .seconds(5))
+                        }
+                    }
+
+                    context("when press yes") {
+
+                        beforeEach {
+                            let alert = app.alerts["Warning!"]
+                            alert.buttons["Yes"].tap()
+                        }
+
+                        it("it dismiss the survey questions screen and show the survey detail question screen") {
+                            app.images[AccessibilityIdentifier.SurveyDetail.image].shouldExists()
+                        }
+                    }
+                }
+
                 context("when submit answers") {
 
                     it("shows the thank you screen") {

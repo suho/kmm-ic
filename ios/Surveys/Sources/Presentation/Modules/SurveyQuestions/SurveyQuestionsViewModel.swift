@@ -90,6 +90,14 @@ final class SurveyQuestionsViewModel: ObservableObject {
             .store(in: &bag)
     }
 
+    func exitButtonDidPress() {
+        state = .willExit
+    }
+
+    func cancelExit() {
+        state = .loaded(isSubmitting: false)
+    }
+
     private func generateUIModels(questions: [Question]) {
         let totalOfQuestions = questions.count
         let questionUIModels = questions.enumerated().map { index, question in
@@ -141,5 +149,6 @@ extension SurveyQuestionsViewModel {
         case loaded(isSubmitting: Bool)
         case failure(String)
         case submitted
+        case willExit
     }
 }
