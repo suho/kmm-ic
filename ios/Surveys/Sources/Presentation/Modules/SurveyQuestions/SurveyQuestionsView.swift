@@ -193,6 +193,14 @@ struct SurveyQuestionsView: View {
                 TextareaAnswerView(answer: textarea.answers().first ?? .init(id: "-"), input: textarea.input().first)
                     .frame(height: 170.0)
             }
+        case let form as Shared.QuestionDisplayType.Textfield:
+            VStack {
+                Spacer(minLength: 110.0)
+                FormAnswerView(
+                    answers: form.answers(),
+                    input: form.answers().map { AnswerInput.content(id: $0.id, value: "") }
+                )
+            }
         default:
             Text(String(describing: displayType))
         }
