@@ -111,12 +111,18 @@ class ApiClient(
 
     fun emptyResponseBody(builder: HttpRequestBuilder): Flow<Unit> {
         return flow {
-            httpClient.request(
+            val body = httpClient.request(
                 builder.apply {
                     contentType(ContentType.Application.Json)
                 }
-            )
-            emit(Unit)
+            ).bodyAsText()
+            try {
+                if (body != "{}") JsonApi(json).decodeFromJsonApiString<Unit>(body)
+                emit(Unit)
+            } catch (e: JsonApiException) {
+                val message = e.errors.first().detail
+                throw AppError(message)
+            }
         }
     }
 }

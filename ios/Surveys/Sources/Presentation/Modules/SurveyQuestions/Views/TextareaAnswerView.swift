@@ -12,19 +12,17 @@ import SwiftUI
 
 struct TextareaAnswerView: View {
 
-    let answer: Answer
-
-    @State var input: AnswerInput?
+    @ObservedObject var viewModel: AnswerViewModel
 
     var content: Binding<String> {
         Binding<String>(
-            get: { input?.content ?? "" },
-            set: { input = AnswerInput.content(id: input?.id ?? "", value: $0) }
+            get: { viewModel.input?.content ?? "" },
+            set: { viewModel.input = AnswerInput.content(id: viewModel.answers.first?.id ?? "", value: $0) }
         )
     }
 
     var body: some View {
-        TextEditor(placeholder: answer.placeholder, text: content)
+        TextEditor(placeholder: viewModel.answers.first?.placeholder ?? "", text: content)
     }
 }
 
@@ -34,8 +32,7 @@ struct TextareaAnswerView_Previews: PreviewProvider {
 
     static var previews: some View {
         TextareaAnswerView(
-            answer: Answer(id: "1", content: "Email", placeholder: "Email"),
-            input: nil
+            viewModel: .init(answers: [Answer(id: "1", content: "Email", placeholder: "Email")])
         )
         .frame(width: 327.0, height: 168.0)
     }

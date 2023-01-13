@@ -12,20 +12,19 @@ import SwiftUI
 
 struct MultipleChoicesAnswerView: View {
 
-    let answers: [Answer]
-    @State var input: Set<AnswerInput>
+    @ObservedObject var viewModel: AnswerViewModel
 
     var body: some View {
         VStack {
-            ForEach(0 ..< answers.count, id: \.self) { index in
-                let answer = answers[index]
+            ForEach(0 ..< viewModel.answers.count, id: \.self) { index in
+                let answer = viewModel.answers[index]
                 let currentInput = AnswerInput.select(id: answer.id)
-                let isSelectingCurrentInput = input.contains(currentInput)
+                let isSelectingCurrentInput = viewModel.inputs.contains(currentInput)
                 Button {
                     if isSelectingCurrentInput {
-                        input.remove(currentInput)
+                        viewModel.inputs.remove(currentInput)
                     } else {
-                        input.insert(currentInput)
+                        viewModel.inputs.insert(currentInput)
                     }
                 } label: {
                     HStack {
@@ -46,7 +45,7 @@ struct MultipleChoicesAnswerView: View {
                     }
                 }
                 .frame(height: 56.0)
-                if index != answers.count - 1 {
+                if index != viewModel.answers.count - 1 {
                     Divider()
                         .frame(minHeight: 0.5)
                         .background(Color.white)
@@ -62,9 +61,9 @@ struct MultipleChoicesAnswerView: View {
 struct MultipleChoicesAnswerView_Previews: PreviewProvider {
 
     static var previews: some View {
-        MultipleChoicesAnswerView(answers: [
+        MultipleChoicesAnswerView(viewModel: .init(answers: [
             Answer(id: "1", content: "email"),
             Answer(id: "2", content: "password")
-        ], input: .init())
+        ]))
     }
 }
