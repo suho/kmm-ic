@@ -19,6 +19,8 @@ target 'Surveys' do
   pod 'Kingfisher'
   pod 'FlowStacks'
   pod 'ShimmerView'
+  pod 'SwiftUIPager'
+  pod 'lottie-ios'
 
   # Storage
   pod 'KeychainAccess'
@@ -50,6 +52,9 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
+
+      config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
+      config.build_settings['SWIFT_SUPPRESS_WARNINGS'] = 'YES'
     end
   end
 end

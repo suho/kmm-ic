@@ -11,3 +11,4 @@ import Rswift
 typealias Typography = R.font
 typealias Localize = R.string.localizable
 typealias Asset = R.image
+typealias ColorAsset = R.color

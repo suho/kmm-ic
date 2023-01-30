@@ -24,9 +24,8 @@ final class SurveyDetailUISpec: QuickSpec {
                 beforeEach {
                     app = XCUIApplication()
                     app.launch()
-
-                    self.login(with: app)
-                    self.selectFirstSurvey(with: app)
+                    app.login()
+                    app.selectFirstSurvey()
                 }
 
                 afterEach {
@@ -34,32 +33,12 @@ final class SurveyDetailUISpec: QuickSpec {
                 }
 
                 it("it shows its ui components") {
-                    let surveyImage = app.images[AccessibilityIdentifier.SurveyDetail.image]
-                    expect(surveyImage.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let surveyTitleText = app.staticTexts[AccessibilityIdentifier.SurveyDetail.title]
-                    expect(surveyTitleText.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let surveyDescriptionText = app.staticTexts[AccessibilityIdentifier.SurveyDetail.description]
-                    expect(surveyDescriptionText.exists).toEventually(equal(true), timeout: .seconds(5))
-
-                    let startSurveyButton = app.buttons[AccessibilityIdentifier.SurveyDetail.startSurvey]
-                    expect(startSurveyButton.exists).toEventually(equal(true), timeout: .seconds(5))
+                    app.images[AccessibilityIdentifier.SurveyDetail.image].shouldExists()
+                    app.staticTexts[AccessibilityIdentifier.SurveyDetail.title].shouldExists()
+                    app.staticTexts[AccessibilityIdentifier.SurveyDetail.description].shouldExists()
+                    app.buttons[AccessibilityIdentifier.SurveyDetail.startSurvey].shouldExists()
                 }
             }
         }
-    }
-
-    private func login(with app: XCUIApplication) {
-        // TODO: Improve this later
-        app.fillInField("Email", with: "dev@nimblehq.co")
-        app.fillInSecureField("Password", with: "12345678")
-        app.tapButton("Log in")
-    }
-
-    private func selectFirstSurvey(with app: XCUIApplication) {
-        // TODO: Improve this later
-        sleep(3)
-        app.buttons[AccessibilityIdentifier.Home.detailSurvey].tap()
     }
 }

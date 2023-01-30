@@ -10,6 +10,8 @@ import Combine
 import Factory
 import Shared
 
+// MARK: - HomeViewModel
+
 final class HomeViewModel: ObservableObject {
 
     @Published private(set) var today: String = ""
@@ -17,14 +19,14 @@ final class HomeViewModel: ObservableObject {
     @Published private(set) var surveysUIModel: HomeSurveysView.UIModel = .init(surveys: [])
     @Published private(set) var state: State = .idle
 
+    var currentPage: Int = 0
+
     @Injected(Container.getProfileUseCase) private var getProfileUseCase: GetProfileUseCaseProtocol
     @Injected(Container.getSurveysUseCase) private var getSurveysUseCase: GetSurveysUseCaseProtocol
     @Injected(Container.dateTime) private var dateTime: DateTimeProtocol
     @Injected(Container.dateTimeFormatter) private var dateTimeFormatter: DateTimeFormatterProtocol
 
-    private var currentPage: Int = 0
     private var surveys: [Survey] = []
-
     private var bag = Set<AnyCancellable>()
 
     var surveyDetailViewModel: SurveyDetailViewModel {
@@ -44,8 +46,13 @@ final class HomeViewModel: ObservableObject {
             .uppercased()
     }
 
-    func loadProfileAndSurveys() {
-        state = .loading
+    func refreshProfileAndSurveys() {
+        if state == .refreshing || state == .loading { return }
+        loadProfileAndSurveys(isRefreshing: true)
+    }
+
+    func loadProfileAndSurveys(isRefreshing: Bool = false) {
+        state = isRefreshing ? .refreshing : .loading
         getProfileUseCase()
             // TODO: - Improve this later when having paging logic
             .combineLatest(getSurveysUseCase(pageNumber: 1, pageSize: 5))
@@ -73,6 +80,9 @@ final class HomeViewModel: ObservableObject {
                         }
                     )
                     $0.state = .loaded
+                    if isRefreshing {
+                        $0.currentPage = 0
+                    }
                 }
             }
             .store(in: &bag)
@@ -83,12 +93,15 @@ final class HomeViewModel: ObservableObject {
     }
 }
 
+// MARK: HomeViewModel.State
+
 extension HomeViewModel {
 
     enum State: Equatable {
 
         case idle
         case loading
+        case refreshing
         case loaded
         case failure(String)
     }

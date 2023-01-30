@@ -22,6 +22,10 @@ struct AppNavigator: View {
                 HomeView()
             case let .surveyDetail(viewModel):
                 SurveyDetailView(viewModel: viewModel)
+            case let .surveyQuestions(viewModel):
+                SurveyQuestionsView(viewModel: viewModel)
+            case .thankYou:
+                ThankYouView()
             }
         }
         .environmentObject(navigator)

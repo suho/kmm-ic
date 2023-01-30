@@ -10,7 +10,6 @@ import Factory
 import Nimble
 import Quick
 import Shared
-
 @testable import Surveys
 
 final class HomeViewModelSpec: QuickSpec {
@@ -125,6 +124,40 @@ final class HomeViewModelSpec: QuickSpec {
                         let state = try self.awaitPublisher(viewModel.$state.collectNext(1)).last
                         expect(state) == .failure(errorMessage)
                     }
+                }
+            }
+
+            describe("its refresh profile and surveys") {
+
+                context("when get profile and get surveys use cases emit success") {
+
+                    beforeEach {
+                        getProfileUseCaseProtocolMock.callAsFunctionReturnValue = .success(.dummy)
+                        getSurveysUseCaseProtocolMock.callAsFunctionPageNumberPageSizeReturnValue = .success([.dummy])
+                        viewModel.refreshProfileAndSurveys()
+                    }
+
+                    it("state changes to refreshing first then to loaded") {
+                        let states = try self.awaitPublisher(viewModel.$state.collect(2).first())
+                        expect(states.first) == .refreshing
+                        expect(states.last) == .loaded
+                    }
+
+                    it("the current page changes to zero") {
+                        _ = try self.awaitPublisher(viewModel.$state.collectNext(1)).last
+                        expect(viewModel.currentPage) == 0
+                    }
+                }
+            }
+
+            describe("its current page did change") {
+
+                beforeEach {
+                    viewModel.currentPageDidChange(1)
+                }
+
+                it("the current page changes to expected value") {
+                    expect(viewModel.currentPage) == 1
                 }
             }
         }

@@ -4,6 +4,14 @@
 
 "general.button.gotIt" = "Got it!";
 "general.text.surveys" = "Surveys";
+"general.alert.warning" = "Warning!";
+"general.text.yes" = "Yes";
 
 "home.header.today" = "Today";
 "surveyDetail.button.title" = "Start Survey";
+"surveyQuestions.button.submit" = "Submit";
+"surveyQuestions.nps.unlike" = "Not at all Likely";
+"surveyQuestions.nps.like" = "Extremely Likely";
+"surveyQuestions.alert.exitMessage" = "Are you sure you want to quit the survey?";
+
+"thankYou.text.title" = "Thanks for taking the survey.";

@@ -22,3 +22,10 @@ extension FontResource {
         Font.custom(fontName, size: size)
     }
 }
+
+extension ColorResource {
+
+    func callAsFunction() -> Color {
+        Color(name)
+    }
+}

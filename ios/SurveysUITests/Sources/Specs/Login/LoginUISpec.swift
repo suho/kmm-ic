@@ -32,14 +32,9 @@ final class LoginUISpec: QuickSpec {
                 }
 
                 it("it shows its ui components") {
-                    let emailField = app.textFields["Email"]
-                    expect(emailField.exists) == true
-
-                    let passwordField = app.secureTextFields["Password"]
-                    expect(passwordField.exists) == true
-
-                    let loginButton = app.buttons["Log in"]
-                    expect(loginButton.exists) == true
+                    app.textFields["Email"].shouldExists()
+                    app.secureTextFields["Password"].shouldExists()
+                    app.buttons["Log in"].shouldExists()
                 }
 
                 context("when fill in valid credentials") {
@@ -51,8 +46,7 @@ final class LoginUISpec: QuickSpec {
                     }
 
                     it("shows home screen with today label") {
-                        expect(app.staticTexts[AccessibilityIdentifier.Home.today].exists)
-                            .toEventually(equal(true), timeout: .seconds(5))
+                        app.staticTexts[AccessibilityIdentifier.Home.today].shouldExists()
                     }
                 }
 
@@ -65,7 +59,7 @@ final class LoginUISpec: QuickSpec {
                     }
 
                     it("shows an alert after the request fails") {
-                        expect(app.alerts["Surveys"].exists).toEventually(equal(true), timeout: .seconds(5))
+                        app.alerts["Surveys"].shouldExists()
                     }
                 }
             }
