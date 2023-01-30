@@ -10,3 +10,5 @@
 "surveyQuestions.button.submit" = "Submit";
 "surveyQuestions.nps.unlike" = "Not at all Likely";
 "surveyQuestions.nps.like" = "Extremely Likely";
+
+"thankYou.text.title" = "Thanks for taking the survey.";

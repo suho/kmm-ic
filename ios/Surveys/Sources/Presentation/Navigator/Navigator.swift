@@ -9,6 +9,8 @@
 import FlowStacks
 import SwiftUI
 
+// MARK: - Navigator
+
 final class Navigator: ObservableObject {
 
     @Published var routes: Routes<Screen> = [.root(.login)]
@@ -41,7 +43,13 @@ final class Navigator: ObservableObject {
     func dismiss() {
         routes.dismiss()
     }
+
+    func steps(routes: (inout Routes<Screen>) -> Void) {
+        RouteSteps.withDelaysIfUnsupported(self, \.routes) { routes(&$0) }
+    }
 }
+
+// MARK: Navigator.Transition
 
 extension Navigator {
 

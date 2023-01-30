@@ -11,8 +11,32 @@ import SwiftUI
 // MARK: - ThankYouView
 
 struct ThankYouView: View {
+
+    @EnvironmentObject private var navigator: Navigator
+
     var body: some View {
-        Text("Thank You")
+        ZStack {
+            ColorAsset.backgroundColor()
+                .edgesIgnoringSafeArea(.all)
+
+            VStack(alignment: .center) {
+                LottieView(fileName: "confetti") {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        navigator.steps {
+                            $0.dismiss()
+                            $0.goBackToRoot()
+                        }
+                    }
+                }
+                .frame(width: 200.0, height: 200.0)
+                Text(Localize.thankYouTextTitle())
+                    .font(Typography.neuzeitSLTStdBookHeavy.font(size: 28.0))
+                    .foregroundColor(Color.white)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

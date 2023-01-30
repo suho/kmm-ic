@@ -112,7 +112,7 @@ final class SurveyQuestionsUISpec: QuickSpec {
                         self.tapNextOrSubmitButton(app)
                         self.tapNextOrSubmitButton(app)
                         sleep(3)
-                        app.staticTexts["Thank You"].shouldExists()
+                        app.staticTexts[AccessibilityIdentifier.Home.today].shouldExists()
                     }
                 }
             }
