@@ -29,6 +29,16 @@ struct SurveyQuestionsView: View {
             content().defaultAlert(message: message)
         case .submitted:
             content().onAppear { navigator.show(screen: .thankYou, by: .push) }
+        case .willExit:
+            content()
+                .alert(isPresented: .constant(true), content: {
+                    Alert(
+                        title: Text(Localize.generalAlertWarning()),
+                        message: Text(Localize.surveyQuestionsAlertExitMessage()),
+                        primaryButton: Alert.Button.default(Text(Localize.generalTextYes())) { navigator.pop() },
+                        secondaryButton: Alert.Button.cancel { viewModel.cancelExit() }
+                    )
+                })
         }
     }
 
@@ -141,7 +151,7 @@ struct SurveyQuestionsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    navigator.pop()
+                    viewModel.exitButtonDidPress()
                 } label: {
                     Asset.closeIcon.image
                 }
