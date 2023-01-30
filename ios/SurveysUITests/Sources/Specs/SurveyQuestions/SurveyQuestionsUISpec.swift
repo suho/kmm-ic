@@ -58,7 +58,7 @@ final class SurveyQuestionsUISpec: QuickSpec {
                             alert.buttons["Cancel"].tap()
                         }
 
-                        it("it dismiss the alert") {
+                        it("it dismisses the alert") {
                             let alert = app.alerts["Warning!"]
                             expect(alert.exists).toEventually(equal(false), timeout: .seconds(5))
                         }
@@ -71,7 +71,7 @@ final class SurveyQuestionsUISpec: QuickSpec {
                             alert.buttons["Yes"].tap()
                         }
 
-                        it("it dismiss the survey questions screen and show the survey detail question screen") {
+                        it("it dismisses the survey questions screen and show the survey detail question screen") {
                             app.images[AccessibilityIdentifier.SurveyDetail.image].shouldExists()
                         }
                     }
