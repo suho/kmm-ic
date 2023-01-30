@@ -12,6 +12,8 @@
 		0FE4E346523D12B3512F986B /* Pods_SurveysTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB8672A8DB533C8A50A0DEC /* Pods_SurveysTests.framework */; };
 		2E95B771E49CEA324FFF9477 /* Pods_Surveys.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BEC56586159DE04CE2CCAA8 /* Pods_Surveys.framework */; };
 		5AD21252E58F1F30EE57EB5E /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F853F5F4E0163A7C3C79C38 /* Application.swift */; };
+		8B05FE612974EFF300634C58 /* ObservableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05FE602974EFF300634C58 /* ObservableScrollView.swift */; };
+		8B05FE632974F00800634C58 /* ScrollViewOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05FE622974F00800634C58 /* ScrollViewOffsetPreferenceKey.swift */; };
 		8B0F7B3D295417C000A08CAF /* SurveyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F7B3C295417C000A08CAF /* SurveyDetailView.swift */; };
 		8B138CC828D8445A00DC161C /* KoinApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B138CC528D8445A00DC161C /* KoinApplication.swift */; };
 		8B138CC928D8445A00DC161C /* Typealias+Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B138CC628D8445A00DC161C /* Typealias+Koin.swift */; };
@@ -174,6 +176,8 @@
 		84FB411111453E4FDA5B5862 /* SurveysUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SurveysUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		894F23E7FF242200A17B28E2 /* Pods-Surveys-SurveysUITests.release staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Surveys-SurveysUITests.release staging.xcconfig"; path = "Target Support Files/Pods-Surveys-SurveysUITests/Pods-Surveys-SurveysUITests.release staging.xcconfig"; sourceTree = "<group>"; };
 		8AA2A4D7F6EBA03C8C781818 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8B05FE602974EFF300634C58 /* ObservableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableScrollView.swift; sourceTree = "<group>"; };
+		8B05FE622974F00800634C58 /* ScrollViewOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewOffsetPreferenceKey.swift; sourceTree = "<group>"; };
 		8B0F7B3C295417C000A08CAF /* SurveyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyDetailView.swift; sourceTree = "<group>"; };
 		8B138CC528D8445A00DC161C /* KoinApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KoinApplication.swift; sourceTree = "<group>"; };
 		8B138CC628D8445A00DC161C /* Typealias+Koin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Typealias+Koin.swift"; sourceTree = "<group>"; };
@@ -437,6 +441,15 @@
 				AA0D742236EFEC86AFE68983 /* Extensions */,
 			);
 			path = Supports;
+			sourceTree = "<group>";
+		};
+		8B05FE5F2974EFEB00634C58 /* ObservableScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				8B05FE602974EFF300634C58 /* ObservableScrollView.swift */,
+				8B05FE622974F00800634C58 /* ScrollViewOffsetPreferenceKey.swift */,
+			);
+			path = ObservableScrollView;
 			sourceTree = "<group>";
 		};
 		8B0F7B3B295417AB00A08CAF /* SurveyDetail */ = {
@@ -834,6 +847,7 @@
 		8BF3A6B528C46B470068A143 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8B05FE5F2974EFEB00634C58 /* ObservableScrollView */,
 				8B5A8CBF29710A5E0044A3AD /* LottieView */,
 				8BFAF388296E59D7003CCB23 /* TextEditor */,
 				8BDFB60C2967D0A800451281 /* LinearGradientView */,
@@ -1588,6 +1602,7 @@
 				8B45FACC2904DD8F009091AC /* LogInUseCase.swift in Sources */,
 				8B6B03D62927801000296983 /* DragGesture+Direction.swift in Sources */,
 				8B2C46D52918B5A600994FC4 /* DateTimeFormatter.swift in Sources */,
+				8B05FE632974F00800634C58 /* ScrollViewOffsetPreferenceKey.swift in Sources */,
 				8BFAF380296C20E6003CCB23 /* Constants+Emoji.swift in Sources */,
 				8BFAF382296D204E003CCB23 /* NpsAnswerView.swift in Sources */,
 				8BDFB60E2967D0B300451281 /* LinearGradientView.swift in Sources */,
@@ -1624,6 +1639,7 @@
 				8B98711D2913CA7000BA6B99 /* HomeView.swift in Sources */,
 				8BCC662F28FF9540003D87AD /* AppNavigator.swift in Sources */,
 				8BD791A5292B481200EF4AF9 /* GetSurveysUseCase.swift in Sources */,
+				8B05FE612974EFF300634C58 /* ObservableScrollView.swift in Sources */,
 				8B79A3AB295AAD6100F714C9 /* AccessibilityIdentifier+SurveyDetail.swift in Sources */,
 				A0562C2F673B4C4DCABFBDB8 /* R.generated.swift in Sources */,
 				8B138CC928D8445A00DC161C /* Typealias+Koin.swift in Sources */,
