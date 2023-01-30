@@ -21,10 +21,30 @@ extension Survey {
                 id: "id",
                 text: "text",
                 displayOrder: 0,
+                displayType: "dropdown",
+                pick: "one",
+                coverImageUrl: "coverImageUrl",
+                answers: []
+            ),
+            Question(
+                id: "id1",
+                text: "text",
+                displayOrder: 0,
                 displayType: "star",
                 pick: "one",
                 coverImageUrl: "coverImageUrl",
                 answers: []
+            ),
+            Question(
+                id: "id2",
+                text: "text",
+                displayOrder: 0,
+                displayType: "textfield",
+                pick: "one",
+                coverImageUrl: "coverImageUrl",
+                answers: [
+                    Answer(id: "1", text: "answer", displayOrder: 0, inputMaskPlaceholder: nil)
+                ]
             )
         ]
     )

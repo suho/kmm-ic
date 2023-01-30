@@ -18,13 +18,16 @@ final class SurveyQuestionsViewModelSpec: QuickSpec {
     override func spec() {
 
         var getSurveyDetailUseCaseProtocolMock: GetSurveyDetailUseCaseProtocolMock!
+        var submitSurveyResponseUseCaseProtocolMock: SubmitSurveyResponseUseCaseProtocolMock!
         var viewModel: SurveyQuestionsViewModel!
 
         describe("a SurveyQuestionsViewModel") {
 
             beforeEach {
                 getSurveyDetailUseCaseProtocolMock = GetSurveyDetailUseCaseProtocolMock()
+                submitSurveyResponseUseCaseProtocolMock = SubmitSurveyResponseUseCaseProtocolMock()
                 Container.getSurveyDetailUseCase.register { getSurveyDetailUseCaseProtocolMock }
+                Container.submitSurveyResponseUseCase.register { submitSurveyResponseUseCaseProtocolMock }
                 let survey = SurveyQuestionsArgument(
                     id: "id",
                     imageURLString: "imageURLString"
@@ -69,6 +72,12 @@ final class SurveyQuestionsViewModelSpec: QuickSpec {
                         let expectedUIModel: SurveyQuestionsView.UIModel = .init(questions: questionUIModels)
                         expect(actualUIModel) == expectedUIModel
                     }
+
+                    it("get the right answer view models list") {
+                        _ = try self.awaitPublisher(viewModel.$uiModel.collectNext(1)).last
+                        let actualQuestionAnswerViewModels = viewModel.answerViewModels
+                        expect(actualQuestionAnswerViewModels.count) == 3
+                    }
                 }
 
                 context("when get survey detail use case emits fail with app error") {
@@ -91,6 +100,59 @@ final class SurveyQuestionsViewModelSpec: QuickSpec {
                     beforeEach {
                         getSurveyDetailUseCaseProtocolMock.callAsFunctionIdReturnValue = .failure(NSError.test)
                         viewModel.loadData()
+                    }
+
+                    it("state changes to failed with expected message") {
+                        let state = try self.awaitPublisher(viewModel.$state.collectNext(1)).last
+                        expect(state) == .failure("-")
+                    }
+                }
+            }
+
+            describe("its submit answers") {
+
+                context("when submit survey response use case emits success") {
+
+                    let expectedSurvey: Survey = .dummy
+
+                    beforeEach {
+                        getSurveyDetailUseCaseProtocolMock.callAsFunctionIdReturnValue = .success(expectedSurvey)
+                        submitSurveyResponseUseCaseProtocolMock.callAsFunctionSubmissionReturnValue = .success(())
+
+                        viewModel.loadData()
+                        _ = try? self.awaitPublisher(viewModel.$state.collectNext(1))
+
+                        viewModel.submitAnswers()
+                    }
+
+                    it("state changes to submitted") {
+                        let state = try self.awaitPublisher(viewModel.$state.collectNext(1)).last
+                        expect(state) == .submitted
+                    }
+                }
+
+                context("when submit survey response use case emits fail with app error") {
+
+                    let errorMessage = "Submit survey response failed!"
+
+                    beforeEach {
+                        submitSurveyResponseUseCaseProtocolMock
+                            .callAsFunctionSubmissionReturnValue = .failure(errorMessage)
+                        viewModel.submitAnswers()
+                    }
+
+                    it("state changes to failed with expected message") {
+                        let state = try self.awaitPublisher(viewModel.$state.collectNext(1)).last
+                        expect(state) == .failure(errorMessage)
+                    }
+                }
+
+                context("when submit survey response use case emits fail without app error") {
+
+                    beforeEach {
+                        submitSurveyResponseUseCaseProtocolMock
+                            .callAsFunctionSubmissionReturnValue = .failure(NSError.test)
+                        viewModel.submitAnswers()
                     }
 
                     it("state changes to failed with expected message") {

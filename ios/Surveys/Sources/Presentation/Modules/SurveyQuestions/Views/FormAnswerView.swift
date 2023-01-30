@@ -20,6 +20,12 @@ struct FormAnswerView: View {
                 TextField(viewModel.answers[index].placeholder.string, text: content(of: index))
                     .primaryFieldStyle()
                     .padding(.horizontal, 12.0)
+                    .accessibilityIdentifier(
+                        AccessibilityIdentifier.AnswerView.textField(
+                            questionId: viewModel.questionId,
+                            index: index
+                        )
+                    )
             }
         }
     }
@@ -49,6 +55,6 @@ struct FormAnswerView_Previews: PreviewProvider {
             Answer(id: "3"),
             Answer(id: "4")
         ]
-        FormAnswerView(viewModel: .init(answers: answers))
+        FormAnswerView(viewModel: .init(questionId: "-", answers: answers))
     }
 }

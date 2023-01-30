@@ -50,6 +50,7 @@ struct DropdownAnswerView_Previews: PreviewProvider {
     static var previews: some View {
         DropdownAnswerView(
             viewModel: .init(
+                questionId: "-",
                 answers: [
                     .init(id: "1", content: "Choice 1", placeholder: nil),
                     .init(id: "2", content: "Choice 2", placeholder: nil),

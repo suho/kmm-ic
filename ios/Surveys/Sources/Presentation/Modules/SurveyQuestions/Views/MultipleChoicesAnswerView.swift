@@ -45,6 +45,12 @@ struct MultipleChoicesAnswerView: View {
                     }
                 }
                 .frame(height: 56.0)
+                .accessibilityIdentifier(
+                    AccessibilityIdentifier.AnswerView.choice(
+                        questionId: viewModel.questionId,
+                        index: index
+                    )
+                )
                 if index != viewModel.answers.count - 1 {
                     Divider()
                         .frame(minHeight: 0.5)
@@ -61,7 +67,7 @@ struct MultipleChoicesAnswerView: View {
 struct MultipleChoicesAnswerView_Previews: PreviewProvider {
 
     static var previews: some View {
-        MultipleChoicesAnswerView(viewModel: .init(answers: [
+        MultipleChoicesAnswerView(viewModel: .init(questionId: "-", answers: [
             Answer(id: "1", content: "email"),
             Answer(id: "2", content: "password")
         ]))

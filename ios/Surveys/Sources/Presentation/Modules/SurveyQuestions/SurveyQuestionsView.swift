@@ -87,10 +87,9 @@ struct SurveyQuestionsView: View {
 
                                 Spacer()
 
-                                if let questionAnswerViewModel = viewModel
-                                    .questionAnswerViewModels
-                                    .first(where: { $0.0 == question.id }) {
-                                    answerView(displayType: question.displayType, viewModel: questionAnswerViewModel.1)
+                                if let answerViewModel = viewModel
+                                    .answerViewModels.first(where: { $0.questionId == question.id }) {
+                                    answerView(displayType: question.displayType, viewModel: answerViewModel)
                                 }
                             }
                             .padding(.top, 26.0)

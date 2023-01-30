@@ -26,7 +26,7 @@ final class SurveyQuestionsViewModel: ObservableObject {
     @Published private(set) var uiModel: SurveyQuestionsView.UIModel?
     @Published private(set) var state: State = .idle
 
-    private(set) var questionAnswerViewModels: [(String, AnswerViewModel)] = []
+    private(set) var answerViewModels: [AnswerViewModel] = []
 
     @Injected(Container.getSurveyDetailUseCase)
     private var getSurveyDetailUseCase: GetSurveyDetailUseCaseProtocol
@@ -64,7 +64,7 @@ final class SurveyQuestionsViewModel: ObservableObject {
     }
 
     func submitAnswers() {
-        let questionSubmissions = questionAnswerViewModels.compactMap { questionId, viewModel -> QuestionSubmission? in
+        let questionSubmissions = answerViewModels.compactMap { viewModel -> QuestionSubmission? in
             var answers: [AnswerSubmission] = []
             if let input = viewModel.input {
                 answers = [AnswerSubmission(id: input.id, answer: input.content)]
@@ -74,7 +74,7 @@ final class SurveyQuestionsViewModel: ObservableObject {
             if answers.isEmpty {
                 return nil
             } else {
-                return QuestionSubmission(id: questionId, answers: answers)
+                return QuestionSubmission(id: viewModel.questionId, answers: answers)
             }
         }
         let surveySubmission = SurveySubmission(id: surveyID, questions: questionSubmissions)
@@ -105,19 +105,20 @@ final class SurveyQuestionsViewModel: ObservableObject {
 
     private func generateAnswerViewModels(questions: [Question]) {
         for question in questions {
+            print(question.id)
             let answers = question.displayType().answers()
             let viewModel: AnswerViewModel
             switch question.displayType() {
             case is Shared.QuestionDisplayType.Dropdown:
                 let input = AnswerInput.select(id: answers.first?.id ?? "")
-                viewModel = AnswerViewModel(answers: answers, input: input)
+                viewModel = AnswerViewModel(questionId: question.id, answers: answers, input: input)
             case let type as Shared.QuestionDisplayType.Textfield:
                 let inputs = type.answers().map { AnswerInput.content(id: $0.id, value: "") }
-                viewModel = AnswerViewModel(answers: answers, inputs: Set(inputs))
+                viewModel = AnswerViewModel(questionId: question.id, answers: answers, inputs: Set(inputs))
             default:
-                viewModel = AnswerViewModel(answers: answers)
+                viewModel = AnswerViewModel(questionId: question.id, answers: answers)
             }
-            questionAnswerViewModels.append((question.id, viewModel))
+            answerViewModels.append(viewModel)
         }
     }
 

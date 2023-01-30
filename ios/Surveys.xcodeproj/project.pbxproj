@@ -90,6 +90,8 @@
 		8BFAF38E296E660A003CCB23 /* AnswerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF38D296E660A003CCB23 /* AnswerViewModel.swift */; };
 		8BFAF390296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF38F296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift */; };
 		8BFAF393296FBC47003CCB23 /* ThankYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF392296FBC47003CCB23 /* ThankYouView.swift */; };
+		8BFAF395296FF561003CCB23 /* AccessibilityIdentifier+AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF394296FF561003CCB23 /* AccessibilityIdentifier+AnswerView.swift */; };
+		8BFAF396296FF561003CCB23 /* AccessibilityIdentifier+AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAF394296FF561003CCB23 /* AccessibilityIdentifier+AnswerView.swift */; };
 		8BFB53CF28D08CCC00F77CD0 /* Rswift+Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB53CE28D08CCC00F77CD0 /* Rswift+Typealias.swift */; };
 		9034CDC8640BB10EC23F3D2C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA2A4D7F6EBA03C8C781818 /* Constants.swift */; };
 		A0562C2F673B4C4DCABFBDB8 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446379DEC5760FE3C00F3AA3 /* R.generated.swift */; };
@@ -243,6 +245,7 @@
 		8BFAF38D296E660A003CCB23 /* AnswerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewModel.swift; sourceTree = "<group>"; };
 		8BFAF38F296EA656003CCB23 /* SubmitSurveyResponseUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitSurveyResponseUseCase.swift; sourceTree = "<group>"; };
 		8BFAF392296FBC47003CCB23 /* ThankYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThankYouView.swift; sourceTree = "<group>"; };
+		8BFAF394296FF561003CCB23 /* AccessibilityIdentifier+AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessibilityIdentifier+AnswerView.swift"; sourceTree = "<group>"; };
 		8BFB53CE28D08CCC00F77CD0 /* Rswift+Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rswift+Typealias.swift"; sourceTree = "<group>"; };
 		8EB8672A8DB533C8A50A0DEC /* Pods_SurveysTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurveysTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B8DCB5A6DDC646B216C9D9 /* DebugStaging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugStaging.xcconfig; sourceTree = "<group>"; };
@@ -483,6 +486,7 @@
 				8B2C46E02919120D00994FC4 /* AccessibilityIdentifier+Home.swift */,
 				8B79A3AA295AAD6100F714C9 /* AccessibilityIdentifier+SurveyDetail.swift */,
 				8B79A3BF295D552D00F714C9 /* AccessibilityIdentifier+SurveyQuestions.swift */,
+				8BFAF394296FF561003CCB23 /* AccessibilityIdentifier+AnswerView.swift */,
 			);
 			path = AccessibilityIdentifier;
 			sourceTree = "<group>";
@@ -1519,6 +1523,7 @@
 				8BF3A6CD28C47D2D0068A143 /* XCUIApplication+Actions.swift in Sources */,
 				8B79A3AC295AAD6100F714C9 /* AccessibilityIdentifier+SurveyDetail.swift in Sources */,
 				8B79A3C4295D58B800F714C9 /* XCUIElement+Expectation.swift in Sources */,
+				8BFAF396296FF561003CCB23 /* AccessibilityIdentifier+AnswerView.swift in Sources */,
 				8B2C46E42919121700994FC4 /* AccessibilityIdentifier+Home.swift in Sources */,
 				8BA566B82905B20700440858 /* AnyPublisher+Mock.swift in Sources */,
 				8BA566B42905B1DA00440858 /* NSError.swift in Sources */,
@@ -1602,6 +1607,7 @@
 				8B0F7B3D295417C000A08CAF /* SurveyDetailView.swift in Sources */,
 				8BCC662828FF9202003D87AD /* Navigator.swift in Sources */,
 				8B138CC828D8445A00DC161C /* KoinApplication.swift in Sources */,
+				8BFAF395296FF561003CCB23 /* AccessibilityIdentifier+AnswerView.swift in Sources */,
 				8B2C46D32918B57100994FC4 /* DateTime.swift in Sources */,
 				8BFAF38C296E5B26003CCB23 /* FormAnswerView.swift in Sources */,
 				8BF3A6B428C469AC0068A143 /* R+SwiftUI.swift in Sources */,

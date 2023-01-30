@@ -33,6 +33,12 @@ struct EmojiAnswerView: View {
                         .font(Typography.neuzeitSLTStdBookHeavy.font(size: 28.0))
                         .opacity(isHighlighted(for: index) ? 1.0 : 0.5)
                 }
+                .accessibilityIdentifier(
+                    AccessibilityIdentifier.AnswerView.emoji(
+                        questionId: viewModel.questionId,
+                        index: index
+                    )
+                )
             }
             Spacer()
         }
@@ -66,6 +72,7 @@ struct ThumpsUpEmojiAnswerView_Previews: PreviewProvider {
             emojis: Array(repeating: Constants.Emoji.thumpsUp, count: 5),
             highlightStyle: .leftItems,
             viewModel: .init(
+                questionId: "-",
                 answers: [.init(id: "1"), .init(id: "2"), .init(id: "3"), .init(id: "4"), .init(id: "5")]
             )
         )
@@ -81,6 +88,7 @@ struct StarEmojiAnswerView_Previews: PreviewProvider {
             emojis: Array(repeating: Constants.Emoji.star, count: 5),
             highlightStyle: .leftItems,
             viewModel: .init(
+                questionId: "-",
                 answers: [.init(id: "1"), .init(id: "2"), .init(id: "3"), .init(id: "4"), .init(id: "5")]
             )
         )
@@ -102,6 +110,7 @@ struct EmojiAnswerView_Previews: PreviewProvider {
             ],
             highlightStyle: .one,
             viewModel: .init(
+                questionId: "-",
                 answers: [.init(id: "1"), .init(id: "2"), .init(id: "3"), .init(id: "4"), .init(id: "5")]
             )
         )
