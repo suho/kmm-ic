@@ -20,16 +20,16 @@ class BuildManager
     )
   end
 
-  def build_app_store(scheme, product_name, bundle_identifier, include_bitcode)
+  def build_app_store(scheme, product_name, bundle_identifier)
     @fastlane.gym(
       scheme: scheme,
       export_method: 'app-store',
       export_options: {
         provisioningProfiles: {
-          @bundle_identifier_staging.to_s => "match AppStore #{bundle_identifier}"
+          @bundle_identifier.to_s => "match AppStore #{bundle_identifier}"
         }
       },
-      include_bitcode: include_bitcode,
+      include_bitcode: false,
       output_name: product_name
     )
   end
