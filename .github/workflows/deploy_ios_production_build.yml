@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - main
+      - bug/deploy-production-ios-build
   workflow_dispatch:
 
 defaults:
